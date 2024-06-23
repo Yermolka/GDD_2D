@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c061fipir4ht7"]
+
+[ext_resource type="Script" path="res://addons/taffer_logger/logger.gd" id="1_ya6u5"]
+
+[node name="Logger" type="Node"]
+editor_description = "Provides logging functions that emit log_entry signals with the formatted log entry."
+script = ExtResource("1_ya6u5")

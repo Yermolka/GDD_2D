@@ -13,3 +13,17 @@ config_version=5
 config/name="GDD_2D"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+TurnManager="res://addons/godot_gameplay_systems/turn_based/./autoloads/turn_manager.gd"
+Questify="*res://addons/questify/quest_manager.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/dialogue_nodes/plugin.cfg", "res://addons/godot_gameplay_systems/plugin.cfg", "res://addons/questify/plugin.cfg")
+
+[questify]
+
+general/update_polling=true
+general/update_interval=0.5

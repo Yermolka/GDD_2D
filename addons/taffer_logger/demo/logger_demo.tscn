@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://cskiv1pi146p6"]
+
+[ext_resource type="Script" path="res://addons/taffer_logger/demo/logger_demo.gd" id="1_jeu3m"]
+[ext_resource type="PackedScene" uid="uid://c061fipir4ht7" path="res://addons/taffer_logger/logger.tscn" id="2_p00eh"]
+
+[node name="LoggerDemo" type="Node2D"]
+script = ExtResource("1_jeu3m")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="Logger" parent="." instance=ExtResource("2_p00eh")]
+
+[node name="InfoButton" type="Button" parent="."]
+offset_left = 512.0
+offset_top = 64.0
+offset_right = 640.0
+offset_bottom = 95.0
+size_flags_horizontal = 4
+text = "Info Log"
+
+[node name="WarningButton" type="Button" parent="."]
+offset_left = 512.0
+offset_top = 128.0
+offset_right = 640.0
+offset_bottom = 159.0
+size_flags_horizontal = 4
+text = "Warning log"
+
+[node name="ErrorButton" type="Button" parent="."]
+offset_left = 512.0
+offset_top = 192.0
+offset_right = 640.0
+offset_bottom = 223.0
+size_flags_horizontal = 4
+text = "Error log"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_top = 384.0
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "This RichTextLabel is going to display the log.
+
+Log:
+
+"
+scroll_following = true
+
+[connection signal="log_entry" from="Logger" to="." method="_on_logger_log_entry"]
+[connection signal="pressed" from="InfoButton" to="." method="_on_info_button_pressed"]
+[connection signal="pressed" from="WarningButton" to="." method="_on_warning_button_pressed"]
+[connection signal="pressed" from="ErrorButton" to="." method="_on_error_button_pressed"]
