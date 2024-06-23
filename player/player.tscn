@@ -1,0 +1,108 @@
+[gd_scene load_steps=21 format=3 uid="uid://cultyql87ixvl"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_31dcg"]
+[ext_resource type="Texture2D" uid="uid://dla76qr5vqp1r" path="res://addons/dialogue_nodes/icons/Character.svg" id="1_r2tra"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/ability_container.gd" id="2_kt3nr"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="3_4d36o"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute.gd" id="4_2qw15"]
+[ext_resource type="Resource" uid="uid://xltm11epb5ep" path="res://stats/player_attributes.tres" id="5_5fmbk"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/inventory.gd" id="7_fdlqo"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/equipment.gd" id="8_ngsfb"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/resources/equipment_slot.gd" id="10_a4fio"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ic6dn"]
+size = Vector2(126, 124)
+
+[sub_resource type="Resource" id="Resource_4bvb6"]
+script = ExtResource("4_2qw15")
+attribute_name = "health"
+minimum_value = 0.0
+maximum_value = 100.0
+current_value = 100.0
+
+[sub_resource type="Resource" id="Resource_c0ocp"]
+script = ExtResource("4_2qw15")
+attribute_name = "mana"
+minimum_value = 0.0
+maximum_value = 100.0
+current_value = 100.0
+
+[sub_resource type="Resource" id="Resource_o5x7h"]
+script = ExtResource("4_2qw15")
+attribute_name = "movement_speed"
+minimum_value = 0.0
+maximum_value = 500.0
+current_value = 100.0
+
+[sub_resource type="Resource" id="Resource_xdma3"]
+script = ExtResource("4_2qw15")
+attribute_name = "base_damage"
+minimum_value = 10.0
+maximum_value = 10.0
+current_value = 10.0
+
+[sub_resource type="Resource" id="Resource_vnchi"]
+script = ExtResource("10_a4fio")
+name = "helm"
+accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([])
+
+[sub_resource type="Resource" id="Resource_bdtrf"]
+script = ExtResource("10_a4fio")
+name = "chest"
+accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([])
+
+[sub_resource type="Resource" id="Resource_hr8py"]
+script = ExtResource("10_a4fio")
+name = "legs"
+accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([])
+
+[sub_resource type="Resource" id="Resource_6kkog"]
+script = ExtResource("10_a4fio")
+name = "feet"
+accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([])
+
+[sub_resource type="Resource" id="Resource_hqypi"]
+script = ExtResource("10_a4fio")
+name = "weapon"
+accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([])
+
+[sub_resource type="Resource" id="Resource_373ht"]
+script = ExtResource("10_a4fio")
+name = "scroll"
+accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([])
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 6
+script = ExtResource("1_31dcg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -0.523599
+skew = -0.261799
+shape = SubResource("RectangleShape2D_ic6dn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -0.523599
+scale = Vector2(8.375, 8.375)
+skew = -0.261799
+texture = ExtResource("1_r2tra")
+
+[node name="AbilityContainer" type="Node" parent="."]
+script = ExtResource("2_kt3nr")
+gameplay_attribute_map_path = NodePath("../GameplayAttributeMap")
+
+[node name="GameplayAttributeMap" type="Node" parent="."]
+script = ExtResource("3_4d36o")
+owning_character = NodePath("..")
+attributes = Array[ExtResource("4_2qw15")]([SubResource("Resource_4bvb6"), SubResource("Resource_c0ocp"), SubResource("Resource_o5x7h"), SubResource("Resource_xdma3")])
+table = ExtResource("5_5fmbk")
+
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("7_fdlqo")
+owner_path = NodePath("..")
+equipment_path = NodePath("../Equipment")
+
+[node name="Equipment" type="Node" parent="."]
+script = ExtResource("8_ngsfb")
+owner_path = NodePath("..")
+inventory_path = NodePath("../Inventory")
+slots = Array[ExtResource("10_a4fio")]([SubResource("Resource_vnchi"), SubResource("Resource_bdtrf"), SubResource("Resource_hr8py"), SubResource("Resource_6kkog"), SubResource("Resource_hqypi"), SubResource("Resource_373ht")])
