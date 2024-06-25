@@ -72,7 +72,7 @@ enum {
 		emit_changed()
 @export_group("Pipeline")
 ## If it is set, it will call [method AttributeEffectCondition.should_apply]
-@export var condition: Resource = null:
+@export var condition: AttributeEffectCondition = null:
 	get:
 		return condition
 	set(value):

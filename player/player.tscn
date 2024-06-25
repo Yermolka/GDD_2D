@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cultyql87ixvl"]
+[gd_scene load_steps=20 format=3 uid="uid://cultyql87ixvl"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_31dcg"]
 [ext_resource type="Texture2D" uid="uid://dla76qr5vqp1r" path="res://addons/dialogue_nodes/icons/Character.svg" id="1_r2tra"]
@@ -9,9 +9,6 @@
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/inventory.gd" id="7_fdlqo"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/equipment.gd" id="8_ngsfb"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/resources/equipment_slot.gd" id="10_a4fio"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ic6dn"]
-size = Vector2(126, 124)
 
 [sub_resource type="Resource" id="Resource_4bvb6"]
 script = ExtResource("4_2qw15")
@@ -75,10 +72,8 @@ accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_s
 collision_mask = 6
 script = ExtResource("1_31dcg")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-rotation = -0.523599
-skew = -0.261799
-shape = SubResource("RectangleShape2D_ic6dn")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-27, -53, 11, -39, 21, -16, 64, -23, 94, 7, 89, 20, 3, 70, -17, 69, -44, 42, -40, 28, -20, 8, -41, 11, -66, -13, -61, -28)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = -0.523599
@@ -106,3 +101,5 @@ script = ExtResource("8_ngsfb")
 owner_path = NodePath("..")
 inventory_path = NodePath("../Inventory")
 slots = Array[ExtResource("10_a4fio")]([SubResource("Resource_vnchi"), SubResource("Resource_bdtrf"), SubResource("Resource_hr8py"), SubResource("Resource_6kkog"), SubResource("Resource_hqypi"), SubResource("Resource_373ht")])
+
+[node name="Camera2D" type="Camera2D" parent="."]

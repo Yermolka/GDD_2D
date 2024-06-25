@@ -1,0 +1,76 @@
+[gd_scene load_steps=4 format=3 uid="uid://b54ngq6in8rn8"]
+
+[ext_resource type="Script" path="res://hud/hud.gd" id="1_d5fuj"]
+[ext_resource type="Script" path="res://hud/inventory_hud.gd" id="2_idcnv"]
+[ext_resource type="PackedScene" uid="uid://cacvwixf2f1bf" path="res://hud/equipment_slot.tscn" id="3_dacoc"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d5fuj")
+
+[node name="Inventory" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("2_idcnv")
+
+[node name="Inventory" type="Panel" parent="Inventory"]
+layout_mode = 0
+offset_left = 816.0
+offset_top = 213.0
+offset_right = 1108.0
+offset_bottom = 488.0
+mouse_filter = 1
+
+[node name="GridContainer" type="GridContainer" parent="Inventory/Inventory"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 5
+
+[node name="CharScreen" type="Panel" parent="Inventory"]
+layout_mode = 0
+offset_left = 82.0
+offset_top = 113.0
+offset_right = 371.0
+offset_bottom = 502.0
+mouse_filter = 1
+
+[node name="GridContainer" type="GridContainer" parent="Inventory/CharScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+
+[node name="Helm" parent="Inventory/CharScreen/GridContainer" instance=ExtResource("3_dacoc")]
+layout_mode = 2
+
+[node name="Chest" parent="Inventory/CharScreen/GridContainer" instance=ExtResource("3_dacoc")]
+layout_mode = 2
+
+[node name="Legs" parent="Inventory/CharScreen/GridContainer" instance=ExtResource("3_dacoc")]
+layout_mode = 2
+
+[node name="Feet" parent="Inventory/CharScreen/GridContainer" instance=ExtResource("3_dacoc")]
+layout_mode = 2
+
+[node name="Weapon" parent="Inventory/CharScreen/GridContainer" instance=ExtResource("3_dacoc")]
+layout_mode = 2
+
+[node name="Scroll" parent="Inventory/CharScreen/GridContainer" instance=ExtResource("3_dacoc")]
+layout_mode = 2

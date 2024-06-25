@@ -10,7 +10,7 @@ var effect: GameplayEffect:
 var antieffect: GameplayEffect:
 	get:
 		var _effect: GameplayEffect = GameplayEffect.new()
-		for stat in stats:
+		for stat: AttributeEffect in stats:
 			var _stat: AttributeEffect = stat.duplicate() as AttributeEffect
 			_stat.minimum_value *= -1
 			_stat.maximum_value *= -1

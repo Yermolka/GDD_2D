@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://cacvwixf2f1bf"]
+
+[ext_resource type="Script" path="res://hud/equipment_slot.gd" id="1_xs42d"]
+
+[node name="EquipmentSlot" type="Panel"]
+custom_minimum_size = Vector2(32, 32)
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_xs42d")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -5,7 +5,8 @@ class_name Player extends CharacterBody2D
 @onready var inventory: Inventory = $Inventory
 @onready var equipment: Equipment = $Equipment
 
-@onready var test_helm : EquipmentBase = preload("res://items/test_helm.tres")
+@onready var test_helm: EquipmentBase = preload("res://items/test_helm.tres").duplicate()
+@onready var healing_potion: ItemBase = preload("res://items/healing_potion.tres")
 
 const SPEED: float = 300.0
 var movement_speed: float:
@@ -24,13 +25,10 @@ func _ready() -> void:
 			print(attribute.current_buffed_value)
 	)
 
-	inventory.item_removed.connect(
-		func(item: Item) -> void:
-			print(item.name, " removed. ", inventory.items.size())
-	)
 	inventory.item_added.connect(
 		func(item: Item) -> void:
-			print(item.name, " added")
+			if item is EquipmentBase:
+				test_helm = item
 	)
 
 	equipment.equipped.connect(
@@ -59,9 +57,17 @@ func _process_input() -> void:
 	if Input.is_action_just_pressed("ability1"):
 		if test_helm in equipment.equipped_items:
 			equipment.unequip(test_helm)
+			inventory.add_item(test_helm)
 		else:
+			inventory.remove_item(test_helm)
 			equipment.equip(test_helm)
-		
+
+	if Input.is_action_just_pressed("ability2"):
+		inventory.add_item(healing_potion)
+
+	if Input.is_action_just_pressed("ability3"):
+		attribute_map.get_attribute_by_name("health").current_value -= 50
+
 func _process_movement() -> void:
 	var horizontal: float = Input.get_axis("move_left", "move_right")
 	var vertical: float = Input.get_axis("move_up", "move_down")
@@ -74,3 +80,7 @@ func _process_movement() -> void:
 		velocity.y = move_toward(velocity.y, 0, SPEED)
 
 	move_and_slide()
+
+func helper(duration: float, gameplay_effect: GameplayEffect) -> void:
+	await get_tree().create_timer(duration).timeout
+	attribute_map.apply_effect(gameplay_effect)

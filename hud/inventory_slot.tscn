@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://bll0lr7dq8kn8"]
+
+[ext_resource type="Script" path="res://hud/inventory_slot.gd" id="1_0p28w"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ok1v8"]
+
+[node name="InventorySlot" type="Panel"]
+custom_minimum_size = Vector2(32, 32)
+anchors_preset = -1
+anchor_right = 0.028
+anchor_bottom = 0.049
+offset_right = -0.256001
+offset_bottom = 0.247999
+script = ExtResource("1_0p28w")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_ok1v8")
+expand_mode = 2
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

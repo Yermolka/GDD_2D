@@ -40,6 +40,7 @@ signal refused_to_remove(item: Item)
 ## [br]For example: a classic Doom/Quake-like game, will not have an inventory system,
 ## all weapons are set at startup and can be used only if some tags are set.
 @export_node_path("Equipment") var equipment_path: NodePath = NodePath()
+@export var max_size: int = 16
 ## Is the array of items.
 @export var items: Array[Item] = []
 ## Tags associated to this [Inventory]
@@ -178,6 +179,9 @@ func can_activate(item: Item, activation_type: int = 0) -> bool:
 
 ## Checks if an [Item] can be added to this [Inventory] checking if all [member Item.tags_required_to_add] exists in this [Inventory]
 func can_add(item: Item) -> bool:
+	if items.size() >= max_size:
+		return false
+	
 	if item.tags_required_to_add.size() == 0:
 		return true
 

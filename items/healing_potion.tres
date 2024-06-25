@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="Potion" load_steps=5 format=3 uid="uid://cpmc42p2qt3kp"]
+
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_y3ty1"]
+[ext_resource type="Texture2D" uid="uid://dlx1ii3oc506a" path="res://addons/dialogue_nodes/icons/float.svg" id="2_lhdxa"]
+[ext_resource type="Script" path="res://items/potion.gd" id="2_va35m"]
+
+[sub_resource type="Resource" id="Resource_ts4wf"]
+script = ExtResource("1_y3ty1")
+life_time = 0
+apply_every_second = 1.0
+max_applications = 1
+applies_as = 1
+attribute_name = "base_damage"
+minimum_value = 50.0
+maximum_value = 50.0
+
+[resource]
+script = ExtResource("2_va35m")
+effects = Array[ExtResource("1_y3ty1")]([SubResource("Resource_ts4wf")])
+duration = 3.0
+ui_icon = ExtResource("2_lhdxa")
+name = &"Healing Potion"
+can_stack = true
+decrease_stack_on_use = true
+tags = Array[String]([])
+quantity_current = 1
+quantity_max = 20
+tags_added_on_activation = Array[String]([])
+tags_added_on_add = Array[String]([])
+tags_added_on_equip = Array[String]([])
+tags_added_on_remove = Array[String]([])
+tags_added_on_unequip = Array[String]([])
+tags_required_to_activate = Array[String]([])
+tags_required_to_add = Array[String]([])
+tags_required_to_equip = Array[String]([])
+tags_required_to_remove = Array[String]([])
+tags_required_to_unequip = Array[String]([])
+tags_removed_on_activation = Array[String]([])
+tags_removed_on_add = Array[String]([])
+tags_removed_on_equip = Array[String]([])
+tags_removed_on_remove = Array[String]([])
+tags_removed_on_unequip = Array[String]([])
