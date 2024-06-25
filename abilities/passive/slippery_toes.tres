@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="PassiveSkill" load_steps=4 format=3 uid="uid://dv6s7i07wrksv"]
+
+[ext_resource type="Script" path="res://abilities/PassiveSkill.gd" id="1_krlxc"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_qm7m7"]
+
+[sub_resource type="Resource" id="Resource_7k717"]
+script = ExtResource("1_qm7m7")
+life_time = 0
+apply_every_second = 1.0
+max_applications = 1
+applies_as = 1
+attribute_name = "movement_speed"
+minimum_value = 200.0
+maximum_value = 200.0
+
+[resource]
+script = ExtResource("1_krlxc")
+effects = Array[ExtResource("1_qm7m7")]([SubResource("Resource_7k717")])
+ui_name = ""
+cooldown_duration = 0.0
+cooldown_continuos = false
+grant_automatic = true
+grant_tags = Array[String]([])
+grant_tags_required = Array[String]([])
+tags_activation = Array[String](["skills.passive.slippery_toes"])
+tags_activation_required = Array[String]([])
+tags_block = Array[String](["skills.passive.slippery_toes"])
+tags_cancellation_required = Array[String]([])
+tags_cooldown_start = Array[String]([])
+tags_cooldown_end = Array[String]([])
+tags_end_blocking = Array[String]([])
+tags_to_remove_on_activation = Array[String]([])
+tags_to_remove_on_block = Array[String]([])
+tags_to_remove_on_cancellation = Array[String]([])
+tags_to_remove_on_cooldown_start = Array[String]([])
+tags_to_remove_on_cooldown_end = Array[String]([])
+tags_to_remove_on_end = Array[String]([])

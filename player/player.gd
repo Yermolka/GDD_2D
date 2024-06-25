@@ -72,6 +72,11 @@ func _process_input() -> void:
 	if Input.is_action_just_pressed("ability3"):
 		attribute_map.get_attribute_by_name("health").current_value -= 50
 
+	if Input.is_action_just_pressed("ability4"):
+		# ability_container.abilities.append(load("res://abilities/passive/slippery_toes.tres"))
+		print(ability_container.grant(load("res://abilities/passive/slippery_toes.tres")))
+		ability_container.activate_many()
+
 func _process_movement() -> void:
 	var horizontal: float = Input.get_axis("move_left", "move_right")
 	var vertical: float = Input.get_axis("move_up", "move_down")

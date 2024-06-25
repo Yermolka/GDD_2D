@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8dof3h5a64ek"]
+
+[ext_resource type="Script" path="res://hud/in_game_bar/in_game_bar.gd" id="1_dc2xq"]
+[ext_resource type="PackedScene" path="res://hud/in_game_bar/selected_skill_button.tscn" id="2_jg8h4"]
+[ext_resource type="Texture2D" uid="uid://yn0v8x2ycqor" path="res://hud/in_game_bar/noskillset_icon.png" id="3_2ttp1"]
+
+[node name="InGameBar" type="HBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 98.0
+grow_horizontal = 2
+script = ExtResource("1_dc2xq")
+
+[node name="HealthMana" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(360, 2.08165e-12)
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="Health" type="ProgressBar" parent="HealthMana"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+show_percentage = false
+
+[node name="HSeparator" type="HSeparator" parent="HealthMana"]
+custom_minimum_size = Vector2(2.08165e-12, 10)
+layout_mode = 2
+
+[node name="Mana" type="ProgressBar" parent="HealthMana"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+show_percentage = false
+
+[node name="SelectedSkills" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Skill0" parent="SelectedSkills" instance=ExtResource("2_jg8h4")]
+layout_mode = 2
+texture_normal = ExtResource("3_2ttp1")
+
+[node name="Skill1" parent="SelectedSkills" instance=ExtResource("2_jg8h4")]
+layout_mode = 2
+texture_normal = ExtResource("3_2ttp1")
+skill_number = 2
+
+[node name="Skill2" parent="SelectedSkills" instance=ExtResource("2_jg8h4")]
+layout_mode = 2
+texture_normal = ExtResource("3_2ttp1")
+skill_number = 3
+
+[node name="Skill3" parent="SelectedSkills" instance=ExtResource("2_jg8h4")]
+layout_mode = 2
+texture_normal = ExtResource("3_2ttp1")
+skill_number = 4

@@ -2,9 +2,6 @@
 class_name ActiveSkill extends GDDSkill
 
 @export_category("Active Skill")
-@export var projectile_skill: PackedScene = null
-@export var projectile_velocity: float = 1000.0
-
 @export var resource_type: String = "mana"
 @export var resource_cost: float = 0.0
 
@@ -57,5 +54,3 @@ func can_activate(event: ActivationEvent) -> bool:
 		return true
 
 	return false
-	## caster is enemy
-

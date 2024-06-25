@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://dbx4mf5ywvhdr"]
+[gd_scene load_steps=13 format=3 uid="uid://dbx4mf5ywvhdr"]
 
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="1_kjur6"]
+[ext_resource type="Script" path="res://enemies/enemy.gd" id="1_s888k"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute.gd" id="2_k2awv"]
 [ext_resource type="Resource" uid="uid://ckjdlmyik1555" path="res://stats/enemy_base_attributes.tres" id="3_b0b3x"]
 [ext_resource type="Texture2D" uid="uid://dla76qr5vqp1r" path="res://addons/dialogue_nodes/icons/Character.svg" id="4_lj11j"]
@@ -53,6 +54,7 @@ rotation = -0.523599
 skew = -0.261799
 collision_layer = 2
 collision_mask = 7
+script = ExtResource("1_s888k")
 
 [node name="GameplayAttributeMap" type="Node" parent="."]
 script = ExtResource("1_kjur6")
