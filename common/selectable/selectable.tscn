@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3knc8japncl7"]
+
+[ext_resource type="Script" path="res://common/selectable/selectable.gd" id="1_rk335"]
+
+[node name="Selectable" type="Area2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_rk335")

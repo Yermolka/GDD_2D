@@ -4,6 +4,8 @@ class_name Player extends CharacterBody2D
 @onready var attribute_map: GameplayAttributeMap = $GameplayAttributeMap
 @onready var inventory: Inventory = $Inventory
 @onready var equipment: Equipment = $Equipment
+@onready var ability_container: AbilityContainer = $AbilityContainer
+
 
 @onready var test_helm: EquipmentBase = preload("res://items/test_helm.tres").duplicate()
 @onready var healing_potion: ItemBase = preload("res://items/healing_potion.tres")
@@ -16,6 +18,8 @@ var movement_speed: float:
 		attribute_map.get_attribute_by_name("movement_speed").current_value = value
 
 func _ready() -> void:
+	add_to_group("player")
+	
 	attribute_map.attribute_changed.connect(
 		func (attr: AttributeSpec) -> void:
 			print("Player HP: ", attr.current_buffed_value, "/", attr.maximum_value)

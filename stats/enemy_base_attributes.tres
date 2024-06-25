@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="AttributeTable" load_steps=2 format=3 uid="uid://ckjdlmyik1555"]
+
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_table.gd" id="1_n2yje"]
+
+[resource]
+script = ExtResource("1_n2yje")
+attributes = Array[String](["health", "mana", "movement_speed", "base_damage", "crit_chance", "crit_multiplier"])

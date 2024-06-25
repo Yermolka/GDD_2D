@@ -74,7 +74,6 @@ var has_cooldown: bool:
 	get:
 		return cooldown_duration > 0.0
 
-
 ## Activates the effect. This will forcefully activate it even if some criteria do not match.
 ## You should use [method Ability.try_activate] instead for a proper (and safer) flow.
 func activate(activation_event: ActivationEvent) -> void:
