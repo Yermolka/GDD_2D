@@ -22,7 +22,7 @@ func _ready() -> void:
 	
 	attribute_map.attribute_changed.connect(
 		func (attr: AttributeSpec) -> void:
-			print("Player HP: ", attr.current_buffed_value, "/", attr.maximum_value)
+			print(attr.attribute_name, ": ", attr.current_buffed_value, "/", attr.maximum_value)
 	)
 	attribute_map.attribute_effect_applied.connect(
 		func (_attribute_effect: AttributeEffect, attribute: AttributeSpec) -> void:
@@ -70,7 +70,9 @@ func _process_input() -> void:
 		inventory.add_item(healing_potion)
 
 	if Input.is_action_just_pressed("ability3"):
-		attribute_map.get_attribute_by_name("health").current_value -= 50
+		var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x is TargetedSkill)
+		abc.set_target(self)
+		ability_container.activate_many()
 
 	if Input.is_action_just_pressed("ability4"):
 		# ability_container.abilities.append(load("res://abilities/passive/slippery_toes.tres"))
@@ -84,9 +86,11 @@ func _process_movement() -> void:
 
 	if direction:
 		velocity = direction * movement_speed
+		ability_container.add_tag("interrupted")
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.y = move_toward(velocity.y, 0, SPEED)
+		ability_container.remove_tag("interrupted")
 
 	move_and_slide()
 

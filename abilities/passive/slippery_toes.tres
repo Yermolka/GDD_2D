@@ -16,7 +16,7 @@ maximum_value = 200.0
 [resource]
 script = ExtResource("1_krlxc")
 effects = Array[ExtResource("1_qm7m7")]([SubResource("Resource_7k717")])
-ui_name = ""
+ui_name = "slippery toes"
 cooldown_duration = 0.0
 cooldown_continuos = false
 grant_automatic = true

@@ -1,6 +1,7 @@
 class_name Selectable extends Area2D
 
 var selected: bool = false
+@onready var sprite: Sprite2D = $Sprite2D
 
 func _ready() -> void:
 	if owner == null:
@@ -11,15 +12,16 @@ func _ready() -> void:
 func select() -> void:
 	for s: Selectable in get_tree().get_nodes_in_group("selectable"):
 		s.deselect()
-	
+
 	add_to_group("selected")
 	selected = true
-	print("Selected ", owner.name)
+	sprite.visible = true
 
 func deselect() -> void:
 	if selected:
 		remove_from_group("selected")
 		selected = false
+		sprite.visible = false
 
 func _handle_input(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if selected:
