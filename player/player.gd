@@ -11,7 +11,7 @@ class_name Player extends CharacterBody2D
 const SPEED: float = 300.0
 var movement_speed: float:
 	get:
-		return SPEED * attribute_map.get_attribute_by_name("movement_speed").current_value / 100.0
+		return SPEED * attribute_map.get_attribute_by_name("movement_speed").current_buffed_value / 100.0
 	set(value):
 		attribute_map.get_attribute_by_name("movement_speed").current_value = value
 

@@ -10,9 +10,9 @@ life_time = 0
 apply_every_second = 1.0
 max_applications = 1
 applies_as = 1
-attribute_name = "base_damage"
-minimum_value = 50.0
-maximum_value = 50.0
+attribute_name = "movement_speed"
+minimum_value = 400.0
+maximum_value = 400.0
 
 [resource]
 script = ExtResource("2_va35m")
