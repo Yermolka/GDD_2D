@@ -48,6 +48,9 @@ func _drop(items: Array[Item]) -> void:
 ## [br]It accepts an optional argument [code]drop_modifier[/code] which increases (or decreases if negative) drop chances for each [DropGroup] pool.
 ## [br]The greater the modifier, the higher the chances to drop an [Item] from the [member DropTable.pools].
 func drop_items(drop_modifier: float = 0.0) -> void:
+	if drop_table == null:
+		return
+		
 	var items = drop_table.drop(drop_modifier)
 
 	if items.size() > 0:

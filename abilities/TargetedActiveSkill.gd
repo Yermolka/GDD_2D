@@ -8,6 +8,7 @@ func is_target_hostile(event: ActivationEvent) -> bool:
 
 func activate(event: ActivationEvent) -> void:
 	var player: Player = event.character as Player
+	var enemy: Enemy = target as Enemy
 	await super.activate(event)
 	if cast_time > 0.0 and event.ability_container.has_tag("interrupted"):
 		return
@@ -19,20 +20,16 @@ func activate(event: ActivationEvent) -> void:
 		scene.position = player.position
 	## Instant
 	else:
-		print("Target cast")
+		var main_effect: GameplayEffect = GameplayEffect.new()
+		main_effect.attributes_affected = instant_effects
+		enemy.add_child(main_effect)
 
 func set_target(_target: CharacterBody2D) -> void:
 	target = _target
 
 func can_activate(event: ActivationEvent) -> bool:
-	var _target: Node2D = event.character.get_tree().get_first_node_in_group("selected")
-	if target == null:
-		if _target == null:
-			target = event.character
-		else:
-			target = _target.get_parent()
-
 	var dist: float = event.character.global_position.distance_to(target.global_position)
+	print(dist)
 	if dist < min_range or dist > max_range:
 		return false
 

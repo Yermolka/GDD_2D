@@ -19,7 +19,7 @@ var movement_speed: float:
 
 func _ready() -> void:
 	add_to_group("player")
-	
+
 	attribute_map.attribute_changed.connect(
 		func (attr: AttributeSpec) -> void:
 			print(attr.attribute_name, ": ", attr.current_buffed_value, "/", attr.maximum_value)
@@ -71,8 +71,8 @@ func _process_input() -> void:
 
 	if Input.is_action_just_pressed("ability3"):
 		var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x is TargetedSkill)
-		abc.set_target(self)
-		ability_container.activate_many()
+		abc.set_target(get_tree().get_first_node_in_group("selected").get_parent())
+		ability_container.activate_one(abc)
 
 	if Input.is_action_just_pressed("ability4"):
 		# ability_container.abilities.append(load("res://abilities/passive/slippery_toes.tres"))

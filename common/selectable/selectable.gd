@@ -16,6 +16,7 @@ func select() -> void:
 	add_to_group("selected")
 	selected = true
 	sprite.visible = true
+	EventBus.onTargetSelected.emit(get_parent())
 
 func deselect() -> void:
 	if selected:

@@ -37,11 +37,7 @@ func activate(event: ActivationEvent) -> void:
 
 	cost_effect.attributes_affected.append(attribute_effect)
 
-	var main_effect: GameplayEffect = GameplayEffect.new()
-	main_effect.attributes_affected = instant_effects
-
 	event.character.add_child(cost_effect)
-	event.character.add_child(main_effect)
 
 	print("CAST")
 
