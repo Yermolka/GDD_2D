@@ -33,6 +33,8 @@ func _ready() -> void:
 		func(item: Item) -> void:
 			if item is EquipmentBase:
 				test_helm = item
+
+			Questify.update_quests()
 	)
 
 	equipment.equipped.connect(
@@ -51,7 +53,24 @@ func _ready() -> void:
 			attribute_map.apply_effect(_item.antieffect)
 	)
 
+	Questify.condition_query_requested.connect(_quest_update)
+
 	inventory.add_item(test_helm)
+
+func _quest_update(type: String, key: String, value: Variant, requester: QuestCondition) -> void:
+	if type != "item":
+		return
+
+	var found: Array[Item] = inventory.filter_by(func (item: Item) -> bool: return item.name == key)
+	var count: int = 0
+	for f: Item in found:
+		if f.can_stack:
+			count += f.quantity_current
+		else:
+			count += 1
+
+	if value is int and count == value:
+		requester.completed = true
 
 func _physics_process(_delta: float) -> void:
 	_process_movement()
