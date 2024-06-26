@@ -18,11 +18,10 @@ func activate(event: ActivationEvent) -> void:
 		var scene: Node2D = projectile_scene.instantiate()
 		player.get_tree().root.add_child(scene)
 		scene.position = player.position
-	## Instant
-	else:
-		var main_effect: GameplayEffect = GameplayEffect.new()
-		main_effect.attributes_affected = instant_effects
-		enemy.add_child(main_effect)
+	
+	var main_effect: GameplayEffect = GameplayEffect.new()
+	main_effect.attributes_affected = instant_effects
+	enemy.add_child(main_effect)
 
 func set_target(_target: CharacterBody2D) -> void:
 	target = _target

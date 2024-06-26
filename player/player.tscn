@@ -72,7 +72,7 @@ name = "scroll"
 accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([])
 
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 6
+collision_mask = 22
 script = ExtResource("1_31dcg")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]

@@ -1,5 +1,5 @@
 @tool
-extends Area2D
+class_name PickableItem2D extends Area2D
 
 
 ## It represents an [Item] which can be picked in a 2D world.

@@ -13,14 +13,14 @@ func select() -> void:
 	for s: Selectable in get_tree().get_nodes_in_group("selectable"):
 		s.deselect()
 
-	add_to_group("selected")
+	get_parent().add_to_group("selected")
 	selected = true
 	sprite.visible = true
 	EventBus.onTargetSelected.emit(get_parent())
 
 func deselect() -> void:
 	if selected:
-		remove_from_group("selected")
+		get_parent().remove_from_group("selected")
 		selected = false
 		sprite.visible = false
 

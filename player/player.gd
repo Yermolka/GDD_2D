@@ -31,6 +31,7 @@ func _ready() -> void:
 
 	inventory.item_added.connect(
 		func(item: Item) -> void:
+			print(item.name)
 			if item is EquipmentBase:
 				test_helm = item
 
@@ -54,11 +55,23 @@ func _ready() -> void:
 	)
 
 	Questify.condition_query_requested.connect(_quest_update)
+	Questify.quest_started.connect(
+		func(quest: QuestResource) -> void:
+			print("Started ", quest.name)
+	)
+	Questify.quest_objective_completed.connect(
+		func(quest: QuestResource, objective: QuestObjective) -> void:
+			print(quest.name, ": objective complete --- ", objective.description)
+	)
+	Questify.quest_completed.connect(
+		func(quest: QuestResource) -> void:
+			print("Completed ", quest.name)
+	)
 
 	inventory.add_item(test_helm)
 
 func _quest_update(type: String, key: String, value: Variant, requester: QuestCondition) -> void:
-	if type != "item":
+	if type != "has_item":
 		return
 
 	var found: Array[Item] = inventory.filter_by(func (item: Item) -> bool: return item.name == key)
@@ -69,7 +82,7 @@ func _quest_update(type: String, key: String, value: Variant, requester: QuestCo
 		else:
 			count += 1
 
-	if value is int and count == value:
+	if count >= value:
 		requester.completed = true
 
 func _physics_process(_delta: float) -> void:
@@ -90,7 +103,7 @@ func _process_input() -> void:
 
 	if Input.is_action_just_pressed("ability3"):
 		var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x is TargetedSkill)
-		abc.set_target(get_tree().get_first_node_in_group("selected").get_parent())
+		abc.set_target(get_tree().get_first_node_in_group("selected"))
 		ability_container.activate_one(abc)
 
 	if Input.is_action_just_pressed("ability4"):

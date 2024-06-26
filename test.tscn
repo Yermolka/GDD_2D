@@ -1,10 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://4s3ws5qp4xgi"]
+[gd_scene load_steps=14 format=3 uid="uid://4s3ws5qp4xgi"]
 
 [ext_resource type="Texture2D" uid="uid://bxibh5b2ytqtq" path="res://icon.svg" id="1_gitl3"]
 [ext_resource type="PackedScene" uid="uid://cultyql87ixvl" path="res://player/player.tscn" id="2_i86u5"]
 [ext_resource type="PackedScene" uid="uid://b54ngq6in8rn8" path="res://hud/hud.tscn" id="3_dwtxw"]
 [ext_resource type="PackedScene" uid="uid://dbx4mf5ywvhdr" path="res://enemies/enemy.tscn" id="4_tmm5i"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/drop_2d.gd" id="5_58p84"]
+[ext_resource type="PackedScene" uid="uid://h6j7611eadfq" path="res://npc/npc.tscn" id="6_tyudm"]
+[ext_resource type="Resource" uid="uid://54wayaddf1qw" path="res://npc/test_dialogue.tres" id="7_skvad"]
+[ext_resource type="PackedScene" uid="uid://bk151w22hm0gc" path="res://npc/quest_npc.tscn" id="8_1t471"]
+[ext_resource type="Resource" uid="uid://ck1sptbnvqg15" path="res://npc/test_quest_dialogue.tres" id="9_vnirw"]
+[ext_resource type="Resource" uid="uid://b66a5yu6skapg" path="res://quests/test_quest.tres" id="10_l20ja"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_71ep8"]
 texture = ExtResource("1_gitl3")
@@ -558,3 +563,12 @@ position = Vector2(246, 725)
 
 [node name="Drop2D" type="Node2D" parent="."]
 script = ExtResource("5_58p84")
+
+[node name="NPC" parent="." instance=ExtResource("6_tyudm")]
+position = Vector2(685, 155)
+dialogue_data = ExtResource("7_skvad")
+
+[node name="QuestNPC" parent="." instance=ExtResource("8_1t471")]
+position = Vector2(634, 439)
+dialogue_data = ExtResource("9_vnirw")
+quest = ExtResource("10_l20ja")
