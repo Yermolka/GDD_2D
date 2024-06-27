@@ -12,10 +12,16 @@ class_name ActiveSkill extends GDDSkill
 @export var max_range: float = 0.0
 
 @export var cast_time: float = 0.0
+
+@export_group("Effects")
 @export var instant_effects: Array[AttributeEffect] = []
 
 @export var instant_timed_effects: Array[AttributeEffect] = []
 @export var timed_effects_duration: float = 1.0
+
+@export var generate_resource_type: String = "mana"
+@export var generate_resource_min_amount: float = 0.0
+@export var generate_resource_max_amount: float = 0.0
 
 func activate(event: ActivationEvent) -> void:
 	super.activate(event)
@@ -61,13 +67,14 @@ func can_activate(event: ActivationEvent) -> bool:
 		return false
 
 	if caster_player != null:
-		var resource: AttributeSpec = caster_player.attribute_map.get_attribute_by_name(resource_type)
-		if resource == null:
-			return false
+		if not resource_type.is_empty():
+			var resource: AttributeSpec = caster_player.attribute_map.get_attribute_by_name(resource_type)
+			if resource == null:
+				return false
 
-		var deducted: float = resource.current_buffed_value - resource_cost
-		if deducted < 0.0:
-			return false
+			var deducted: float = resource.current_buffed_value - resource_cost
+			if deducted < 0.0:
+				return false
 
 		return super.can_activate(event)
 

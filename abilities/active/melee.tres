@@ -1,40 +1,33 @@
-[gd_resource type="Resource" script_class="TargetedSkill" load_steps=5 format=3 uid="uid://cq2lmto3pfn1s"]
+[gd_resource type="Resource" script_class="TargetedSkill" load_steps=4 format=3 uid="uid://cq2lmto3pfn1s"]
 
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_aqwey"]
 [ext_resource type="Script" path="res://abilities/TargetedActiveSkill.gd" id="1_vr5qx"]
 
-[sub_resource type="Resource" id="Resource_h7hgd"]
+[sub_resource type="Resource" id="Resource_s66ej"]
 script = ExtResource("1_aqwey")
 life_time = 0
 apply_every_second = 1.0
 max_applications = 1
 applies_as = 0
 attribute_name = "health"
-minimum_value = -50.0
-maximum_value = -50.0
-
-[sub_resource type="Resource" id="Resource_eiu26"]
-script = ExtResource("1_aqwey")
-life_time = 0
-apply_every_second = 1.0
-max_applications = 1
-applies_as = 1
-attribute_name = "movement_speed"
-minimum_value = -50.0
-maximum_value = -50.0
+minimum_value = -1.0
+maximum_value = -5.0
 
 [resource]
 script = ExtResource("1_vr5qx")
 projectile_speed = 1000.0
 resource_type = "mana"
-resource_cost = 50.0
+resource_cost = 0.0
 min_range = 0.0
 max_range = 500.0
 cast_time = 0.0
-instant_effects = Array[ExtResource("1_aqwey")]([SubResource("Resource_h7hgd")])
-instant_timed_effects = Array[ExtResource("1_aqwey")]([SubResource("Resource_eiu26")])
+instant_effects = Array[ExtResource("1_aqwey")]([SubResource("Resource_s66ej")])
+instant_timed_effects = Array[ExtResource("1_aqwey")]([])
 timed_effects_duration = 1.0
-ui_name = "melee"
+generate_resource_type = "rage"
+generate_resource_min_amount = 10.0
+generate_resource_max_amount = 25.0
+ui_name = "Melee"
 cooldown_duration = 0.0
 cooldown_continuos = false
 grant_automatic = true

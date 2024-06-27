@@ -84,6 +84,14 @@ func _ready() -> void:
 	_setup_quests()
 
 	inventory.add_item(test_helm)
+	var attr: AttributeSpec = AttributeSpec.new()
+	attr.attribute_name = "rage"
+	attr.minimum_value = 0
+	attr.maximum_value = 100
+	attr.current_value = 0
+
+	attribute_map.add_attribute(attr)
+	print(ability_container.grant_all_abilities())
 
 func _quest_update(type: String, key: String, value: Variant, requester: QuestCondition) -> void:
 	if type != "has_item":
@@ -117,26 +125,22 @@ func _process_input() -> void:
 		inventory.add_item(healing_potion)
 
 	if Input.is_action_just_pressed("ability3"):
-		var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x is TargetedSkill)
+		var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Melee")
 		if abc:
 			abc.set_target(get_tree().get_first_node_in_group("selected"))
 			ability_container.activate_one(abc)
-		else:
-			print("got no rage!")
 
 	if Input.is_action_just_pressed("ability4"):
 		# ability_container.abilities.append(load("res://abilities/passive/slippery_toes.tres"))
 		# print(ability_container.grant(load("res://abilities/passive/slippery_toes.tres")))
 		# ability_container.activate_many()
-		if not ability_container.has_tag("resources.rage"):
-			var attr: AttributeSpec = AttributeSpec.new()
-			attr.attribute_name = "rage"
-			attr.minimum_value = 0
-			attr.maximum_value = 100
-			attr.current_value = 0
-
-			attribute_map.add_attribute(attr)
-			print(ability_container.grant_all_abilities())
+		var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Heroic Strike")
+		if abc:
+			abc.set_target(get_tree().get_first_node_in_group("selected"))
+			ability_container.activate_one(abc)
+		else:
+			print("got no rage!")
+		
 
 func _process_movement() -> void:
 	var horizontal: float = Input.get_axis("move_left", "move_right")

@@ -11,6 +11,7 @@ func _ready() -> void:
 				drop.drop_items()
 				print("dead")
 				call_deferred("queue_free")
+			print(attr.attribute_name, ": ", attr.current_buffed_value)
 	)
 	var attr: AttributeSpec = AttributeSpec.new()
 	attr.attribute_name = "rage"
