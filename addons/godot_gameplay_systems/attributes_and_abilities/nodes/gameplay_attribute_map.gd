@@ -17,6 +17,9 @@ signal attribute_effect_removed(attribute_effect: AttributeEffect, attribute: At
 ## [br]
 ## The signal is called once, even if a time-based AttributeEffect is still going on.
 signal effect_applied(effect: GameplayEffect)
+signal timed_effect_applied(effect: TimedGameplayEffect)
+signal attribute_added(attribute: AttributeSpec)
+signal attribute_removed(attribute: AttributeSpec)
 
 
 @export_category("Owner")
@@ -150,16 +153,24 @@ func add_attribute(attribute: AttributeSpec) -> void:
 	)
 
 	_attributes_dict[attribute.attribute_name] = attribute
+	attribute_added.emit(attribute)
+
+func remove_attribute(attribute_name: String) -> void:
+	var attr = get_attribute_by_name(attribute_name)
+
+	if attr:	
+		_attributes_dict.erase(attribute_name)
+		attribute_removed.emit(attr)
 
 
 func apply_timed_effect(effect: TimedGameplayEffect) -> void:
 	var _effect = effect.duplicate()
 	effect.queue_free()
 
-	if _effect == null:
+	if effect == null:
 		return
 
-	for attribute_affected in _effect.attributes_affected:
+	for attribute_affected in effect.attributes_affected:
 		if not attribute_affected.attribute_name in _attributes_dict:
 			continue
 
@@ -171,9 +182,11 @@ func apply_timed_effect(effect: TimedGameplayEffect) -> void:
 			attribute_affected.applies_as = 1
 
 		var spec = _attributes_dict[attribute_affected.attribute_name]
-		var old_value = spec.current_value
+		var old_value = spec.buffing_value
 
 		spec.apply_attribute_effect(attribute_affected)
+
+		var diff = old_value - spec.buffing_value
 
 		attribute_effect_applied.emit(attribute_affected, spec)
 
@@ -185,15 +198,16 @@ func apply_timed_effect(effect: TimedGameplayEffect) -> void:
 
 		timer.timeout.connect(
 			func():
-				spec.current_value = old_value
+				spec.buffing_value += diff
 				attribute_effect_removed.emit(attribute_affected, spec)
 				timer.stop()
+
 				remove_child(timer)
 		)
 
 		add_child(timer)
 
-	effect_applied.emit(_effect)
+	timed_effect_applied.emit(_effect)
 
 ## Applies an effect on current GameplayAttributeMap
 func apply_effect(effect: GameplayEffect) -> void:

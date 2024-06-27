@@ -17,9 +17,7 @@ var movement_speed: float:
 	set(value):
 		attribute_map.get_attribute_by_name("movement_speed").current_value = value
 
-func _ready() -> void:
-	add_to_group("player")
-
+func _setup_attr_map() -> void:
 	attribute_map.attribute_changed.connect(
 		func (attr: AttributeSpec) -> void:
 			print(attr.attribute_name, ": ", attr.current_buffed_value, "/", attr.maximum_value)
@@ -28,7 +26,16 @@ func _ready() -> void:
 		func (_attribute_effect: AttributeEffect, attribute: AttributeSpec) -> void:
 			print(attribute.current_buffed_value)
 	)
+	attribute_map.attribute_added.connect(
+		func (attr: AttributeSpec) -> void:
+			ability_container.add_tag("resources." + attr.attribute_name)
+	)
+	attribute_map.attribute_removed.connect(
+		func (attr: AttributeSpec) -> void:
+			ability_container.remove_tag("resources." + attr.attribute_name)
+	)
 
+func _setup_inventory() -> void:
 	inventory.item_added.connect(
 		func(item: Item) -> void:
 			print(item.name)
@@ -54,6 +61,7 @@ func _ready() -> void:
 			attribute_map.apply_effect(_item.antieffect)
 	)
 
+func _setup_quests() -> void:
 	Questify.condition_query_requested.connect(_quest_update)
 	Questify.quest_started.connect(
 		func(quest: QuestResource) -> void:
@@ -67,6 +75,13 @@ func _ready() -> void:
 		func(quest: QuestResource) -> void:
 			print("Completed ", quest.name)
 	)
+
+func _ready() -> void:
+	add_to_group("player")
+
+	_setup_attr_map()
+	_setup_inventory()
+	_setup_quests()
 
 	inventory.add_item(test_helm)
 
@@ -103,13 +118,25 @@ func _process_input() -> void:
 
 	if Input.is_action_just_pressed("ability3"):
 		var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x is TargetedSkill)
-		abc.set_target(get_tree().get_first_node_in_group("selected"))
-		ability_container.activate_one(abc)
+		if abc:
+			abc.set_target(get_tree().get_first_node_in_group("selected"))
+			ability_container.activate_one(abc)
+		else:
+			print("got no rage!")
 
 	if Input.is_action_just_pressed("ability4"):
 		# ability_container.abilities.append(load("res://abilities/passive/slippery_toes.tres"))
-		print(ability_container.grant(load("res://abilities/passive/slippery_toes.tres")))
-		ability_container.activate_many()
+		# print(ability_container.grant(load("res://abilities/passive/slippery_toes.tres")))
+		# ability_container.activate_many()
+		if not ability_container.has_tag("resources.rage"):
+			var attr: AttributeSpec = AttributeSpec.new()
+			attr.attribute_name = "rage"
+			attr.minimum_value = 0
+			attr.maximum_value = 100
+			attr.current_value = 0
+
+			attribute_map.add_attribute(attr)
+			print(ability_container.grant_all_abilities())
 
 func _process_movement() -> void:
 	var horizontal: float = Input.get_axis("move_left", "move_right")

@@ -14,6 +14,9 @@ class_name ActiveSkill extends GDDSkill
 @export var cast_time: float = 0.0
 @export var instant_effects: Array[AttributeEffect] = []
 
+@export var instant_timed_effects: Array[AttributeEffect] = []
+@export var timed_effects_duration: float = 1.0
+
 func activate(event: ActivationEvent) -> void:
 	super.activate(event)
 

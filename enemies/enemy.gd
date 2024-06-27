@@ -12,3 +12,15 @@ func _ready() -> void:
 				print("dead")
 				call_deferred("queue_free")
 	)
+	var attr: AttributeSpec = AttributeSpec.new()
+	attr.attribute_name = "rage"
+	attr.minimum_value = 0
+	attr.maximum_value = 100
+	attr.current_value = 0
+
+	attribute_map.add_attribute(attr)
+
+	print(attribute_map.get_attributes_dict())
+
+	attribute_map.remove_attribute("rage")
+	print(attribute_map.get_attributes_dict())

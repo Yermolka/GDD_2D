@@ -23,6 +23,11 @@ func activate(event: ActivationEvent) -> void:
 	main_effect.attributes_affected = instant_effects
 	enemy.add_child(main_effect)
 
+	var main_timed_effect: TimedGameplayEffect = TimedGameplayEffect.new()
+	main_timed_effect.attributes_affected = instant_timed_effects
+	main_timed_effect.effect_time = timed_effects_duration
+	enemy.add_child(main_timed_effect)
+
 func set_target(_target: CharacterBody2D) -> void:
 	target = _target
 
