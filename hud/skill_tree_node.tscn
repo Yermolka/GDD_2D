@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://183k1wbjsqwy"]
+
+[ext_resource type="Script" path="res://hud/skill_tree_node.gd" id="1_syu3u"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_p5spi"]
+
+[sub_resource type="Gradient" id="Gradient_lel7n"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yvht6"]
+gradient = SubResource("Gradient_lel7n")
+
+[node name="SkillTreeNode" type="TextureButton"]
+custom_minimum_size = Vector2(50, 50)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = SubResource("PlaceholderTexture2D_p5spi")
+texture_disabled = SubResource("GradientTexture2D_yvht6")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_syu3u")

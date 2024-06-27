@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="SkillTreeData" load_steps=7 format=3 uid="uid://o6aw4bsftfj0"]
+
+[ext_resource type="Script" path="res://hud/skill_tree_data.gd" id="1_qvlag"]
+[ext_resource type="Script" path="res://hud/skill_tree_tier_data.gd" id="2_5ngas"]
+[ext_resource type="Resource" uid="uid://cq2lmto3pfn1s" path="res://abilities/active/melee.tres" id="3_fhnjh"]
+[ext_resource type="Resource" uid="uid://bddbuu7c3joaa" path="res://abilities/active/heroic_strike.tres" id="4_dwnth"]
+
+[sub_resource type="Resource" id="Resource_1ldsv"]
+script = ExtResource("2_5ngas")
+skills = Array[Resource("res://abilities/GDDSkill.gd")]([ExtResource("3_fhnjh")])
+
+[sub_resource type="Resource" id="Resource_3jhp1"]
+script = ExtResource("2_5ngas")
+skills = Array[Resource("res://abilities/GDDSkill.gd")]([ExtResource("4_dwnth"), ExtResource("4_dwnth")])
+
+[resource]
+script = ExtResource("1_qvlag")
+tiers = Array[ExtResource("2_5ngas")]([SubResource("Resource_1ldsv"), SubResource("Resource_3jhp1")])

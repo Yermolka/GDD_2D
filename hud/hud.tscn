@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b54ngq6in8rn8"]
+[gd_scene load_steps=13 format=3 uid="uid://b54ngq6in8rn8"]
 
 [ext_resource type="Script" path="res://hud/hud.gd" id="1_d5fuj"]
 [ext_resource type="Script" path="res://hud/inventory_hud.gd" id="2_idcnv"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://addons/dialogue_nodes/objects/bbcodeWait.gd" id="6_nwfki"]
 [ext_resource type="Script" path="res://addons/dialogue_nodes/objects/bbcodeGhost.gd" id="7_ppcym"]
 [ext_resource type="Script" path="res://addons/dialogue_nodes/objects/bbcodeMatrix.gd" id="8_o4wgr"]
+[ext_resource type="PackedScene" uid="uid://dkuujqavu6c60" path="res://hud/skill_tree.tscn" id="9_x0b8p"]
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_xikk0"]
 script = ExtResource("6_nwfki")
@@ -101,10 +102,18 @@ grow_vertical = 0
 
 [node name="DialogueBox" type="Panel" parent="."]
 visible = false
-layout_mode = 0
-offset_left = 361.0
-offset_top = 400.0
-offset_right = 814.0
-offset_bottom = 532.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 347.0
+offset_top = 397.0
+offset_right = -347.0
+offset_bottom = -125.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("5_x1fam")
 custom_effects = Array[RichTextEffect]([SubResource("RichTextEffect_xikk0"), SubResource("RichTextEffect_6wpih"), SubResource("RichTextEffect_rnr86")])
+
+[node name="SkillTree" parent="." instance=ExtResource("9_x0b8p")]
+layout_mode = 1

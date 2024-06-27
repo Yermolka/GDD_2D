@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="TargetedSkill" load_steps=5 format=3 uid="uid://bddbuu7c3joaa"]
+[gd_resource type="Resource" script_class="TargetedSkill" load_steps=6 format=3 uid="uid://bddbuu7c3joaa"]
 
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_b4qk2"]
 [ext_resource type="Script" path="res://abilities/TargetedActiveSkill.gd" id="1_cglly"]
+[ext_resource type="Texture2D" uid="uid://c2d8ar1vogsgq" path="res://addons/godot_gameplay_systems/attributes_and_abilities/assets/Ability.svg" id="3_6wphq"]
 
 [sub_resource type="Resource" id="Resource_qvbyq"]
 script = ExtResource("1_b4qk2")
@@ -43,12 +44,13 @@ instant_self_effects = Array[ExtResource("1_b4qk2")]([])
 instant_self_timed_effects = Array[ExtResource("1_b4qk2")]([])
 instant_self_timed_effects_duration = 1.0
 self_chance_effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])
+ui_icon = ExtResource("3_6wphq")
 ui_name = "Heroic Strike"
 cooldown_duration = 3.0
 cooldown_continuos = false
 grant_automatic = true
-grant_tags = Array[String]([])
-grant_tags_required = Array[String](["resources.rage"])
+grant_tags = Array[String](["abilities.heroic_strike"])
+grant_tags_required = Array[String](["resources.rage", "abilities.melee"])
 tags_activation = Array[String]([])
 tags_activation_required = Array[String]([])
 tags_block = Array[String]([])

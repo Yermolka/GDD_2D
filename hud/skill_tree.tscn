@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://dkuujqavu6c60"]
+
+[ext_resource type="Script" path="res://hud/skill_tree.gd" id="1_3y0ys"]
+[ext_resource type="Script" path="res://hud/skill_tree_data.gd" id="2_vr11t"]
+[ext_resource type="Script" path="res://hud/skill_tree_tier_data.gd" id="3_2e7a5"]
+[ext_resource type="Resource" uid="uid://cq2lmto3pfn1s" path="res://abilities/active/melee.tres" id="4_of8aj"]
+[ext_resource type="Resource" uid="uid://bddbuu7c3joaa" path="res://abilities/active/heroic_strike.tres" id="5_imjjk"]
+
+[sub_resource type="Resource" id="Resource_1ldsv"]
+script = ExtResource("3_2e7a5")
+skills = Array[Resource("res://abilities/GDDSkill.gd")]([ExtResource("4_of8aj")])
+
+[sub_resource type="Resource" id="Resource_3jhp1"]
+script = ExtResource("3_2e7a5")
+skills = Array[Resource("res://abilities/GDDSkill.gd")]([ExtResource("5_imjjk"), ExtResource("5_imjjk")])
+
+[sub_resource type="Resource" id="Resource_8lhx8"]
+script = ExtResource("2_vr11t")
+tiers = Array[ExtResource("3_2e7a5")]([SubResource("Resource_1ldsv"), SubResource("Resource_3jhp1")])
+
+[node name="SkillTree" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3y0ys")
+data = SubResource("Resource_8lhx8")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 471.0
+offset_top = 64.0
+offset_right = -266.0
+offset_bottom = -78.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+visible = false
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
