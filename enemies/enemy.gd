@@ -1,7 +1,8 @@
-class_name Enemy extends CharacterBody2D
+class_name Enemy extends Entity
 
 @onready var drop: Drop = $Drop
 @onready var attribute_map: GameplayAttributeMap = $GameplayAttributeMap
+@onready var ability_container: AbilityContainer = $AbilityContainer
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -20,8 +21,11 @@ func _ready() -> void:
 	attr.current_value = 0
 
 	attribute_map.add_attribute(attr)
+	ability_container.add_tag("resources.rage")
+	print("Enemy: ", ability_container.grant_all_abilities())
 
-	print(attribute_map.get_attributes_dict())
-
-	attribute_map.remove_attribute("rage")
-	print(attribute_map.get_attributes_dict())
+func _physics_process(delta: float) -> void:
+	var player: Player = get_tree().get_first_node_in_group("player")
+	var abc: TargetedSkill = ability_container.find_by(func(x: Ability) -> bool: return x is TargetedSkill)
+	abc.set_target(player)
+	ability_container.activate_one(abc)

@@ -1,4 +1,4 @@
-class_name Player extends CharacterBody2D
+class_name Player extends Entity
 
 
 @onready var attribute_map: GameplayAttributeMap = $GameplayAttributeMap

@@ -19,6 +19,8 @@ enum LifeCycle {
 	CooldownEnded = 5,
 }
 
+const GCD_TIME: float = 1.0
+var timer: Timer = Timer.new()
 
 ## Emitted when an ability is activated manually or automatically
 signal ability_activated(ability: Ability, activation_event: ActivationEvent)
@@ -203,6 +205,13 @@ func _ready() -> void:
 	gameplay_attribute_map = get_node(gameplay_attribute_map_path)
 	grant_all_abilities()
 
+	timer.one_shot = true
+	timer.wait_time = GCD_TIME
+	timer.timeout.connect(func() -> void: remove_tag("gcd"))
+	add_child(timer)
+
+func start_gcd() -> void:
+	timer.start()
 
 ## Activates a single [Ability] calling [method Ability.try_activate].
 func activate_one(ability: Ability) -> void:
@@ -236,6 +245,8 @@ func add_tag(tag: String, skip_emitting = false) -> void:
 		var previous_tags: Array[String] = tags.duplicate()
 		tags.append(tag)
 		tags_updated.emit(tags, previous_tags)
+		if tag == "gcd":
+			start_gcd()
 
 
 ## Adds many tags to an [AbilityContainer]
