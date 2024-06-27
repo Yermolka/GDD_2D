@@ -26,6 +26,6 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var player: Player = get_tree().get_first_node_in_group("player")
-	var abc: TargetedSkill = ability_container.find_by(func(x: Ability) -> bool: return x is TargetedSkill)
-	abc.set_target(player)
-	ability_container.activate_one(abc)
+	# var abc: TargetedSkill = ability_container.find_by(func(x: Ability) -> bool: return x is TargetedSkill)
+	# abc.set_target(player)
+	# ability_container.activate_one(abc)

@@ -56,6 +56,14 @@ enum {
 		emit_changed()
 ## The minimum value.
 ## [br]Can be negative
+const INPUT_STATS: PackedStringArray = ["INT", "AGI", "STR", "DMG"]
+const INPUT_STATS_FULL_NAMES: PackedStringArray = ["intelligence", "agiligy", "strength", "base_damage"]
+var stats: GameplayAttributeMap = null
+
+@export var value_formula: String = "":
+	set(value):
+		value_formula = value
+		emit_changed()
 @export var minimum_value := 0.0:
 	get:
 		return minimum_value
@@ -86,6 +94,18 @@ enum {
 ## [br] - [member minimum_value] and [member maximum_value] if minimum_value is less than maximum
 ## [br] - [member maximum_value] and [member minimum_value] if minimum_value is greater than maximum
 func get_current_value() -> float:
+	if not value_formula.is_empty() and stats != null:
+		var e: Expression = Expression.new()
+		e.parse(value_formula, INPUT_STATS)
+		var stat_array: Array = []
+		for i in range(INPUT_STATS.size()):
+			var attr = stats.get_attribute_by_name(INPUT_STATS_FULL_NAMES[i])
+			if attr:
+				stat_array.append(attr.current_buffed_value)
+			else:
+				stat_array.append(0)
+		return e.execute(stat_array)
+	
 	if minimum_value < maximum_value:
 		return randf_range(minimum_value, maximum_value)
 	elif minimum_value > maximum_value:

@@ -9,6 +9,7 @@ class_name Player extends Entity
 
 @onready var test_helm: EquipmentBase = preload("res://items/test_helm.tres").duplicate()
 @onready var healing_potion: ItemBase = preload("res://items/healing_potion.tres")
+@onready var test_effect: ChanceAttributeEffect = ChanceAttributeEffect.new()
 
 const SPEED: float = 300.0
 var movement_speed: float:
@@ -93,6 +94,11 @@ func _ready() -> void:
 	attribute_map.add_attribute(attr)
 	print(ability_container.grant_all_abilities())
 
+	test_effect.attribute_name = "rage"
+	test_effect.proc_chance = 50
+	test_effect.minimum_value = 10
+	test_effect.maximum_value = 50
+
 func _quest_update(type: String, key: String, value: Variant, requester: QuestCondition) -> void:
 	if type != "has_item":
 		return
@@ -134,12 +140,22 @@ func _process_input() -> void:
 		# ability_container.abilities.append(load("res://abilities/passive/slippery_toes.tres"))
 		# print(ability_container.grant(load("res://abilities/passive/slippery_toes.tres")))
 		# ability_container.activate_many()
-		var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Heroic Strike")
+		# var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Heroic Strike")
+		# if abc:
+		# 	abc.set_target(get_tree().get_first_node_in_group("selected"))
+		# 	ability_container.activate_one(abc)
+		# else:
+		# 	print("got no rage!")
+
+		var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Melee")
 		if abc:
-			abc.set_target(get_tree().get_first_node_in_group("selected"))
-			ability_container.activate_one(abc)
-		else:
-			print("got no rage!")
+			if abc.chance_effects.has(test_effect):
+				print("Removing")
+				abc.chance_effects.erase(test_effect)
+			else:
+				print("Adding")
+				abc.chance_effects.append(test_effect)
+			
 		
 
 func _process_movement() -> void:

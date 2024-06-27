@@ -13,7 +13,7 @@ func activate(event: ActivationEvent) -> void:
 	if cast_time > 0.0 and event.ability_container.has_tag("interrupted"):
 		return
 
-	## Projectile
+	## special effect
 	if projectile_scene != null and projectile_scene.can_instantiate():
 		var scene: Node2D = projectile_scene.instantiate()
 		caster.get_tree().root.add_child(scene)
@@ -22,17 +22,20 @@ func activate(event: ActivationEvent) -> void:
 	## Instant target
 	var main_effect: GameplayEffect = GameplayEffect.new()
 	main_effect.attributes_affected = instant_effects
+	main_effect.set_stats(event.attribute_map)
 	target.add_child(main_effect)
 
 	var main_timed_effect: TimedGameplayEffect = TimedGameplayEffect.new()
 	main_timed_effect.attributes_affected = instant_timed_effects
 	main_timed_effect.effect_time = timed_effects_duration
+	main_timed_effect.set_stats(event.attribute_map)
 	target.add_child(main_timed_effect)
 
 	var main_chance_effect: GameplayEffect = GameplayEffect.new()
 	for ce: ChanceAttributeEffect in chance_effects:
 		if ce.proc:
 			main_chance_effect.attributes_affected.append(ce)
+	main_chance_effect.set_stats(event.attribute_map)
 	target.add_child(main_chance_effect)
 
 func set_target(_target: Entity) -> void:

@@ -58,21 +58,25 @@ func activate(event: ActivationEvent) -> void:
 	## Instant self
 	var self_generator_effect: GameplayEffect = GameplayEffect.new()
 	self_generator_effect.attributes_affected.append(generator_effect)
+	self_generator_effect.set_stats(event.attribute_map)
 	caster.add_child(self_generator_effect)
 
 	var self_effect: GameplayEffect = GameplayEffect.new()
 	self_effect.attributes_affected = instant_self_effects
+	self_effect.set_stats(event.attribute_map)
 	caster.add_child(self_effect)
 
 	var self_timed_effect: TimedGameplayEffect = TimedGameplayEffect.new()
 	self_timed_effect.attributes_affected = instant_self_timed_effects
 	self_timed_effect.effect_time = instant_self_timed_effects_duration
+	self_timed_effect.set_stats(event.attribute_map)
 	caster.add_child(self_timed_effect)
 
 	var self_chance_effect: GameplayEffect = GameplayEffect.new()
 	for ce: ChanceAttributeEffect in self_chance_effects:
 		if ce.proc:
 			self_chance_effect.attributes_affected.append(ce)
+	self_chance_effect.set_stats(event.attribute_map)
 	caster.add_child(self_chance_effect)
 
 	print("CAST")

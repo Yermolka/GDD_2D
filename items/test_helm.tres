@@ -11,6 +11,7 @@ apply_every_second = 1.0
 max_applications = 1
 applies_as = 1
 attribute_name = "health"
+value_formula = ""
 minimum_value = 30.0
 maximum_value = 30.0
 

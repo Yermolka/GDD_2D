@@ -99,3 +99,4 @@ owning_node_path = NodePath("..")
 script = ExtResource("11_8y1re")
 gameplay_attribute_map_path = NodePath("../GameplayAttributeMap")
 abilities = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/ability.gd")]([ExtResource("12_ewyp1")])
+active = false
