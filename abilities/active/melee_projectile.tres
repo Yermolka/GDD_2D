@@ -1,0 +1,56 @@
+[gd_resource type="Resource" script_class="TargetedSkill" load_steps=6 format=3 uid="uid://e3dsj8de7p7v"]
+
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_ho0vm"]
+[ext_resource type="Script" path="res://abilities/TargetedActiveSkill.gd" id="1_id1vy"]
+[ext_resource type="PackedScene" uid="uid://bavii32bwjf2c" path="res://abilities/skill_aoe.tscn" id="2_p7ogj"]
+[ext_resource type="Texture2D" uid="uid://b8o81rn8q8a43" path="res://addons/dialogue_nodes/icons/Remove.svg" id="4_a5log"]
+
+[sub_resource type="Resource" id="Resource_lv00y"]
+script = ExtResource("1_ho0vm")
+life_time = 0
+apply_every_second = 1.0
+max_applications = 1
+applies_as = 0
+attribute_name = "health"
+value_formula = "-DMG*2"
+minimum_value = 0.0
+maximum_value = 0.0
+
+[resource]
+script = ExtResource("1_id1vy")
+allowed_targets = 0
+projectile_scene = ExtResource("2_p7ogj")
+projectile_speed = 1000.0
+resource_costs = {}
+min_range = 0.0
+max_range = 500.0
+cast_time = 1.0
+instant_effects = Array[ExtResource("1_ho0vm")]([SubResource("Resource_lv00y")])
+instant_timed_effects = Array[ExtResource("1_ho0vm")]([])
+timed_effects_duration = 1.0
+chance_effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])
+generator_effects = Array[ExtResource("1_ho0vm")]([])
+instant_self_effects = Array[ExtResource("1_ho0vm")]([])
+instant_self_timed_effects = Array[ExtResource("1_ho0vm")]([])
+instant_self_timed_effects_duration = 1.0
+self_chance_effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])
+ui_icon = ExtResource("4_a5log")
+ui_name = "Melee Projectile"
+cooldown_duration = 0.0
+cooldown_continuos = false
+grant_automatic = true
+grant_tags = Array[String](["type.cursor_aoe"])
+grant_tags_required = Array[String]([])
+tags_activation = Array[String]([])
+tags_activation_required = Array[String]([])
+tags_block = Array[String]([])
+tags_cancellation_required = Array[String]([])
+tags_cooldown_start = Array[String]([])
+tags_cooldown_end = Array[String]([])
+tags_end_blocking = Array[String]([])
+tags_to_remove_on_activation = Array[String]([])
+tags_to_remove_on_block = Array[String]([])
+tags_to_remove_on_cancellation = Array[String]([])
+tags_to_remove_on_cooldown_start = Array[String]([])
+tags_to_remove_on_cooldown_end = Array[String]([])
+tags_to_remove_on_end = Array[String]([])

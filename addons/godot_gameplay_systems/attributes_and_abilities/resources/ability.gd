@@ -38,7 +38,7 @@ signal ended(Ability, ActivationEvent)
 ## Tags added once ability has been activated.
 ## [br]Use [member Ability.tags_to_remove_on_activation] to remove some of these tags after the activation.
 @export var tags_activation: Array[String] = []
-## Tags required for activation. 
+## Tags required for activation.
 ## [br]The ability cannot be activated if the [AbilityContainer] does not have all the tags provided here.
 @export var tags_activation_required: Array[String] = []
 ## Blocks execution if ore or more tags are contained by [AbilityContainer]
@@ -85,7 +85,7 @@ func activate(activation_event: ActivationEvent) -> void:
 func can_activate(activation_event: ActivationEvent) -> bool:
 	if tags_activation_required.size() > 0:
 		return has_all_tags(tags_activation_required, activation_event.tags)
-	
+
 	return true
 
 
@@ -103,7 +103,7 @@ func can_block(activation_event: ActivationEvent) -> bool:
 func can_cancel(activation_event: ActivationEvent) -> bool:
 	if tags_cancellation_required.size() > 0:
 		return has_some_tags(tags_cancellation_required, activation_event.tags)
-	
+
 	return false
 
 
