@@ -8,6 +8,15 @@ var skill: GDDSkill = null:
 		texture_normal = skill.ui_icon
 		texture_disabled = skill.ui_icon
 		_render()
+var upgrade: GDDSkillUpgrade = null:
+	get:
+		return upgrade
+	set(value):
+		upgrade = value
+		texture_normal = upgrade.ui_icon
+		texture_disabled = upgrade.ui_icon
+		_render()
+
 var ability_container: AbilityContainer = null:
 	get:
 		return ability_container
@@ -28,8 +37,11 @@ func force_set_disabled(value: bool) -> void:
 	disabled = value
 
 func _render() -> void:
-	if not ability_container or not skill:
+	if not ability_container or (not skill and not upgrade):
 		force_set_disabled(true)
 		return
 	
-	force_set_disabled(not ability_container.can_grant(skill))
+	if skill:
+		force_set_disabled(not ability_container.can_grant(skill))
+	if upgrade:
+		force_set_disabled(not upgrade.unlocked(ability_container))

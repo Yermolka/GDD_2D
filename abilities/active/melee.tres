@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="TargetedSkill" load_steps=8 format=3 uid="uid://cq2lmto3pfn1s"]
+[gd_resource type="Resource" script_class="TargetedSkill" load_steps=7 format=3 uid="uid://cq2lmto3pfn1s"]
 
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd" id="1_65ke5"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_aqwey"]
@@ -17,17 +17,6 @@ value_formula = ""
 minimum_value = -5.0
 maximum_value = -15.0
 
-[sub_resource type="Resource" id="Resource_85bwt"]
-script = ExtResource("1_aqwey")
-life_time = 0
-apply_every_second = 1.0
-max_applications = 1
-applies_as = 0
-attribute_name = "rage"
-value_formula = ""
-minimum_value = 10.0
-maximum_value = 25.0
-
 [sub_resource type="Resource" id="Resource_s66ej"]
 script = ExtResource("1_aqwey")
 life_time = 0
@@ -43,8 +32,7 @@ maximum_value = 0.0
 script = ExtResource("1_vr5qx")
 allowed_targets = 0
 projectile_speed = 1000.0
-resource_type = "mana"
-resource_cost = 0.0
+resource_costs = {}
 min_range = 0.0
 max_range = 500.0
 cast_time = 0.0
@@ -52,14 +40,14 @@ instant_effects = Array[ExtResource("1_aqwey")]([SubResource("Resource_s66ej")])
 instant_timed_effects = Array[ExtResource("1_aqwey")]([])
 timed_effects_duration = 1.0
 chance_effects = Array[ExtResource("1_65ke5")]([SubResource("Resource_1emhl")])
-generator_effect = SubResource("Resource_85bwt")
+generator_effects = null
 instant_self_effects = Array[ExtResource("1_aqwey")]([])
 instant_self_timed_effects = Array[ExtResource("1_aqwey")]([])
 instant_self_timed_effects_duration = 1.0
 self_chance_effects = Array[ExtResource("1_65ke5")]([])
 ui_icon = ExtResource("4_11tqo")
 ui_name = "Melee"
-cooldown_duration = 0.0
+cooldown_duration = 2.0
 cooldown_continuos = false
 grant_automatic = true
 grant_tags = Array[String](["abilities.melee"])

@@ -122,7 +122,9 @@ func _handle_ability_activated(ability: Ability, activation_event: ActivationEve
 			_handle_lifecycle_tagging(LifeCycle.CooldownStarted, ability)
 			cooldown_started.emit(ability)
 			ability_activated.emit(ability, activation_event)
+			timer.wait_time = ability.cooldown_duration
 			timer.start()
+			print(timer.wait_time)
 	else:
 		ability_activated.emit(ability, activation_event)
 
@@ -219,6 +221,9 @@ func activate_one(ability: Ability) -> void:
 		return
 
 	if granted_abilities.has(ability):
+		if _has_cooldown(ability):
+			if not _get_cooldown_timer(ability).is_stopped():
+				return
 		ability.try_activate(ActivationEvent.new(self))
 
 

@@ -5,8 +5,10 @@ class_name ActiveSkill extends GDDSkill
 @export var projectile_scene: PackedScene = null
 @export var projectile_speed: float = 1000.0
 
-@export var resource_type: String = "mana"
-@export var resource_cost: float = 0.0
+# @export var resource_types: Array[String] = ["mana"]
+# @export var resource_costs: Array[int] = [0]
+
+@export var resource_costs: Dictionary = {}
 
 @export var min_range: float = 0.0
 @export var max_range: float = 0.0
@@ -22,7 +24,7 @@ class_name ActiveSkill extends GDDSkill
 @export var chance_effects: Array[ChanceAttributeEffect] = []
 
 @export_group("Effects for self")
-@export var generator_effect: AttributeEffect = AttributeEffect.new()
+@export var generator_effects: Array[AttributeEffect] = []
 @export var instant_self_effects: Array[AttributeEffect] = []
 
 @export var instant_self_timed_effects: Array[AttributeEffect] = []
@@ -33,7 +35,6 @@ class_name ActiveSkill extends GDDSkill
 func activate(event: ActivationEvent) -> void:
 	super.activate(event)
 
-	var attribute_effect: AttributeEffect = AttributeEffect.new()
 	var cost_effect: GameplayEffect = GameplayEffect.new()
 	var caster: Entity = event.character as Entity
 
@@ -47,17 +48,19 @@ func activate(event: ActivationEvent) -> void:
 		if event.ability_container.has_tag("interrupted"):
 			return
 
-	attribute_effect.attribute_name = resource_type
-	attribute_effect.maximum_value = -resource_cost
-	attribute_effect.minimum_value = -resource_cost
+	for resource_type: String in resource_costs:
+		var attribute_effect: AttributeEffect = AttributeEffect.new()
+		attribute_effect.attribute_name = resource_type
+		attribute_effect.maximum_value = -resource_costs[resource_type]
+		attribute_effect.minimum_value = -resource_costs[resource_type]
 
-	cost_effect.attributes_affected.append(attribute_effect)
+		cost_effect.attributes_affected.append(attribute_effect)
 
 	event.character.add_child(cost_effect)
 
 	## Instant self
 	var self_generator_effect: GameplayEffect = GameplayEffect.new()
-	self_generator_effect.attributes_affected.append(generator_effect)
+	self_generator_effect.attributes_affected = generator_effects
 	self_generator_effect.set_stats(event.attribute_map)
 	caster.add_child(self_generator_effect)
 
@@ -79,7 +82,6 @@ func activate(event: ActivationEvent) -> void:
 	self_chance_effect.set_stats(event.attribute_map)
 	caster.add_child(self_chance_effect)
 
-	print("CAST")
 
 func _cast(timer: SceneTreeTimer, ac: AbilityContainer) -> void:
 	while true:
@@ -96,14 +98,15 @@ func can_activate(event: ActivationEvent) -> bool:
 	if caster == null or not event.has_ability_container:
 		return false
 
-	if not resource_type.is_empty():
-		var resource: AttributeSpec = caster.attribute_map.get_attribute_by_name(resource_type)
-		if resource == null:
-			return false
+	if resource_costs.size() > 0:
+		for resource_type: String in resource_costs:
+			var resource: AttributeSpec = caster.attribute_map.get_attribute_by_name(resource_type)
+			if resource == null:
+				return false
 
-		var deducted: float = resource.current_buffed_value - resource_cost
-		if deducted < 0.0:
-			return false
+			var deducted: float = resource.current_buffed_value - resource_costs[resource_type]
+			if deducted < 0.0:
+				return false
 
 	return super.can_activate(event)
 

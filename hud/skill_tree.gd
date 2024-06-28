@@ -1,5 +1,6 @@
 class_name SkillTree extends Control
 
+@export var root_skill: ActiveSkill = null
 @export var data: SkillTreeData = null:
 	get:
 		return data
@@ -28,20 +29,44 @@ func _draw_items() -> void:
 		vbox_container.remove_child(c)
 		c.queue_free()
 
+	var hbox_root: HBoxContainer = hbox_container.duplicate()
+	vbox_container.add_child(hbox_root)
+	hbox_root.visible = true
+	var btn_root: SkillTreeNode = skill_tree_slot.instantiate()
+	btn_root.ability_container = ability_container
+	btn_root.skill = root_skill
+	btn_root.force_set_disabled(btn_root.disabled or available_points == 0)
+	hbox_root.add_child(btn_root)
+	btn_root.skill_tree_node_pressed.connect(_ability_clicked)
+
 	for tier: SkillTreeTierData in data.tiers:
 		var hbox: HBoxContainer = hbox_container.duplicate()
 		vbox_container.add_child(hbox)
 		hbox.visible = true
-		for skill: GDDSkill in tier.skills:
+		for upgrade: GDDSkillUpgrade in tier.skills:
 			var btn: SkillTreeNode = skill_tree_slot.instantiate()
 			btn.ability_container = ability_container
-			btn.skill = skill
+			btn.upgrade = upgrade
 			btn.force_set_disabled(btn.disabled or available_points == 0)
 			hbox.add_child(btn)
 			btn.skill_tree_node_pressed.connect(_ability_clicked)
 	
+func can_remove_upgrade(_upgrade: GDDSkillUpgrade) -> bool:
+	for tier: SkillTreeTierData in data.tiers:
+		for upgrade: GDDSkillUpgrade in tier.skills:
+			if not upgrade.learned:
+				continue
+				
+			for tag: String in _upgrade.grant_tags:
+				if upgrade.required_tags.has(tag):
+					return false
+	return true
+
 func _ability_clicked(node: SkillTreeNode) -> void:
-	ability_container.grant(node.skill)
+	if node.skill:
+		ability_container.grant(node.skill)
+	if node.upgrade:
+		node.upgrade.apply(root_skill, ability_container)
 	available_points -= 1
 	_draw_items()
 
