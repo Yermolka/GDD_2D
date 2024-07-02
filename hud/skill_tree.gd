@@ -69,6 +69,11 @@ func _ability_clicked(node: SkillTreeNode) -> void:
 		node.upgrade.apply(root_skill, ability_container)
 	available_points -= 1
 	_draw_items()
+	print(123)
 
 func setup_ability_container(ac: AbilityContainer) -> void:
 	ability_container = ac
+
+
+func _on_close_button_pressed() -> void:
+	visible = false

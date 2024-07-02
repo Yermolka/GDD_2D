@@ -1,9 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://qqsivifoh2bu"]
+[gd_scene load_steps=4 format=3 uid="uid://cgc1hn53qkhmp"]
 
 [ext_resource type="Script" path="res://hud/in_game_bar/selected_skill_button.gd" id="1_g3bwv"]
+[ext_resource type="Texture2D" uid="uid://lnqipy75y07a" path="res://hud/ui_active_skill_slot.png" id="2_audf2"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_66gjp"]
+size = Vector2(10, 10)
 
 [node name="SelectedSkillButton" type="TextureButton"]
-custom_minimum_size = Vector2(96, 96)
+custom_minimum_size = Vector2(24, 24)
+offset_right = 24.0
+offset_bottom = 24.0
+texture_normal = SubResource("PlaceholderTexture2D_66gjp")
+stretch_mode = 0
 script = ExtResource("1_g3bwv")
 
 [node name="Label" type="Label" parent="."]
@@ -13,9 +21,28 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -23.0
+offset_left = 7.0
+offset_top = 4.0
+offset_right = 12.0
+offset_bottom = 16.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_font_sizes/font_size = 8
 text = "1"
 horizontal_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+show_behind_parent = true
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_audf2")
+expand_mode = 2

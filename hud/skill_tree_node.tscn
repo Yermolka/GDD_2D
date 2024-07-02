@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://183k1wbjsqwy"]
+[gd_scene load_steps=6 format=3 uid="uid://183k1wbjsqwy"]
 
 [ext_resource type="Script" path="res://hud/skill_tree_node.gd" id="1_syu3u"]
+[ext_resource type="Texture2D" uid="uid://xsy4002jva8x" path="res://hud/ui_passive_skill_slot.png" id="2_y0roc"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_p5spi"]
 
@@ -10,10 +11,15 @@
 gradient = SubResource("Gradient_lel7n")
 
 [node name="SkillTreeNode" type="TextureButton"]
+texture_filter = 1
 custom_minimum_size = Vector2(50, 50)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 13.0
+offset_right = -1088.0
+offset_bottom = -585.0
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = SubResource("PlaceholderTexture2D_p5spi")
@@ -21,3 +27,19 @@ texture_disabled = SubResource("GradientTexture2D_yvht6")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_syu3u")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+show_behind_parent = true
+texture_filter = 1
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -13.0
+offset_top = -13.0
+offset_right = 13.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_y0roc")
