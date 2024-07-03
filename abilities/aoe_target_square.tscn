@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://sobu8lv4g768"]
+
+[ext_resource type="Texture2D" uid="uid://cuotecpt76nmw" path="res://addons/godot_gameplay_systems/interactables/assets/InteractableArea2D.png" id="1_nhts0"]
+[ext_resource type="Script" path="res://abilities/aoe_target_script.gd" id="2_0uu71"]
+
+[node name="TargetSprite" type="Sprite2D"]
+texture = ExtResource("1_nhts0")
+script = ExtResource("2_0uu71")

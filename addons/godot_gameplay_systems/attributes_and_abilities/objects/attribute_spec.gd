@@ -14,7 +14,10 @@ var __setup := false
 ## It's the attribute name
 var attribute_name := ""
 ## It's the buff amount
-var buffing_value := 0.0
+var buffing_value := 0.0:
+	set(value):
+		buffing_value = value
+		changed.emit(self)
 ## It's the current attribute's value
 var current_value := 0.0:
 	get:

@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="EquipmentBase" load_steps=5 format=3 uid="uid://b7xkucqt8xtny"]
+
+[ext_resource type="Script" path="res://items/equipment_base.gd" id="1_auqp6"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="2_23dje"]
+[ext_resource type="Texture2D" uid="uid://dla76qr5vqp1r" path="res://addons/dialogue_nodes/icons/Character.svg" id="3_2g180"]
+
+[sub_resource type="Resource" id="Resource_nxwq1"]
+script = ExtResource("2_23dje")
+life_time = 0
+apply_every_second = 1.0
+max_applications = 1
+applies_as = 1
+attribute_name = "health"
+value_formula = ""
+minimum_value = 30.0
+maximum_value = 30.0
+
+[resource]
+script = ExtResource("1_auqp6")
+stats = Array[ExtResource("2_23dje")]([SubResource("Resource_nxwq1")])
+ui_icon = ExtResource("3_2g180")
+name = &"Default helm"
+can_stack = false
+decrease_stack_on_use = false
+tags = Array[String](["equipment.helm"])
+quantity_current = 1
+quantity_max = 1
+tags_added_on_activation = Array[String]([])
+tags_added_on_add = Array[String]([])
+tags_added_on_equip = Array[String]([])
+tags_added_on_remove = Array[String]([])
+tags_added_on_unequip = Array[String]([])
+tags_required_to_activate = Array[String]([])
+tags_required_to_add = Array[String]([])
+tags_required_to_equip = Array[String]([])
+tags_required_to_remove = Array[String]([])
+tags_required_to_unequip = Array[String]([])
+tags_removed_on_activation = Array[String]([])
+tags_removed_on_add = Array[String]([])
+tags_removed_on_equip = Array[String]([])
+tags_removed_on_remove = Array[String]([])
+tags_removed_on_unequip = Array[String]([])

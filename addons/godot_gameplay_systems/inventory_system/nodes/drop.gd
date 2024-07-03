@@ -7,6 +7,7 @@ class_name Drop extends Node
 ## Emitted when some [Item]s have been dropped.
 signal items_dropped(items: Array[Item], drop_owner: Node)
 
+@onready var item_drop: PackedScene = preload("res://items/item_drop.tscn")
 
 @export_category("Drop")
 ## The table used to drop items
@@ -33,21 +34,24 @@ func _drop(items: Array[Item]) -> void:
 		return
 
 	for item in items:
-		if item.scene and item.scene.can_instantiate():
-			var instance = item.scene.instantiate()
-			var nearest_drop = find_nearest_drop()
+		var instance = item_drop.instantiate()
+		var nearest_drop = find_nearest_drop()
 
-			instance.position = _owning_node.position
+		instance.position = _owning_node.position
 
-			if nearest_drop:
-				nearest_drop.add_child(instance)
-				nearest_drop.item_dropped.emit(item, instance)
+		if nearest_drop:
+			nearest_drop.add_child(instance)
+			instance.item = item
+			nearest_drop.item_dropped.emit(item, instance)
 
 
 ## It gets the droppable [Item]s from the [DropTable].
 ## [br]It accepts an optional argument [code]drop_modifier[/code] which increases (or decreases if negative) drop chances for each [DropGroup] pool.
 ## [br]The greater the modifier, the higher the chances to drop an [Item] from the [member DropTable.pools].
 func drop_items(drop_modifier: float = 0.0) -> void:
+	if drop_table == null:
+		return
+		
 	var items = drop_table.drop(drop_modifier)
 
 	if items.size() > 0:

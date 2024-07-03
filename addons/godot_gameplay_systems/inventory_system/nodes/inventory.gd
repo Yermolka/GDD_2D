@@ -35,11 +35,12 @@ signal refused_to_remove(item: Item)
 @export_category("Inventory")
 ## Is the path to the owner (aka the character or entity which owns the inventory).
 @export_node_path("Node2D", "Node3D") var owner_path: NodePath = NodePath()
-## Is the path to the related [Equipment] node. 
+## Is the path to the related [Equipment] node.
 ## [br]This is not necessary unless you want to make this [Inventory] to talk with an [Equipment] automatically.
-## [br]For example: a classic Doom/Quake-like game, will not have an inventory system, 
+## [br]For example: a classic Doom/Quake-like game, will not have an inventory system,
 ## all weapons are set at startup and can be used only if some tags are set.
 @export_node_path("Equipment") var equipment_path: NodePath = NodePath()
+@export var max_size: int = 16
 ## Is the array of items.
 @export var items: Array[Item] = []
 ## Tags associated to this [Inventory]
@@ -68,7 +69,7 @@ func _handle_lifecycle_tags(life_cycle: LifeCycle, item: Item) -> void:
 ## Ready function. Adds all starting [member Item.tags_added_on_add] when the node is ready.
 func _ready() -> void:
 	setup()
-	
+
 
 
 ## Activates an [Item] with an optional [code]activation_type[/code].
@@ -80,10 +81,10 @@ func activate(item: Item, activation_type: int = 0) -> void:
 		item._activate(activation_event)
 		item_activated.emit(item, activation_type)
 		_handle_lifecycle_tags(LifeCycle.Activated, item)
-		
+
 		if item.can_stack and item.decrease_stack_on_use:
 			item.quantity_current = clampi(item.quantity_current - 1, 0, item.quantity_current)
-			
+
 			if item.quantity_current == 0:
 				var index = items.find(item)
 
@@ -101,7 +102,7 @@ func add_item(item: Item) -> Item:
 	if not can_add(item):
 		refused_to_add.emit(item)
 		return null
-	
+
 	# Finds the first item which is already in the inventory, is stackable and it's own stack is not at the maximum quantity.
 	var found = find_by(func (x: Item): return item.name == x.name and x.can_stack and x.quantity_current < x.quantity_max)
 
@@ -124,7 +125,7 @@ func add_item(item: Item) -> Item:
 			found.quantity_current = new_quantity
 		item_added.emit(found)
 		return found
-	
+
 	var item_to_return = item.duplicate()
 	items.append(item_to_return)
 
@@ -135,13 +136,13 @@ func add_item(item: Item) -> Item:
 	return item_to_return
 
 
-## Adds many items. 
+## Adds many items.
 func add_items(_items: Array[Item]) -> Array[Item]:
 	var out: Array[Item] = []
-	
+
 	for i in _items:
 		out.append(add_item(i))
-		
+
 	return out
 
 
@@ -150,7 +151,7 @@ func add_items(_items: Array[Item]) -> Array[Item]:
 func add_tag(tag: String) -> void:
 	if tag == null:
 		return
-	
+
 	if not tags.has(tag):
 		tags.append(tag)
 
@@ -160,7 +161,7 @@ func add_tag(tag: String) -> void:
 func add_tags(_tags: Array[String]) -> void:
 	if _tags.size() == 0:
 		return
-	
+
 	for t in _tags:
 		if not tags.has(t):
 			tags.append(t)
@@ -172,12 +173,15 @@ func can_activate(item: Item, activation_type: int = 0) -> bool:
 		for tag in item.tags_required_to_activate:
 			if not tags.has(tag):
 				return false
-	
+
 	return item._can_activate(ItemActivationEvent.new(self, activation_type))
 
 
 ## Checks if an [Item] can be added to this [Inventory] checking if all [member Item.tags_required_to_add] exists in this [Inventory]
 func can_add(item: Item) -> bool:
+	if items.size() >= max_size:
+		return false
+	
 	if item.tags_required_to_add.size() == 0:
 		return true
 
@@ -204,14 +208,14 @@ func can_remove(item: Item) -> bool:
 func count_items(count_stacks: bool = false) -> int:
 	if count_stacks:
 		var count = 0
-		
+
 		for item in items:
 			count += item.quantity_current
-			
+
 		return count
 	else:
 		return items.size()
-	
+
 
 ## Counts all items by a given predicate.
 ## [br]If [code]count_stacks[/code] is passed to [code]true[/code], the count will returns also count all stacked quantities.
@@ -224,7 +228,7 @@ func count_items_by(predicate: Callable, count_stacks: bool = false) -> int:
 				num += i.quantity_current
 			else:
 				num += 1
-	
+
 	return num
 
 
@@ -232,11 +236,11 @@ func count_items_by(predicate: Callable, count_stacks: bool = false) -> int:
 ## [br]It returns all [Item]s which satisfy the predicate.
 func filter_by(predicate: Callable) -> Array[Item]:
 	var out: Array[Item] = []
-	
+
 	for i in items:
 		if predicate.call(i):
 			out.append(i)
-	
+
 	return out
 
 
@@ -254,15 +258,15 @@ func find_by(predicate: Callable) -> Item:
 func instantiate_item(item: Item) -> Node:
 	if item.scene != null and item.scene.can_instantiate():
 		var instance = item.scene.instantiate()
-		
+
 		if instance.has_method("_from_item"):
 			instance.call("_from_item", item, self)
-		
+
 		return instance
-	
+
 	return null
 
-	
+
 ## Removes an item from the inventory
 ## [br]If [code]bypass_tag_check[/code] is set to [code]true[/code] then the check for [member Item.tags_required_to_remove] will not be performed.
 func remove_item(item: Item, bypass_tag_check: bool = false) -> void:
@@ -310,7 +314,7 @@ func remove_tags(_tags: Array[String]) -> void:
 func setup() -> void:
 	if not equipment_path.is_empty():
 		equipment = get_node(equipment_path) as Equipment
-	
+
 	if not Engine.is_editor_hint() and not owner_path.is_empty():
 		var _owner = get_node(owner_path)
 		_owner.set_meta("ggsInventory", self)

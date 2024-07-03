@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="SkillTreeData" load_steps=2 format=3 uid="uid://o6aw4bsftfj0"]
+
+[ext_resource type="Script" path="res://hud/skill_tree_data.gd" id="1_qvlag"]
+
+[resource]
+script = ExtResource("1_qvlag")
+tiers = Array[Resource("res://hud/skill_tree_tier_data.gd")]([])

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://deglggdd7ul7j"]
+
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/pickable_item_2d.gd" id="1_g26cw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uf4xo"]
+radius = 48.0104
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_apcr6"]
+
+[node name="ItemDrop" type="Area2D"]
+collision_layer = 16
+script = ExtResource("1_g26cw")
+automatically_pick = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_uf4xo")
+
+[node name="DebugSprite" type="Sprite2D" parent="."]
+scale = Vector2(86, 86)
+texture = SubResource("PlaceholderTexture2D_apcr6")

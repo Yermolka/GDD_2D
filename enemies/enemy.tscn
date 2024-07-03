@@ -1,0 +1,102 @@
+[gd_scene load_steps=21 format=3 uid="uid://dbx4mf5ywvhdr"]
+
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="1_kjur6"]
+[ext_resource type="Script" path="res://enemies/enemy.gd" id="1_s888k"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute.gd" id="2_k2awv"]
+[ext_resource type="Resource" uid="uid://ckjdlmyik1555" path="res://stats/enemy_base_attributes.tres" id="3_b0b3x"]
+[ext_resource type="Texture2D" uid="uid://dla76qr5vqp1r" path="res://addons/dialogue_nodes/icons/Character.svg" id="4_lj11j"]
+[ext_resource type="PackedScene" uid="uid://c3knc8japncl7" path="res://common/selectable/selectable.tscn" id="6_ybr71"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/drop.gd" id="7_vo5q4"]
+[ext_resource type="Resource" uid="uid://b7xkucqt8xtny" path="res://items/test_helm.tres" id="8_cljkv"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/resources/drop_group.gd" id="9_xmano"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/resources/drop_table.gd" id="10_1ofvw"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/ability_container.gd" id="11_8y1re"]
+[ext_resource type="Resource" uid="uid://cq2lmto3pfn1s" path="res://abilities/active/melee.tres" id="12_ewyp1"]
+
+[sub_resource type="Resource" id="Resource_5mqa3"]
+script = ExtResource("2_k2awv")
+attribute_name = "health"
+minimum_value = 0.0
+maximum_value = 100.0
+current_value = 100.0
+
+[sub_resource type="Resource" id="Resource_6pbgw"]
+script = ExtResource("2_k2awv")
+attribute_name = "mana"
+minimum_value = 0.0
+maximum_value = 100.0
+current_value = 100.0
+
+[sub_resource type="Resource" id="Resource_p5s3w"]
+script = ExtResource("2_k2awv")
+attribute_name = "movement_speed"
+minimum_value = 0.0
+maximum_value = 500.0
+current_value = 100.0
+
+[sub_resource type="Resource" id="Resource_8jjlt"]
+script = ExtResource("2_k2awv")
+attribute_name = "base_damage"
+minimum_value = 10.0
+maximum_value = 10.0
+current_value = 10.0
+
+[sub_resource type="Resource" id="Resource_vcgko"]
+script = ExtResource("2_k2awv")
+attribute_name = "crit_chance"
+minimum_value = 0.0
+maximum_value = 1.0
+current_value = 0.05
+
+[sub_resource type="Resource" id="Resource_cixur"]
+script = ExtResource("2_k2awv")
+attribute_name = "crit_multiplier"
+minimum_value = 1.0
+maximum_value = 20.0
+current_value = 2.0
+
+[sub_resource type="Resource" id="Resource_vgigj"]
+script = ExtResource("9_xmano")
+items_pool = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([ExtResource("8_cljkv")])
+drop_chance = 100.0
+
+[sub_resource type="Resource" id="Resource_7dh5b"]
+script = ExtResource("10_1ofvw")
+pools = Array[ExtResource("9_xmano")]([SubResource("Resource_vgigj")])
+
+[node name="Enemy" type="CharacterBody2D"]
+rotation = -0.523599
+skew = -0.261799
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("1_s888k")
+
+[node name="GameplayAttributeMap" type="Node" parent="."]
+script = ExtResource("1_kjur6")
+owning_character = NodePath("..")
+attributes = Array[ExtResource("2_k2awv")]([SubResource("Resource_5mqa3"), SubResource("Resource_6pbgw"), SubResource("Resource_p5s3w"), SubResource("Resource_8jjlt"), SubResource("Resource_vcgko"), SubResource("Resource_cixur")])
+table = ExtResource("3_b0b3x")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(5.75, 5.75)
+texture = ExtResource("4_lj11j")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-16, -38, 5, -42, 22, -24, 16, -2, 35, 7, 44, 23, 36, 41, -29, 44, -41, 35, -43, 15, -33, 5, -15, 2, -23, -15)
+
+[node name="Selectable" parent="." instance=ExtResource("6_ybr71")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Selectable"]
+polygon = PackedVector2Array(-16, -38, 5, -42, 22, -24, 16, -2, 35, 7, 44, 23, 36, 41, -29, 44, -41, 35, -43, 15, -33, 5, -15, 2, -23, -15)
+
+[node name="Drop" type="Node" parent="."]
+script = ExtResource("7_vo5q4")
+drop_table = SubResource("Resource_7dh5b")
+owning_node_path = NodePath("..")
+
+[node name="AbilityContainer" type="Node" parent="."]
+script = ExtResource("11_8y1re")
+gameplay_attribute_map_path = NodePath("../GameplayAttributeMap")
+abilities = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/ability.gd")]([ExtResource("12_ewyp1")])
+active = false

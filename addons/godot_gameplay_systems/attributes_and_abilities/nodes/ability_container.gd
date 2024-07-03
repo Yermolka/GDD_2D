@@ -19,6 +19,8 @@ enum LifeCycle {
 	CooldownEnded = 5,
 }
 
+const GCD_TIME: float = 1.0
+var timer: Timer = Timer.new()
 
 ## Emitted when an ability is activated manually or automatically
 signal ability_activated(ability: Ability, activation_event: ActivationEvent)
@@ -40,7 +42,10 @@ signal cooldown_ended(ability: Ability)
 signal cooldown_started(ability: Ability)
 ## Emitted when tags are updated
 signal tags_updated(updated_tags: Array[String], previous_tags: Array[String])
-
+## Emitted when an ability cast started
+signal cast_started(ability: ActiveSkill)
+## Emitted whe an ability cast ended
+signal cast_ended(ability: ActiveSkill, success: bool)
 
 @export_category("Abilities")
 ## It's the path to the [GameplayAttributeMap] which holds all character attributes
@@ -118,11 +123,24 @@ func _handle_ability_activated(ability: Ability, activation_event: ActivationEve
 
 		if timer.is_stopped():
 			_handle_lifecycle_tagging(LifeCycle.CooldownStarted, ability)
-			cooldown_started.emit(ability)
 			ability_activated.emit(ability, activation_event)
+			if ability is ActiveSkill and ability.cast_time > 0.0:
+				cast_started.emit(ability)
+				var res = await ability.cast_ended
+				cast_ended.emit(res[0], res[1])
+				if not res[1]: # failed to cast
+					return
+
+			cooldown_started.emit(ability)
+			timer.wait_time = ability.cooldown_duration
 			timer.start()
 	else:
 		ability_activated.emit(ability, activation_event)
+
+		if ability is ActiveSkill and ability.cast_time > 0.0:
+			cast_started.emit(ability)
+			var res = await ability.cast_ended
+			cast_ended.emit(res[0], res[1])
 
 		if ability.can_end(activation_event):
 			ability.end_ability(activation_event)
@@ -203,6 +221,13 @@ func _ready() -> void:
 	gameplay_attribute_map = get_node(gameplay_attribute_map_path)
 	grant_all_abilities()
 
+	timer.one_shot = true
+	timer.wait_time = GCD_TIME
+	timer.timeout.connect(func() -> void: remove_tag("gcd"))
+	add_child(timer)
+
+func start_gcd() -> void:
+	timer.start()
 
 ## Activates a single [Ability] calling [method Ability.try_activate].
 func activate_one(ability: Ability) -> void:
@@ -210,6 +235,9 @@ func activate_one(ability: Ability) -> void:
 		return
 
 	if granted_abilities.has(ability):
+		if _has_cooldown(ability):
+			if not _get_cooldown_timer(ability).is_stopped():
+				return
 		ability.try_activate(ActivationEvent.new(self))
 
 
@@ -236,6 +264,8 @@ func add_tag(tag: String, skip_emitting = false) -> void:
 		var previous_tags: Array[String] = tags.duplicate()
 		tags.append(tag)
 		tags_updated.emit(tags, previous_tags)
+		if tag == "gcd":
+			start_gcd()
 
 
 ## Adds many tags to an [AbilityContainer]

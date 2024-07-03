@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3knc8japncl7"]
+
+[ext_resource type="Script" path="res://common/selectable/selectable.gd" id="1_rk335"]
+
+[sub_resource type="Gradient" id="Gradient_8yg40"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_86k3k"]
+gradient = SubResource("Gradient_8yg40")
+
+[node name="Selectable" type="Area2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_rk335")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = SubResource("GradientTexture2D_86k3k")

@@ -1,0 +1,216 @@
+[gd_scene load_steps=22 format=3 uid="uid://dkuujqavu6c60"]
+
+[ext_resource type="Script" path="res://hud/skill_tree.gd" id="1_3y0ys"]
+[ext_resource type="Script" path="res://hud/skill_tree_data.gd" id="2_vr11t"]
+[ext_resource type="Script" path="res://hud/skill_tree_tier_data.gd" id="3_2e7a5"]
+[ext_resource type="Resource" uid="uid://cq2lmto3pfn1s" path="res://abilities/active/melee.tres" id="4_of8aj"]
+[ext_resource type="Script" path="res://abilities/ability_tree/skill_upgrade.gd" id="5_5j57m"]
+[ext_resource type="Texture2D" uid="uid://c6dtwwunb63rm" path="res://addons/dialogue_nodes/icons/DialogueBox.svg" id="6_xnxol"]
+[ext_resource type="Texture2D" uid="uid://dps8mwnnuc5nm" path="res://addons/dialogue_nodes/icons/DistractionFree.svg" id="7_w8wd7"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="8_2621c"]
+[ext_resource type="Texture2D" uid="uid://bucad3kf5mxvp" path="res://addons/dialogue_nodes/icons/Play.svg" id="9_nyfxi"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd" id="10_6ht1e"]
+[ext_resource type="Texture2D" uid="uid://bo52q0gri82h" path="res://hud/ui_close.png" id="11_artqc"]
+
+[sub_resource type="Resource" id="Resource_qu4ih"]
+script = ExtResource("5_5j57m")
+ui_icon = ExtResource("6_xnxol")
+required_tags = Array[String](["resources.rage", "abilities.melee"])
+grant_tags = Array[String](["upgrades.melee.1"])
+upgrades_resource_costs = {}
+upgrade_min_range = 0.0
+upgrade_max_range = 0.0
+upgrade_cast_time = 0.0
+upgrade_cooldown = -1.0
+upgrade_remove_gcd = false
+upgrade_projectile_speed = 1000.0
+upgrades_instant = Array[ExtResource("8_2621c")]([])
+upgrades_instant_timed = Array[ExtResource("8_2621c")]([])
+upgrades_instant_bonus_duration = 1.0
+upgrades_chance = Array[ExtResource("10_6ht1e")]([])
+upgrades_generator = Array[ExtResource("8_2621c")]([])
+upgrades_instant_self = Array[ExtResource("8_2621c")]([])
+upgrades_instant_timed_self = Array[ExtResource("8_2621c")]([])
+upgrades_instant_self_bonus_duration = 1.0
+upgrades_chance_self = Array[ExtResource("10_6ht1e")]([])
+
+[sub_resource type="Resource" id="Resource_03j5q"]
+script = ExtResource("5_5j57m")
+ui_icon = ExtResource("7_w8wd7")
+required_tags = Array[String](["resources.rage", "abilities.melee"])
+grant_tags = Array[String](["upgrades.melee.2"])
+upgrades_resource_costs = {}
+upgrade_min_range = 0.0
+upgrade_max_range = 0.0
+upgrade_cast_time = 0.0
+upgrade_cooldown = 0.0
+upgrade_remove_gcd = true
+upgrade_projectile_speed = 1000.0
+upgrades_instant = Array[ExtResource("8_2621c")]([])
+upgrades_instant_timed = Array[ExtResource("8_2621c")]([])
+upgrades_instant_bonus_duration = 1.0
+upgrades_chance = Array[ExtResource("10_6ht1e")]([])
+upgrades_generator = Array[ExtResource("8_2621c")]([])
+upgrades_instant_self = Array[ExtResource("8_2621c")]([])
+upgrades_instant_timed_self = Array[ExtResource("8_2621c")]([])
+upgrades_instant_self_bonus_duration = 1.0
+upgrades_chance_self = Array[ExtResource("10_6ht1e")]([])
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_b1ja6"]
+
+[sub_resource type="Resource" id="Resource_81ck2"]
+script = ExtResource("8_2621c")
+life_time = 0
+apply_every_second = 1.0
+max_applications = 1
+applies_as = 0
+attribute_name = "rage"
+value_formula = ""
+minimum_value = 20.0
+maximum_value = 40.0
+
+[sub_resource type="Resource" id="Resource_mew7j"]
+script = ExtResource("5_5j57m")
+ui_icon = SubResource("PlaceholderTexture2D_b1ja6")
+required_tags = Array[String](["resources.rage", "abilities.melee"])
+grant_tags = Array[String](["upgrades.melee.3"])
+upgrades_resource_costs = {}
+upgrade_min_range = 0.0
+upgrade_max_range = 0.0
+upgrade_cast_time = 0.0
+upgrade_cooldown = 0.0
+upgrade_remove_gcd = false
+upgrade_projectile_speed = 1000.0
+upgrades_instant = Array[ExtResource("8_2621c")]([])
+upgrades_instant_timed = Array[ExtResource("8_2621c")]([])
+upgrades_instant_bonus_duration = 1.0
+upgrades_chance = Array[ExtResource("10_6ht1e")]([])
+upgrades_generator = Array[ExtResource("8_2621c")]([SubResource("Resource_81ck2")])
+upgrades_instant_self = Array[ExtResource("8_2621c")]([])
+upgrades_instant_timed_self = Array[ExtResource("8_2621c")]([])
+upgrades_instant_self_bonus_duration = 1.0
+upgrades_chance_self = Array[ExtResource("10_6ht1e")]([])
+
+[sub_resource type="Resource" id="Resource_end8r"]
+script = ExtResource("3_2e7a5")
+skills = Array[ExtResource("5_5j57m")]([SubResource("Resource_qu4ih"), SubResource("Resource_03j5q"), SubResource("Resource_mew7j")])
+
+[sub_resource type="Resource" id="Resource_j776q"]
+script = ExtResource("10_6ht1e")
+proc_chance = 100.0
+life_time = 1
+apply_every_second = 0.25
+max_applications = 4
+applies_as = 0
+attribute_name = "health"
+value_formula = "-DMG*0.2"
+minimum_value = 0.0
+maximum_value = 0.0
+
+[sub_resource type="Resource" id="Resource_dm22o"]
+script = ExtResource("5_5j57m")
+ui_icon = ExtResource("9_nyfxi")
+required_tags = Array[String](["resources.rage", "upgrades.melee.3", "abilities.melee"])
+grant_tags = Array[String](["upgrades.melee.4"])
+upgrades_resource_costs = {}
+upgrade_min_range = 0.0
+upgrade_max_range = 0.0
+upgrade_cast_time = 0.0
+upgrade_cooldown = 0.0
+upgrade_remove_gcd = false
+upgrade_projectile_speed = 1000.0
+upgrades_instant = Array[ExtResource("8_2621c")]([])
+upgrades_instant_timed = Array[ExtResource("8_2621c")]([])
+upgrades_instant_bonus_duration = 1.0
+upgrades_chance = Array[ExtResource("10_6ht1e")]([SubResource("Resource_j776q")])
+upgrades_generator = Array[ExtResource("8_2621c")]([])
+upgrades_instant_self = Array[ExtResource("8_2621c")]([])
+upgrades_instant_timed_self = Array[ExtResource("8_2621c")]([])
+upgrades_instant_self_bonus_duration = 1.0
+upgrades_chance_self = Array[ExtResource("10_6ht1e")]([])
+
+[sub_resource type="Resource" id="Resource_uv5os"]
+script = ExtResource("3_2e7a5")
+skills = Array[ExtResource("5_5j57m")]([SubResource("Resource_dm22o")])
+
+[sub_resource type="Resource" id="Resource_251ee"]
+script = ExtResource("2_vr11t")
+tiers = Array[ExtResource("3_2e7a5")]([SubResource("Resource_end8r"), SubResource("Resource_uv5os")])
+
+[node name="SkillTree" type="Control"]
+layout_mode = 3
+anchor_left = 0.41
+anchor_top = 0.101
+anchor_right = 0.768
+anchor_bottom = 0.88
+offset_left = -472.32
+offset_top = -65.448
+offset_right = 267.264
+offset_bottom = 77.7599
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_3y0ys")
+root_skill = ExtResource("4_of8aj")
+data = SubResource("Resource_251ee")
+available_points = 3
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.409
+anchor_top = 0.099
+anchor_right = 0.769
+anchor_bottom = 0.88
+offset_left = -0.167999
+offset_top = -0.152008
+offset_right = 0.111938
+offset_bottom = -0.240051
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.409
+anchor_top = 0.099
+anchor_right = 0.77
+anchor_bottom = 0.877
+offset_left = -2.168
+offset_top = 456.848
+offset_right = -1.04004
+offset_bottom = 2.70398
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="CloseButton" type="TextureButton" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.768
+anchor_top = 0.1
+anchor_right = 0.768
+anchor_bottom = 0.1
+offset_left = -21.736
+offset_top = 0.199997
+offset_right = 0.263977
+offset_bottom = 23.2
+grow_horizontal = 0
+texture_normal = ExtResource("11_artqc")
+stretch_mode = 0
+
+[connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]

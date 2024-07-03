@@ -21,6 +21,7 @@ var started: bool:
 	get: return start_node.active
 
 var completed: bool = false
+var turned_in: bool = false
 var is_instance := false
 
 

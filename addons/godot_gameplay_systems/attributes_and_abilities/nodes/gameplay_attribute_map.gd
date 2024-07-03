@@ -17,6 +17,9 @@ signal attribute_effect_removed(attribute_effect: AttributeEffect, attribute: At
 ## [br]
 ## The signal is called once, even if a time-based AttributeEffect is still going on.
 signal effect_applied(effect: GameplayEffect)
+signal timed_effect_applied(effect: TimedGameplayEffect)
+signal attribute_added(attribute: AttributeSpec)
+signal attribute_removed(attribute: AttributeSpec)
 
 
 @export_category("Owner")
@@ -42,11 +45,20 @@ var effects: Array[GameplayEffect] = []:
 		var _effects: Array[GameplayEffect] = []
 
 		for child in get_children():
-			if child is GameplayEffect:
+			if child is GameplayEffect and not child is TimedGameplayEffect:
 				_effects.append(child)
 
 		return _effects
 
+var timed_effects: Array[TimedGameplayEffect] = []:
+	get:
+		var _timed_effects: Array[TimedGameplayEffect] = []
+
+		for child in get_children():
+			if child is TimedGameplayEffect:
+				_timed_effects.append(child)
+
+		return _timed_effects
 
 func _add_attribute_spec(spec: AttributeResource) -> void:
 	if Engine.is_editor_hint():
@@ -83,7 +95,9 @@ func _ready() -> void:
 
 			if character:
 				character.child_entered_tree.connect(func (child):
-					if child is GameplayEffect:
+					if child is TimedGameplayEffect:
+						apply_timed_effect(child)
+					elif child is GameplayEffect:
 						apply_effect(child)
 				)
 
@@ -128,6 +142,73 @@ func _update_attribute(index: int, key: String, value: float) -> void:
 				attributes[index][key] = value
 
 
+func add_attribute(attribute: AttributeSpec) -> void:
+	var previous = get_attribute_by_name(attribute.attribute_name)
+	
+	if previous:
+		previous.free()
+
+	attribute.changed.connect(func (attribute):
+		attribute_changed.emit(attribute)
+	)
+
+	_attributes_dict[attribute.attribute_name] = attribute
+	attribute_added.emit(attribute)
+
+func remove_attribute(attribute_name: String) -> void:
+	var attr = get_attribute_by_name(attribute_name)
+
+	if attr:	
+		_attributes_dict.erase(attribute_name)
+		attribute_removed.emit(attr)
+
+
+func apply_timed_effect(effect: TimedGameplayEffect) -> void:
+	var _effect = effect.duplicate()
+	effect.queue_free()
+
+	if effect == null:
+		return
+
+	for attribute_affected in effect.attributes_affected:
+		if not attribute_affected.attribute_name in _attributes_dict:
+			continue
+
+		if not attribute_affected.should_apply(_effect, self):
+			continue
+
+		if attribute_affected.applies_as != 1: ## not value buff
+			printerr("Timed effect is not a value buff! Effect: ", _effect.name)
+			attribute_affected.applies_as = 1
+
+		var spec = _attributes_dict[attribute_affected.attribute_name]
+		var old_value = spec.buffing_value
+
+		spec.apply_attribute_effect(attribute_affected)
+
+		var diff = old_value - spec.buffing_value
+
+		attribute_effect_applied.emit(attribute_affected, spec)
+
+		var timer = Timer.new()
+
+		timer.autostart = true
+		timer.one_shot = true
+		timer.wait_time = effect.effect_time
+
+		timer.timeout.connect(
+			func():
+				spec.buffing_value += diff
+				attribute_effect_removed.emit(attribute_affected, spec)
+				timer.stop()
+
+				remove_child(timer)
+		)
+
+		add_child(timer)
+
+	timed_effect_applied.emit(_effect)
+
 ## Applies an effect on current GameplayAttributeMap
 func apply_effect(effect: GameplayEffect) -> void:
 	var _effect = effect.duplicate()
@@ -142,7 +223,7 @@ func apply_effect(effect: GameplayEffect) -> void:
 
 	for attribute_affected in effect.attributes_affected:
 		if not attribute_affected.attribute_name in _attributes_dict:
-			return
+			continue
 
 		if attribute_affected.life_time == AttributeEffect.LIFETIME_ONE_SHOT:
 			var spec = _attributes_dict[attribute_affected.attribute_name]
@@ -153,7 +234,6 @@ func apply_effect(effect: GameplayEffect) -> void:
 			_attributes_dict[attribute_affected.attribute_name].apply_attribute_effect(attribute_affected)
 
 			attribute_effect_applied.emit(attribute_affected, spec)
-			attribute_effect_removed.emit(attribute_affected, spec)
 		elif attribute_affected.life_time == AttributeEffect.LIFETIME_TIME_BASED:
 			var timer = Timer.new()
 			var timer_id = timer.get_instance_id()

@@ -1,0 +1,85 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3 uid="uid://ck1sptbnvqg15"]
+
+[ext_resource type="Script" path="res://addons/dialogue_nodes/objects/DialogueData.gd" id="1_r4r4r"]
+
+[resource]
+script = ExtResource("1_r4r4r")
+starts = {
+"not_ready": &"0_2",
+"start": &"0_1",
+"turn_in": &"0_3"
+}
+nodes = {
+"0_1": {
+"link": &"1_1",
+"offset": Vector2(-560, -280),
+"start_id": "start"
+},
+"0_2": {
+"link": &"1_2",
+"offset": Vector2(-600, 0),
+"start_id": "not_ready"
+},
+"0_3": {
+"link": &"1_3",
+"offset": Vector2(-600, 340),
+"start_id": "turn_in"
+},
+"1_1": {
+"dialogue": "Wanna start a quest?",
+"offset": Vector2(-240, -280),
+"options": {
+0: {
+"condition": {},
+"link": &"3_1",
+"text": "Yes"
+},
+1: {
+"condition": {},
+"link": "END",
+"text": "No"
+}
+},
+"size": Vector2(300, 242),
+"speaker": "NPC"
+},
+"1_2": {
+"dialogue": "You are not ready!",
+"offset": Vector2(-240, 0),
+"options": {
+0: {
+"condition": {},
+"link": "END",
+"text": ""
+}
+},
+"size": Vector2(300, 240),
+"speaker": "NPC"
+},
+"1_3": {
+"dialogue": "Thank you!",
+"offset": Vector2(-260, 340),
+"options": {
+0: {
+"condition": {},
+"link": &"3_2",
+"text": "You're welcome"
+}
+},
+"size": Vector2(300, 240),
+"speaker": "NPC"
+},
+"3_1": {
+"link": "END",
+"offset": Vector2(120, -140),
+"signalValue": "quests.test.accepted"
+},
+"3_2": {
+"link": "END",
+"offset": Vector2(140, 560),
+"signalValue": "quests.test.completed"
+}
+}
+variables = {}
+strays = Array[String]([])
+characters = ""

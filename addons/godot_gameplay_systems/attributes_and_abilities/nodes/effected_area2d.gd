@@ -19,7 +19,7 @@ var effects: Array[GameplayEffect] = []:
 		var _effects: Array[GameplayEffect] = []
 
 		for child in get_children():
-			if child is GameplayEffect:
+			if child is GameplayEffect or child is TimedGameplayEffect:
 				_effects.append(child)
 
 		return _effects
@@ -35,6 +35,8 @@ func _ready() -> void:
 						body.add_child(effect)
 					else:
 						body.add_child(effect.duplicate())
+
+				
 				if remove_self_on_apply:
 					queue_free()
 		)
