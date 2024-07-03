@@ -46,7 +46,7 @@ func activate(event: ActivationEvent) -> void:
 		event.ability_container.add_tag(CASTING_TAG)
 		await _cast(caster.get_tree().create_timer(cast_time), event.ability_container)
 		event.ability_container.remove_tag(CASTING_TAG)
-		if event.ability_container.has_tag("interrupted"):
+		if event.ability_container.has_tag("moving"):
 			cast_ended.emit(self, false)
 			return
 		cast_ended.emit(self, true)
@@ -98,7 +98,7 @@ func _cast(timer: SceneTreeTimer, ac: AbilityContainer) -> void:
 	while true:
 		if not timer or timer.time_left <= 0.0:
 			return
-		if ac.has_tag("interrupted"):
+		if ac.has_tag("moving") and tags_block.has("moving"):
 			return
 
 		await ac.owner.get_tree().process_frame

@@ -21,7 +21,7 @@ func activate(event: ActivationEvent) -> void:
 		return
 	
 	await super.activate(event)
-	if event.ability_container.has_tag("interrupted"):
+	if event.ability_container.has_tag("moving"):
 		return
 
 	## Instant target

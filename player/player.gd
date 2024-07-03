@@ -132,7 +132,7 @@ func _process_input() -> void:
 
 	if Input.is_action_just_pressed("ability3"):
 		# var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Melee Projectile")
-		var abc: AoeTargetSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "aoe test")
+		var abc: MovementSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "teleport")
 		if abc:
 			# abc.set_target(get_tree().get_first_node_in_group("selected"))
 			ability_container.activate_one(abc)
@@ -160,17 +160,20 @@ func _process_input() -> void:
 		
 
 func _process_movement() -> void:
+	if ability_container.has_tag("movement.dashing"):
+		return
+
 	var horizontal: float = Input.get_axis("move_left", "move_right")
 	var vertical: float = Input.get_axis("move_up", "move_down")
 	var direction: Vector2 = Vector2(horizontal, vertical).normalized()
 
 	if direction:
 		velocity = direction * movement_speed
-		ability_container.add_tag("interrupted")
+		ability_container.add_tag("moving")
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.y = move_toward(velocity.y, 0, SPEED)
-		ability_container.remove_tag("interrupted")
+		ability_container.remove_tag("moving")
 
 	move_and_slide()
 

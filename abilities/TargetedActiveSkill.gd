@@ -10,7 +10,7 @@ func is_target_hostile(event: ActivationEvent) -> bool:
 func activate(event: ActivationEvent) -> void:
 	var caster: Entity = event.character as Entity
 	await super.activate(event)
-	if cast_time > 0.0 and event.ability_container.has_tag("interrupted"):
+	if cast_time > 0.0 and event.ability_container.has_tag("moving"):
 		return
 
 	## Instant target
