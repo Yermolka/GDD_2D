@@ -6,7 +6,7 @@ class_name InGameBar extends Control
 @onready var skill_1: SelectedSkillButton = $SelectedSkills/Skill0
 @onready var skill_2: SelectedSkillButton = $SelectedSkills/Skill1
 @onready var skill_3: SelectedSkillButton = $SelectedSkills/Skill2
-
+@onready var cast_bar: ProgressBar = $CastBar
 
 func _set_progress_bar(bar: ProgressBar, attribute_spec: AttributeSpec) -> void:
 	if attribute_spec == null:
@@ -24,8 +24,23 @@ func activate_ability_on_slot(slot_number: int) -> void:
 		3: skill_3.activate()
 
 
+func _process(delta: float) -> void:
+	if cast_bar.visible:
+		cast_bar.value += delta
+
+
 func handle_ability_activated(_ability: Ability, _event: ActivationEvent) -> void:
 	pass
+
+
+func handle_cast_started(ability: ActiveSkill) -> void:
+	cast_bar.show()
+	cast_bar.max_value = ability.cast_time
+	cast_bar.value = 0
+
+
+func handle_cast_ended(_ability: ActiveSkill, _success: bool) -> void:
+	cast_bar.hide()
 
 
 func handle_ability_granted(_skill: ActiveSkill) -> void:
@@ -38,9 +53,26 @@ func handle_ability_granted(_skill: ActiveSkill) -> void:
 	else:
 		printerr("Adding too many abilities!")
 
+
+func handle_cooldown_started(ability: ActiveSkill) -> void:
+	if skill_1.ability == ability:
+		skill_1.start_cooldown()
+	elif skill_2.ability == ability:
+		skill_2.start_cooldown()
+	elif skill_3.ability == ability:
+		skill_3.start_cooldown()
+
+func handle_cooldown_ended(ability: ActiveSkill) -> void:
+	pass
+
+
 func setup_ability_container(ability_container: AbilityContainer) -> void:
 	ability_container.ability_activated.connect(handle_ability_activated)
 	ability_container.ability_granted.connect(handle_ability_granted)
+	ability_container.cooldown_started.connect(handle_cooldown_started)
+	ability_container.cooldown_ended.connect(handle_cooldown_ended)
+	ability_container.cast_started.connect(handle_cast_started)
+	ability_container.cast_ended.connect(handle_cast_ended)
 
 	for child: SelectedSkillButton in $SelectedSkills.get_children():
 		child.ability_container = ability_container

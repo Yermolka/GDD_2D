@@ -1,16 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://cgc1hn53qkhmp"]
+[gd_scene load_steps=3 format=3 uid="uid://cgc1hn53qkhmp"]
 
 [ext_resource type="Script" path="res://hud/in_game_bar/selected_skill_button.gd" id="1_g3bwv"]
 [ext_resource type="Texture2D" uid="uid://lnqipy75y07a" path="res://hud/ui_active_skill_slot.png" id="2_audf2"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_66gjp"]
-size = Vector2(10, 10)
-
 [node name="SelectedSkillButton" type="TextureButton"]
+texture_filter = 1
 custom_minimum_size = Vector2(24, 24)
 offset_right = 24.0
 offset_bottom = 24.0
-texture_normal = SubResource("PlaceholderTexture2D_66gjp")
+mouse_filter = 1
 stretch_mode = 0
 script = ExtResource("1_g3bwv")
 
@@ -46,3 +44,34 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_audf2")
 expand_mode = 2
+
+[node name="Sweep" type="TextureProgressBar" parent="."]
+modulate = Color(0.152941, 0.152941, 0.152941, 0.890196)
+layout_mode = 0
+offset_right = 25.0
+offset_bottom = 24.0
+value = 60.0
+fill_mode = 5
+
+[node name="Timer" type="Timer" parent="Sweep"]
+one_shot = true
+
+[node name="Counter" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="Value" type="Label" parent="Counter"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "0.0"
+horizontal_alignment = 2
+clip_text = true

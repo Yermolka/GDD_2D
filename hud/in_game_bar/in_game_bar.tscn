@@ -4,13 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://cgc1hn53qkhmp" path="res://hud/in_game_bar/selected_skill_button.tscn" id="2_jg8h4"]
 [ext_resource type="Texture2D" uid="uid://4pusokq2al3w" path="res://hud/ui_skill_bar.png" id="2_yel5x"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qytni"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_enqoq"]
 size = Vector2(10, 10)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gjncf"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_cm6at"]
 size = Vector2(10, 10)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2rv2d"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_32pe1"]
 size = Vector2(10, 10)
 
 [node name="InGameBar" type="Control"]
@@ -68,7 +68,7 @@ offset_left = 167.0
 offset_top = 55.0
 offset_right = 196.0
 offset_bottom = 83.0
-texture_normal = SubResource("PlaceholderTexture2D_qytni")
+texture_normal = SubResource("PlaceholderTexture2D_enqoq")
 
 [node name="Skill1" parent="SelectedSkills" instance=ExtResource("2_jg8h4")]
 layout_mode = 2
@@ -76,7 +76,7 @@ offset_left = 244.0
 offset_top = 55.0
 offset_right = 272.0
 offset_bottom = 83.0
-texture_normal = SubResource("PlaceholderTexture2D_gjncf")
+texture_normal = SubResource("PlaceholderTexture2D_cm6at")
 skill_number = 2
 
 [node name="Skill2" parent="SelectedSkills" instance=ExtResource("2_jg8h4")]
@@ -85,5 +85,14 @@ offset_left = 319.0
 offset_top = 55.0
 offset_right = 348.0
 offset_bottom = 83.0
-texture_normal = SubResource("PlaceholderTexture2D_2rv2d")
+texture_normal = SubResource("PlaceholderTexture2D_32pe1")
 skill_number = 3
+
+[node name="CastBar" type="ProgressBar" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 399.0
+offset_top = -125.0
+offset_right = 960.0
+offset_bottom = -98.0
+show_percentage = false

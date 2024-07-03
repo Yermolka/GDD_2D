@@ -5,9 +5,6 @@ class_name ActiveSkill extends GDDSkill
 @export var projectile_scene: PackedScene = null
 @export var projectile_speed: float = 1000.0
 
-# @export var resource_types: Array[String] = ["mana"]
-# @export var resource_costs: Array[int] = [0]
-
 @export var resource_costs: Dictionary = {}
 
 @export var min_range: float = 0.0
@@ -32,6 +29,9 @@ class_name ActiveSkill extends GDDSkill
 
 @export var self_chance_effects: Array[ChanceAttributeEffect] = []
 
+signal cast_started(skill: ActiveSkill)
+signal cast_ended(skill: ActiveSkill, success: bool)
+
 func activate(event: ActivationEvent) -> void:
 	super.activate(event)
 
@@ -42,11 +42,14 @@ func activate(event: ActivationEvent) -> void:
 		return
 
 	if cast_time != 0.0:
+		cast_started.emit(self)
 		event.ability_container.add_tag(CASTING_TAG)
 		await _cast(caster.get_tree().create_timer(cast_time), event.ability_container)
 		event.ability_container.remove_tag(CASTING_TAG)
 		if event.ability_container.has_tag("interrupted"):
+			cast_ended.emit(self, false)
 			return
+		cast_ended.emit(self, true)
 
 	for resource_type: String in resource_costs:
 		var attribute_effect: AttributeEffect = AttributeEffect.new()

@@ -42,7 +42,10 @@ signal cooldown_ended(ability: Ability)
 signal cooldown_started(ability: Ability)
 ## Emitted when tags are updated
 signal tags_updated(updated_tags: Array[String], previous_tags: Array[String])
-
+## Emitted when an ability cast started
+signal cast_started(ability: ActiveSkill)
+## Emitted whe an ability cast ended
+signal cast_ended(ability: ActiveSkill, success: bool)
 
 @export_category("Abilities")
 ## It's the path to the [GameplayAttributeMap] which holds all character attributes
@@ -120,13 +123,24 @@ func _handle_ability_activated(ability: Ability, activation_event: ActivationEve
 
 		if timer.is_stopped():
 			_handle_lifecycle_tagging(LifeCycle.CooldownStarted, ability)
-			cooldown_started.emit(ability)
 			ability_activated.emit(ability, activation_event)
+			if ability is ActiveSkill and ability.cast_time > 0.0:
+				cast_started.emit(ability)
+				var res = await ability.cast_ended
+				cast_ended.emit(res[0], res[1])
+				if not res[1]: # failed to cast
+					return
+
+			cooldown_started.emit(ability)
 			timer.wait_time = ability.cooldown_duration
 			timer.start()
-			print(timer.wait_time)
 	else:
 		ability_activated.emit(ability, activation_event)
+
+		if ability is ActiveSkill and ability.cast_time > 0.0:
+			cast_started.emit(ability)
+			var res = await ability.cast_ended
+			cast_ended.emit(res[0], res[1])
 
 		if ability.can_end(activation_event):
 			ability.end_ability(activation_event)
