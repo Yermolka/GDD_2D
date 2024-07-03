@@ -561,6 +561,12 @@ player_path = NodePath("../..")
 [node name="Enemy" parent="." instance=ExtResource("4_tmm5i")]
 position = Vector2(246, 725)
 
+[node name="Enemy2" parent="." instance=ExtResource("4_tmm5i")]
+position = Vector2(350, 704)
+
+[node name="Enemy3" parent="." instance=ExtResource("4_tmm5i")]
+position = Vector2(322, 804)
+
 [node name="Drop2D" type="Node2D" parent="."]
 script = ExtResource("5_58p84")
 

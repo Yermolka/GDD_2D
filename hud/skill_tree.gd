@@ -20,6 +20,7 @@ var ability_container: AbilityContainer = null
 
 func _ready() -> void:
 	visibility_changed.connect(_draw_items)
+	hide()
 
 func _draw_items() -> void:
 	if not visible or not vbox_container:

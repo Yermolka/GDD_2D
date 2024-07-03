@@ -41,8 +41,6 @@ func activate(event: ActivationEvent) -> void:
 		scene.speed = projectile_speed
 		if grant_tags.has("type.projectile"):
 			scene.position = caster.global_position
-		elif grant_tags.has("type.cursor_aoe") and not caster is Enemy:
-			scene.position = caster.get_global_mouse_position()
 		return
 
 	target.add_child(main_effect)
@@ -53,9 +51,6 @@ func set_target(_target: Entity) -> void:
 	target = _target
 
 func can_activate(event: ActivationEvent) -> bool:
-	if grant_tags.has("type.cursor_aoe"):
-		return true
-
 	if allowed_targets == 1 and target == null:
 		target = event.character
 

@@ -131,9 +131,10 @@ func _process_input() -> void:
 		inventory.add_item(healing_potion)
 
 	if Input.is_action_just_pressed("ability3"):
-		var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Melee Projectile")
+		# var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Melee Projectile")
+		var abc: AoeTargetSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "aoe test")
 		if abc:
-			abc.set_target(get_tree().get_first_node_in_group("selected"))
+			# abc.set_target(get_tree().get_first_node_in_group("selected"))
 			ability_container.activate_one(abc)
 
 	if Input.is_action_just_pressed("ability4"):

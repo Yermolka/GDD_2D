@@ -85,7 +85,10 @@ func activate(event: ActivationEvent) -> void:
 	self_chance_effect.set_stats(event.attribute_map)
 	caster.add_child(self_chance_effect)
 
-	if not self is TargetedSkill and projectile_scene != null and projectile_scene.can_instantiate():
+	if self is TargetedSkill or self is AoeTargetSkill:
+		return
+
+	if projectile_scene != null and projectile_scene.can_instantiate():
 		var scene: Node2D = projectile_scene.instantiate()
 		caster.get_tree().root.add_child(scene)
 		scene.position = caster.global_position

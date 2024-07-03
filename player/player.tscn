@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cultyql87ixvl"]
+[gd_scene load_steps=24 format=3 uid="uid://cultyql87ixvl"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_31dcg"]
 [ext_resource type="Texture2D" uid="uid://dla76qr5vqp1r" path="res://addons/dialogue_nodes/icons/Character.svg" id="1_r2tra"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute.gd" id="4_2qw15"]
 [ext_resource type="Resource" uid="uid://e3dsj8de7p7v" path="res://abilities/active/melee_projectile.tres" id="4_s7rsn"]
 [ext_resource type="Resource" uid="uid://xltm11epb5ep" path="res://stats/player_attributes.tres" id="5_5fmbk"]
+[ext_resource type="Resource" uid="uid://c1w64w0isqrub" path="res://abilities/active/aoe_target_test.tres" id="5_ca3sa"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/inventory.gd" id="7_fdlqo"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/equipment.gd" id="8_ngsfb"]
 [ext_resource type="PackedScene" uid="uid://c3knc8japncl7" path="res://common/selectable/selectable.tscn" id="10_4pxso"]
@@ -87,7 +88,7 @@ texture = ExtResource("1_r2tra")
 [node name="AbilityContainer" type="Node" parent="."]
 script = ExtResource("2_kt3nr")
 gameplay_attribute_map_path = NodePath("../GameplayAttributeMap")
-abilities = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/ability.gd")]([ExtResource("4_s7rsn")])
+abilities = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/ability.gd")]([ExtResource("4_s7rsn"), ExtResource("5_ca3sa")])
 
 [node name="GameplayAttributeMap" type="Node" parent="."]
 script = ExtResource("3_4d36o")
