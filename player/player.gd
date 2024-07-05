@@ -7,8 +7,8 @@ class_name Player extends Entity
 @onready var ability_container: AbilityContainer = $AbilityContainer
 
 
-@onready var test_helm: EquipmentBase = preload("res://items/test_helm.tres").duplicate()
-@onready var healing_potion: ItemBase = preload("res://items/healing_potion.tres")
+@onready var test_helm: EquipmentBase = preload("res://items/equipment/test_helm.tres").duplicate()
+@onready var healing_potion: ItemBase = preload("res://items/potions/healing_potion.tres")
 @onready var test_effect: ChanceAttributeEffect = ChanceAttributeEffect.new()
 
 const SPEED: float = 300.0
@@ -40,7 +40,7 @@ func _setup_inventory() -> void:
 	inventory.item_added.connect(
 		func(item: Item) -> void:
 			print(item.name)
-			if item is EquipmentBase:
+			if item is EquipmentBase and item.name == "Default helm":
 				test_helm = item
 
 			Questify.update_quests()
@@ -84,7 +84,7 @@ func _ready() -> void:
 	_setup_inventory()
 	_setup_quests()
 
-	inventory.add_item(test_helm)
+	# inventory.add_item(test_helm)
 	var attr: AttributeSpec = AttributeSpec.new()
 	attr.attribute_name = "rage"
 	attr.minimum_value = 0
@@ -131,32 +131,16 @@ func _process_input() -> void:
 		inventory.add_item(healing_potion)
 
 	if Input.is_action_just_pressed("ability3"):
-		# var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Melee Projectile")
-		var abc: MovementSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "teleport")
+		var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Melee Projectile")
+		# var abc: MovementSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "teleport")
 		if abc:
-			# abc.set_target(get_tree().get_first_node_in_group("selected"))
+			abc.set_target(get_tree().get_first_node_in_group("selected"))
 			ability_container.activate_one(abc)
 
 	if Input.is_action_just_pressed("ability4"):
-		# ability_container.abilities.append(load("res://abilities/passive/slippery_toes.tres"))
-		# print(ability_container.grant(load("res://abilities/passive/slippery_toes.tres")))
-		# ability_container.activate_many()
-		# var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Heroic Strike")
-		# if abc:
-		# 	abc.set_target(get_tree().get_first_node_in_group("selected"))
-		# 	ability_container.activate_one(abc)
-		# else:
-		# 	print("got no rage!")
-
-		var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Melee")
-		if abc:
-			if abc.chance_effects.has(test_effect):
-				print("Removing")
-				abc.chance_effects.erase(test_effect)
-			else:
-				print("Adding")
-				abc.chance_effects.append(test_effect)
-			
+		var weapon: Weapon = equipment.find_item_by(func(x: EquipmentBase) -> bool: return "equipment.weapon" in x.tags)
+		if weapon:
+			weapon.skill_points += 1
 		
 
 func _process_movement() -> void:

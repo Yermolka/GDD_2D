@@ -1,6 +1,11 @@
 class_name SkillTree extends Control
 
-@export var root_skill: ActiveSkill = null
+@export var root_skill: ActiveSkill = null:
+	get:
+		return root_skill
+	set(value):
+		root_skill = value
+		_draw_items()
 @export var data: SkillTreeData = null:
 	get:
 		return data
@@ -14,9 +19,12 @@ var ability_container: AbilityContainer = null
 	set(value):
 		available_points = value
 		_draw_items()
+		if points_label:
+			points_label.text = str(available_points)
 @onready var skill_tree_slot: PackedScene = preload("res://hud/skill_tree_node.tscn")
 @onready var vbox_container: VBoxContainer = $Panel/VBoxContainer
 @onready var hbox_container: HBoxContainer = $HBoxContainer
+@onready var points_label: Label = $Panel/Points
 
 func _ready() -> void:
 	visibility_changed.connect(_draw_items)
@@ -39,6 +47,9 @@ func _draw_items() -> void:
 	btn_root.force_set_disabled(btn_root.disabled or available_points == 0)
 	hbox_root.add_child(btn_root)
 	btn_root.skill_tree_node_pressed.connect(_ability_clicked)
+
+	if not data:
+		return
 
 	for tier: SkillTreeTierData in data.tiers:
 		var hbox: HBoxContainer = hbox_container.duplicate()
@@ -75,6 +86,36 @@ func _ability_clicked(node: SkillTreeNode) -> void:
 func setup_ability_container(ac: AbilityContainer) -> void:
 	ability_container = ac
 
+func _handle_skill_points_changed(value: int) -> void:
+	available_points = value
+
+func setup_equipment(eq: Equipment) -> void:
+	eq.equipped.connect(
+		func(_item: Item, _slot: EquipmentSlot) -> void:
+			print(1230)
+			var item: Weapon = _item as Weapon
+			if not item:
+				return
+			
+			root_skill = item.skill
+			data = item.skill_tree
+			available_points = item.skill_points
+
+			item.skill_points_changed.connect(_handle_skill_points_changed)
+	)
+
+	eq.unequipped.connect(
+		func(_item: Item, _slot: EquipmentSlot) -> void:
+			var item: Weapon = _item as Weapon
+			if not item:
+				return
+
+			root_skill = null
+			data = null
+			available_points = 0
+
+			item.skill_points_changed.disconnect(_handle_skill_points_changed)
+	)
 
 func _on_close_button_pressed() -> void:
 	visible = false

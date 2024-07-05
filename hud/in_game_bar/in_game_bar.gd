@@ -53,6 +53,15 @@ func handle_ability_granted(_skill: ActiveSkill) -> void:
 	else:
 		printerr("Adding too many abilities!")
 
+func handle_ability_revoked(_skill: ActiveSkill) -> void:
+	if skill_1.ability == _skill:
+		skill_1.ability = null
+	elif skill_2.ability == _skill:
+		skill_2.ability = null
+	elif skill_3.ability == _skill:
+		skill_3.ability = null
+	else:
+		printerr("Trying to revoke non existent ability!")
 
 func handle_cooldown_started(ability: ActiveSkill) -> void:
 	if skill_1.ability == ability:
@@ -69,6 +78,7 @@ func handle_cooldown_ended(ability: ActiveSkill) -> void:
 func setup_ability_container(ability_container: AbilityContainer) -> void:
 	ability_container.ability_activated.connect(handle_ability_activated)
 	ability_container.ability_granted.connect(handle_ability_granted)
+	ability_container.ability_revoked.connect(handle_ability_revoked)
 	ability_container.cooldown_started.connect(handle_cooldown_started)
 	ability_container.cooldown_ended.connect(handle_cooldown_ended)
 	ability_container.cast_started.connect(handle_cast_started)

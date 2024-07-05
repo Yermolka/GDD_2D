@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="Potion" load_steps=5 format=3 uid="uid://cpmc42p2qt3kp"]
 
-[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_y3ty1"]
-[ext_resource type="Texture2D" uid="uid://dlx1ii3oc506a" path="res://addons/dialogue_nodes/icons/float.svg" id="2_lhdxa"]
-[ext_resource type="Script" path="res://items/potion.gd" id="2_va35m"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_2fo4n"]
+[ext_resource type="Script" path="res://items/potion.gd" id="2_psunk"]
+[ext_resource type="Texture2D" uid="uid://dlx1ii3oc506a" path="res://addons/dialogue_nodes/icons/float.svg" id="3_xhihl"]
 
 [sub_resource type="Resource" id="Resource_ts4wf"]
-script = ExtResource("1_y3ty1")
+script = ExtResource("1_2fo4n")
 life_time = 0
 apply_every_second = 1.0
 max_applications = 1
@@ -16,10 +16,10 @@ minimum_value = 400.0
 maximum_value = 400.0
 
 [resource]
-script = ExtResource("2_va35m")
-effects = Array[ExtResource("1_y3ty1")]([SubResource("Resource_ts4wf")])
+script = ExtResource("2_psunk")
+effects = Array[ExtResource("1_2fo4n")]([SubResource("Resource_ts4wf")])
 duration = 3.0
-ui_icon = ExtResource("2_lhdxa")
+ui_icon = ExtResource("3_xhihl")
 name = &"Healing Potion"
 can_stack = true
 decrease_stack_on_use = true

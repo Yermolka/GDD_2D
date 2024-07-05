@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=5 format=3 uid="uid://dqy2c0g5wqihv"]
+
+[ext_resource type="Script" path="res://items/weapon.gd" id="1_bbfx7"]
+[ext_resource type="Resource" uid="uid://cq2lmto3pfn1s" path="res://abilities/active/melee.tres" id="2_pbb44"]
+[ext_resource type="Texture2D" uid="uid://b5wgoe1rpbf31" path="res://addons/dialogue_nodes/icons/CharacterList.svg" id="3_6n4kn"]
+[ext_resource type="Resource" uid="uid://blxg4t7jutslw" path="res://abilities/ability_tree/skill_tree1.tres" id="3_al4a0"]
+
+[resource]
+script = ExtResource("1_bbfx7")
+skill_tree = ExtResource("3_al4a0")
+skill = ExtResource("2_pbb44")
+stats = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd")]([])
+ui_icon = ExtResource("3_6n4kn")
+name = &"Test Weapon"
+can_stack = false
+decrease_stack_on_use = false
+tags = Array[String](["equipment.weapon"])
+quantity_current = 1
+quantity_max = 1
+tags_added_on_activation = Array[String]([])
+tags_added_on_add = Array[String]([])
+tags_added_on_equip = Array[String](["weapon.two_handed"])
+tags_added_on_remove = Array[String]([])
+tags_added_on_unequip = Array[String]([])
+tags_required_to_activate = Array[String]([])
+tags_required_to_add = Array[String]([])
+tags_required_to_equip = Array[String]([])
+tags_required_to_remove = Array[String]([])
+tags_required_to_unequip = Array[String]([])
+tags_removed_on_activation = Array[String]([])
+tags_removed_on_add = Array[String]([])
+tags_removed_on_equip = Array[String]([])
+tags_removed_on_remove = Array[String]([])
+tags_removed_on_unequip = Array[String](["weapon.two_handed"])

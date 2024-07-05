@@ -5,8 +5,12 @@ var skill: GDDSkill = null:
 		return skill
 	set(value):
 		skill = value
-		texture_normal = skill.ui_icon
-		texture_disabled = skill.ui_icon
+		if skill:
+			texture_normal = skill.ui_icon
+			texture_disabled = skill.ui_icon
+		else:
+			texture_normal = null
+			texture_disabled = null
 		_render()
 var upgrade: GDDSkillUpgrade = null:
 	get:

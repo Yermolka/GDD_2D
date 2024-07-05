@@ -24,7 +24,7 @@ apply_every_second = 1.0
 max_applications = 1
 applies_as = 0
 attribute_name = "health"
-value_formula = "-DMG*2"
+value_formula = "-DMG*200"
 minimum_value = 0.0
 maximum_value = 0.0
 

@@ -115,3 +115,5 @@ custom_effects = Array[RichTextEffect]([SubResource("RichTextEffect_xikk0"), Sub
 
 [node name="SkillTree" parent="." instance=ExtResource("9_x0b8p")]
 layout_mode = 1
+root_skill = null
+data = null
