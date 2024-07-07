@@ -46,12 +46,14 @@ texture = ExtResource("2_audf2")
 expand_mode = 2
 
 [node name="Sweep" type="TextureProgressBar" parent="."]
-modulate = Color(0.152941, 0.152941, 0.152941, 0.890196)
+modulate = Color(0.658824, 0.658824, 0.658824, 0.811765)
+texture_filter = 1
 layout_mode = 0
 offset_right = 25.0
 offset_bottom = 24.0
-value = 60.0
+value = 30.0
 fill_mode = 5
+nine_patch_stretch = true
 
 [node name="Timer" type="Timer" parent="Sweep"]
 one_shot = true

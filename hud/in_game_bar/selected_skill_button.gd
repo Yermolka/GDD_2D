@@ -19,10 +19,7 @@ class_name SelectedSkillButton extends TextureButton
 var ability_container: AbilityContainer
 
 func _on_pressed() -> void:
-	if ability != null and ability_container != null:
-		if ability is TargetedSkill:
-			ability.set_target(get_tree().get_first_node_in_group("selected"))
-		ability_container.activate_one(ability)
+	activate()
 
 
 func _ready() -> void:
@@ -33,6 +30,7 @@ func _ready() -> void:
 		cd_bar.value = 0
 		time_label.hide()
 		disabled = false
+		texture_normal = ability.ui_icon
 	)
 	
 
@@ -44,10 +42,14 @@ func _process(_delta: float) -> void:
 		if not timer.is_stopped():
 			time_label.text = "%3.1f" % timer.time_left
 			cd_bar.value = int((timer.time_left / ability.cooldown_duration) * 100)
+		if Input.is_action_just_pressed("ability" + str(skill_number)):
+			activate()
 
 
 func activate() -> void:
 	if ability != null and ability_container != null:
+		if ability is TargetedSkill:
+			ability.set_target(get_tree().get_first_node_in_group("selected"))
 		ability_container.activate_one(ability)
 
 
@@ -57,8 +59,6 @@ func draw_ability() -> void:
 		cd_bar.texture_progress = texture_normal
 		cd_bar.value = 0
 	else:
-		# texture_normal = PlaceholderTexture2D.new()
-		# texture_normal.size = Vector2(10, 10)
 		texture_normal = null
 
 
@@ -66,3 +66,4 @@ func start_cooldown() -> void:
 	time_label.show()
 	timer.start(ability.cooldown_duration)
 	disabled = true
+	texture_normal = null

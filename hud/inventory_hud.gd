@@ -68,6 +68,8 @@ func setup(_inventory: Inventory, _equipment: Equipment) -> void:
 					inventory.activate(item)
 		)
 		inventory_slot.equipment = equipment
+		if inventory.items.size() > i:
+			inventory_slot.item = inventory.items[i]
 		inventory_map.append(inventory_slot)
 
 	var equipment_slots: Array = char_screen_frame.get_children().filter(func (x: Node) -> bool: return x is EquipmentSlotUI)

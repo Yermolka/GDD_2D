@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cultyql87ixvl"]
+[gd_scene load_steps=26 format=3 uid="uid://cultyql87ixvl"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_31dcg"]
 [ext_resource type="Texture2D" uid="uid://dla76qr5vqp1r" path="res://addons/dialogue_nodes/icons/Character.svg" id="1_r2tra"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/equipment.gd" id="8_ngsfb"]
 [ext_resource type="PackedScene" uid="uid://c3knc8japncl7" path="res://common/selectable/selectable.tscn" id="10_4pxso"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/resources/equipment_slot.gd" id="10_a4fio"]
+[ext_resource type="Resource" uid="uid://dqy2c0g5wqihv" path="res://items/weapons/test_weapon.tres" id="11_qsa7m"]
 [ext_resource type="PackedScene" uid="uid://cxh5dyttaogko" path="res://addons/godot_gameplay_systems/attributes_and_abilities/debug/abilities_debugger.tscn" id="12_2smb5"]
 
 [sub_resource type="Resource" id="Resource_4bvb6"]
@@ -67,6 +68,7 @@ accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_s
 script = ExtResource("10_a4fio")
 name = "weapon"
 accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([])
+equipped = ExtResource("11_qsa7m")
 
 [sub_resource type="Resource" id="Resource_373ht"]
 script = ExtResource("10_a4fio")

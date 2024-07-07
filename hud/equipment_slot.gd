@@ -10,6 +10,8 @@ func setup(_slot: EquipmentSlot) -> void:
 		func (_item: Item, __slot: EquipmentSlot) -> void:
 			texture_rect.texture = null		
 	)
+	if slot.has_equipped_item:
+		_draw_slot(slot.equipped, slot)
 
 func _draw_slot(item: Item, _slot: EquipmentSlot) -> void:
 	item = item as EquipmentBase

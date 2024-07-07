@@ -78,6 +78,18 @@ func _setup_inventory() -> void:
 			attribute_map.apply_effect(_item.antieffect)
 	)
 
+	call_deferred("_setup_equipped_items")
+
+func _setup_equipped_items() -> void:
+	for eqb: EquipmentBase in equipment.equipped_items:
+		if eqb is Weapon:
+			ability_container.grant(eqb.skill)
+			for tier: SkillTreeTierData in eqb.skill_tree.tiers:
+				for upgrade: GDDSkillUpgrade in tier.skills:
+					if upgrade.learned:
+						upgrade.apply(eqb.skill, ability_container)
+		add_child(eqb.effect)
+
 func _setup_quests() -> void:
 	Questify.condition_query_requested.connect(_quest_update)
 	Questify.quest_started.connect(
@@ -135,28 +147,18 @@ func _physics_process(_delta: float) -> void:
 	_process_input()
 
 func _process_input() -> void:
-	if Input.is_action_just_pressed("ability1"):
-		if test_helm in equipment.equipped_items:
-			equipment.unequip(test_helm)
-			inventory.add_item(test_helm)
-		else:
-			inventory.remove_item(test_helm)
-			equipment.equip(test_helm)
+	# if Input.is_action_just_pressed("ability1"):
+	# 	pass
 
-	if Input.is_action_just_pressed("ability2"):
-		inventory.add_item(healing_potion)
+	# if Input.is_action_just_pressed("ability2"):
+	# 	pass
 
-	if Input.is_action_just_pressed("ability3"):
-		var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Melee Projectile")
-		# var abc: MovementSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "teleport")
-		if abc:
-			abc.set_target(get_tree().get_first_node_in_group("selected"))
-			ability_container.activate_one(abc)
+	# if Input.is_action_just_pressed("ability3"):
+	# 	pass
 
-	if Input.is_action_just_pressed("ability4"):
-		var weapon: Weapon = equipment.find_item_by(func(x: EquipmentBase) -> bool: return "equipment.weapon" in x.tags)
-		if weapon:
-			weapon.skill_points += 1
+	# if Input.is_action_just_pressed("ability4"):
+	# 	pass
+	pass
 		
 
 func _process_movement() -> void:
