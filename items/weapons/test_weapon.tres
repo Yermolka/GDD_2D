@@ -9,7 +9,12 @@
 script = ExtResource("1_bbfx7")
 skill_tree = ExtResource("3_al4a0")
 skill = ExtResource("2_pbb44")
+skill_points = 0
+level = 1
+current_xp = 0
+xp_map = Array[int]([0, 10])
 stats = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd")]([])
+required_level = 0
 ui_icon = ExtResource("3_6n4kn")
 name = &"Test Weapon"
 can_stack = false

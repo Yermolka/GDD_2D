@@ -550,6 +550,7 @@ layer_1/tile_data = PackedInt32Array(655356, 1, 0, 720892, 1, 1, 786428, 1, 2, 8
 
 [node name="Player" parent="." instance=ExtResource("2_i86u5")]
 position = Vector2(420, 306)
+xp_map = Array[int]([0, 10])
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Player"]
 
@@ -560,12 +561,15 @@ player_path = NodePath("../..")
 
 [node name="Enemy" parent="." instance=ExtResource("4_tmm5i")]
 position = Vector2(246, 725)
+xp_reward = 10
 
 [node name="Enemy2" parent="." instance=ExtResource("4_tmm5i")]
 position = Vector2(350, 704)
+xp_reward = 10
 
 [node name="Enemy3" parent="." instance=ExtResource("4_tmm5i")]
 position = Vector2(322, 804)
+xp_reward = 10
 
 [node name="Drop2D" type="Node2D" parent="."]
 script = ExtResource("5_58p84")

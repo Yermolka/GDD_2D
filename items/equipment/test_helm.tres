@@ -18,6 +18,7 @@ maximum_value = 30.0
 [resource]
 script = ExtResource("1_auqp6")
 stats = Array[ExtResource("2_23dje")]([SubResource("Resource_nxwq1")])
+required_level = 0
 ui_icon = ExtResource("3_2g180")
 name = &"Default helm"
 can_stack = false

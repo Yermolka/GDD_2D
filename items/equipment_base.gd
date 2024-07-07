@@ -16,3 +16,8 @@ var antieffect: GameplayEffect:
 			_stat.maximum_value *= -1
 			_effect.attributes_affected.append(_stat)
 		return _effect
+
+@export var required_level: int = 0
+
+func _can_equip(_equipment: Equipment) -> bool:
+	return (_equipment.owner as Player).level >= required_level

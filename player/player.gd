@@ -11,6 +11,22 @@ class_name Player extends Entity
 @onready var healing_potion: ItemBase = preload("res://items/potions/healing_potion.tres")
 @onready var test_effect: ChanceAttributeEffect = ChanceAttributeEffect.new()
 
+@export var level: int = 1
+@export var current_xp: int = 0:
+	get:
+		return current_xp
+	set(value):
+		current_xp = value
+		if xp_map.size() > level and current_xp >= xp_map[level]:
+			current_xp -= xp_map[level]
+			level += 1
+			level_changed.emit(level)
+		if xp_map.size() > level:
+			current_xp_changed.emit(current_xp, xp_map[level])
+@export var xp_map: Array[int]
+signal current_xp_changed(value: int, maxValue: int)
+signal level_changed(value: int)
+
 const SPEED: float = 300.0
 var movement_speed: float:
 	get:
@@ -164,3 +180,10 @@ func _process_movement() -> void:
 func helper(duration: float, gameplay_effect: GameplayEffect) -> void:
 	await get_tree().create_timer(duration).timeout
 	attribute_map.apply_effect(gameplay_effect)
+
+func give_xp(amount: int) -> void:
+	current_xp += amount
+	var weapons: Array = equipment.slots.filter(func(x: EquipmentSlot) -> bool: return "weapon" in x.name)
+	for w: EquipmentSlot in weapons:
+		if w.has_equipped_item:
+			w.equipped.give_xp(amount)
