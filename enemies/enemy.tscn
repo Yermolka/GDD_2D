@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dbx4mf5ywvhdr"]
+[gd_scene load_steps=22 format=3 uid="uid://dbx4mf5ywvhdr"]
 
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="1_kjur6"]
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="1_s888k"]
@@ -7,7 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dla76qr5vqp1r" path="res://addons/dialogue_nodes/icons/Character.svg" id="4_lj11j"]
 [ext_resource type="PackedScene" uid="uid://c3knc8japncl7" path="res://common/selectable/selectable.tscn" id="6_ybr71"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/drop.gd" id="7_vo5q4"]
-[ext_resource type="Resource" uid="uid://b7xkucqt8xtny" path="res://items/test_helm.tres" id="8_cljkv"]
+[ext_resource type="Resource" uid="uid://dqy2c0g5wqihv" path="res://items/weapons/test_weapon.tres" id="8_c4eux"]
+[ext_resource type="Resource" uid="uid://cl5q55fgvw7ek" path="res://items/weapons/test_weapon2.tres" id="9_v1dxf"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/resources/drop_group.gd" id="9_xmano"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/resources/drop_table.gd" id="10_1ofvw"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/ability_container.gd" id="11_8y1re"]
@@ -57,7 +58,7 @@ current_value = 2.0
 
 [sub_resource type="Resource" id="Resource_vgigj"]
 script = ExtResource("9_xmano")
-items_pool = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([ExtResource("8_cljkv")])
+items_pool = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([ExtResource("8_c4eux"), ExtResource("9_v1dxf")])
 drop_chance = 100.0
 
 [sub_resource type="Resource" id="Resource_7dh5b"]

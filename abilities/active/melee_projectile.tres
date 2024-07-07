@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_ho0vm"]
 [ext_resource type="Script" path="res://abilities/TargetedActiveSkill.gd" id="1_id1vy"]
-[ext_resource type="PackedScene" uid="uid://bavii32bwjf2c" path="res://abilities/skill_aoe.tscn" id="2_p7ogj"]
+[ext_resource type="PackedScene" uid="uid://clh8fdmdclnw6" path="res://abilities/skill_projectile.tscn" id="2_qdww5"]
 [ext_resource type="Texture2D" uid="uid://b8o81rn8q8a43" path="res://addons/dialogue_nodes/icons/Remove.svg" id="4_a5log"]
 
 [sub_resource type="Resource" id="Resource_lv00y"]
@@ -12,19 +12,19 @@ apply_every_second = 1.0
 max_applications = 1
 applies_as = 0
 attribute_name = "health"
-value_formula = "-DMG*2"
+value_formula = "-DMG*200"
 minimum_value = 0.0
 maximum_value = 0.0
 
 [resource]
 script = ExtResource("1_id1vy")
 allowed_targets = 0
-projectile_scene = ExtResource("2_p7ogj")
+projectile_scene = ExtResource("2_qdww5")
 projectile_speed = 1000.0
 resource_costs = {}
 min_range = 0.0
 max_range = 500.0
-cast_time = 1.0
+cast_time = 0.0
 instant_effects = Array[ExtResource("1_ho0vm")]([SubResource("Resource_lv00y")])
 instant_timed_effects = Array[ExtResource("1_ho0vm")]([])
 timed_effects_duration = 1.0
@@ -39,7 +39,7 @@ ui_name = "Melee Projectile"
 cooldown_duration = 1.0
 cooldown_continuos = false
 grant_automatic = true
-grant_tags = Array[String](["type.cursor_aoe"])
+grant_tags = Array[String](["type.projectile"])
 grant_tags_required = Array[String]([])
 tags_activation = Array[String](["casting"])
 tags_activation_required = Array[String]([])

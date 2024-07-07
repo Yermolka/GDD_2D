@@ -1,6 +1,7 @@
 class_name Enemy extends Entity
 
 @onready var drop: Drop = $Drop
+@export var xp_reward: int = 0
 @onready var attribute_map: GameplayAttributeMap = $GameplayAttributeMap
 @onready var ability_container: AbilityContainer = $AbilityContainer
 
@@ -10,7 +11,8 @@ func _ready() -> void:
 		func (attr: AttributeSpec) -> void:
 			if attr.attribute_name == "health" and attr.current_buffed_value == 0:
 				drop.drop_items()
-				print("dead")
+				var player: Player = get_tree().get_first_node_in_group("player")
+				player.give_xp(xp_reward)
 				call_deferred("queue_free")
 			print(attr.attribute_name, ": ", attr.current_buffed_value)
 	)

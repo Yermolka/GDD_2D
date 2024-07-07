@@ -97,7 +97,7 @@ func _handle_item_equipped(item: Item, slot: EquipmentSlot):
 
 ## Used internally to handle a [signal Inventory.item_removed] signal.
 func _handle_item_removed(item: Item) -> void:
-	unequip(item)
+	# unequip(item)
 	_handle_life_cycle(LifeCycle.Remove, item)
 
 
@@ -130,6 +130,7 @@ func _handle_item_refused_to_equip(item: Item, slot: EquipmentSlot):
 func _handle_item_unequipped(item: Item, slot: EquipmentSlot):
 	unequipped.emit(item, slot)	
 	item._unequip(self, slot)
+	inventory.add_item(item)
 	_handle_life_cycle(LifeCycle.Unequip, item)
 
 

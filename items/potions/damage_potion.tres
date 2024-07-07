@@ -11,12 +11,14 @@ apply_every_second = 1.0
 max_applications = 1
 applies_as = 0
 attribute_name = ""
+value_formula = ""
 minimum_value = 0.0
 maximum_value = 0.0
 
 [resource]
 script = ExtResource("1_t0ofd")
 effects = Array[ExtResource("1_6vwuf")]([SubResource("Resource_clmhq")])
+duration = 0.0
 ui_icon = ExtResource("3_e48gc")
 name = &"Damage Potion"
 can_stack = true

@@ -7,9 +7,25 @@ class_name Player extends Entity
 @onready var ability_container: AbilityContainer = $AbilityContainer
 
 
-@onready var test_helm: EquipmentBase = preload("res://items/test_helm.tres").duplicate()
-@onready var healing_potion: ItemBase = preload("res://items/healing_potion.tres")
+@onready var test_helm: EquipmentBase = preload("res://items/equipment/test_helm.tres").duplicate()
+@onready var healing_potion: ItemBase = preload("res://items/potions/healing_potion.tres")
 @onready var test_effect: ChanceAttributeEffect = ChanceAttributeEffect.new()
+
+@export var level: int = 1
+@export var current_xp: int = 0:
+	get:
+		return current_xp
+	set(value):
+		current_xp = value
+		if xp_map.size() > level and current_xp >= xp_map[level]:
+			current_xp -= xp_map[level]
+			level += 1
+			level_changed.emit(level)
+		if xp_map.size() > level:
+			current_xp_changed.emit(current_xp, xp_map[level])
+@export var xp_map: Array[int]
+signal current_xp_changed(value: int, maxValue: int)
+signal level_changed(value: int)
 
 const SPEED: float = 300.0
 var movement_speed: float:
@@ -40,7 +56,7 @@ func _setup_inventory() -> void:
 	inventory.item_added.connect(
 		func(item: Item) -> void:
 			print(item.name)
-			if item is EquipmentBase:
+			if item is EquipmentBase and item.name == "Default helm":
 				test_helm = item
 
 			Questify.update_quests()
@@ -61,6 +77,18 @@ func _setup_inventory() -> void:
 				return
 			attribute_map.apply_effect(_item.antieffect)
 	)
+
+	call_deferred("_setup_equipped_items")
+
+func _setup_equipped_items() -> void:
+	for eqb: EquipmentBase in equipment.equipped_items:
+		if eqb is Weapon:
+			ability_container.grant(eqb.skill)
+			for tier: SkillTreeTierData in eqb.skill_tree.tiers:
+				for upgrade: GDDSkillUpgrade in tier.skills:
+					if upgrade.learned:
+						upgrade.apply(eqb.skill, ability_container)
+		add_child(eqb.effect)
 
 func _setup_quests() -> void:
 	Questify.condition_query_requested.connect(_quest_update)
@@ -84,7 +112,7 @@ func _ready() -> void:
 	_setup_inventory()
 	_setup_quests()
 
-	inventory.add_item(test_helm)
+	# inventory.add_item(test_helm)
 	var attr: AttributeSpec = AttributeSpec.new()
 	attr.attribute_name = "rage"
 	attr.minimum_value = 0
@@ -119,44 +147,18 @@ func _physics_process(_delta: float) -> void:
 	_process_input()
 
 func _process_input() -> void:
-	if Input.is_action_just_pressed("ability1"):
-		if test_helm in equipment.equipped_items:
-			equipment.unequip(test_helm)
-			inventory.add_item(test_helm)
-		else:
-			inventory.remove_item(test_helm)
-			equipment.equip(test_helm)
+	# if Input.is_action_just_pressed("ability1"):
+	# 	pass
 
-	if Input.is_action_just_pressed("ability2"):
-		inventory.add_item(healing_potion)
+	# if Input.is_action_just_pressed("ability2"):
+	# 	pass
 
-	if Input.is_action_just_pressed("ability3"):
-		# var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Melee Projectile")
-		var abc: MovementSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "teleport")
-		if abc:
-			# abc.set_target(get_tree().get_first_node_in_group("selected"))
-			ability_container.activate_one(abc)
+	# if Input.is_action_just_pressed("ability3"):
+	# 	pass
 
-	if Input.is_action_just_pressed("ability4"):
-		# ability_container.abilities.append(load("res://abilities/passive/slippery_toes.tres"))
-		# print(ability_container.grant(load("res://abilities/passive/slippery_toes.tres")))
-		# ability_container.activate_many()
-		# var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Heroic Strike")
-		# if abc:
-		# 	abc.set_target(get_tree().get_first_node_in_group("selected"))
-		# 	ability_container.activate_one(abc)
-		# else:
-		# 	print("got no rage!")
-
-		var abc: TargetedSkill = ability_container.find_by(func (x: Ability) -> bool: return x.ui_name == "Melee")
-		if abc:
-			if abc.chance_effects.has(test_effect):
-				print("Removing")
-				abc.chance_effects.erase(test_effect)
-			else:
-				print("Adding")
-				abc.chance_effects.append(test_effect)
-			
+	# if Input.is_action_just_pressed("ability4"):
+	# 	pass
+	pass
 		
 
 func _process_movement() -> void:
@@ -180,3 +182,10 @@ func _process_movement() -> void:
 func helper(duration: float, gameplay_effect: GameplayEffect) -> void:
 	await get_tree().create_timer(duration).timeout
 	attribute_map.apply_effect(gameplay_effect)
+
+func give_xp(amount: int) -> void:
+	current_xp += amount
+	var weapons: Array = equipment.slots.filter(func(x: EquipmentSlot) -> bool: return "weapon" in x.name)
+	for w: EquipmentSlot in weapons:
+		if w.has_equipped_item:
+			w.equipped.give_xp(amount)

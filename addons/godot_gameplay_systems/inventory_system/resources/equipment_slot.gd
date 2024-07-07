@@ -47,12 +47,16 @@ func can_equip(item: Item) -> bool:
 	if item == null:
 		return false
 	
-	if accepted_items.size() == 0:
-		return true
-	
-	for accepted in accepted_items:
-		if accepted.name == item.name:
+	for tag: String in item.tags:
+		if tag == "equipment." + name:
 			return true
+
+	# if accepted_items.size() == 0:
+	# 	return true
+	
+	# for accepted in accepted_items:
+	# 	if accepted.name == item.name:
+	# 		return true
 	
 	return false
 

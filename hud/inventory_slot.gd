@@ -16,6 +16,7 @@ var item: ItemBase:
 		else:
 			texture = null
 
+var equipment: Equipment = null
 
 func _on_gui_input(event: InputEvent) -> void:
 	if item == null:
@@ -25,5 +26,5 @@ func _on_gui_input(event: InputEvent) -> void:
 	if not event:
 		return
 
-	if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+	if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed and item._can_equip(equipment):
 		slot_pressed.emit(item)

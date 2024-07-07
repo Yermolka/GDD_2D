@@ -43,6 +43,18 @@ func setup(_inventory: Inventory, _equipment: Equipment) -> void:
 
 	$Inventory.visible = false
 	$CharScreen.visible = false
+	$Inventory.visibility_changed.connect(
+		func() -> void:
+			if not $Inventory.visible:
+				return
+			for i: InventorySlot in inventory_map:
+				if not i.item:
+					continue
+				if i.item._can_equip(equipment):
+					i.modulate = Color.WHITE
+				else:
+					i.modulate = Color.RED
+	)
 
 	for i: int in range(inventory.max_size):
 		var inventory_slot: InventorySlot = inventory_slot_scene.instantiate()
@@ -55,6 +67,9 @@ func setup(_inventory: Inventory, _equipment: Equipment) -> void:
 				elif inventory.can_activate(item):
 					inventory.activate(item)
 		)
+		inventory_slot.equipment = equipment
+		if inventory.items.size() > i:
+			inventory_slot.item = inventory.items[i]
 		inventory_map.append(inventory_slot)
 
 	var equipment_slots: Array = char_screen_frame.get_children().filter(func (x: Node) -> bool: return x is EquipmentSlotUI)

@@ -80,3 +80,6 @@ func _equip(_equipment: Equipment, _equipment_slot: EquipmentSlot) -> void:
 func _unequip(_equipment: Equipment, _equipment_slot: EquipmentSlot) -> void:
 	pass
 
+
+func _can_equip(_equipment: Equipment) -> bool:
+	return true

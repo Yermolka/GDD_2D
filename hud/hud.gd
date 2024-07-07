@@ -15,7 +15,9 @@ func _ready() -> void:
 
 	in_game_bar.setup_ability_container(player.ability_container)
 	in_game_bar.setup_gameplay_attribute_map(player.attribute_map)
+
 	skill_tree.setup_ability_container(player.ability_container)
+	skill_tree.setup_equipment(player.equipment)
 
 	EventBus.startDialogue.connect(
 		func(data: DialogueData, start: String) -> void:
