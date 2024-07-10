@@ -46,9 +46,9 @@ func activate(event: ActivationEvent) -> void:
 		event.ability_container.add_tag(CASTING_TAG)
 		await _cast(caster.get_tree().create_timer(cast_time), event.ability_container)
 		event.ability_container.remove_tag(CASTING_TAG)
-		if event.ability_container.has_tag("moving"):
-			cast_ended.emit(self, false)
-			return
+		# if event.ability_container.has_tag("moving"):
+		# 	cast_ended.emit(self, false)
+		# 	return
 		cast_ended.emit(self, true)
 
 	for resource_type: String in resource_costs:
@@ -85,7 +85,7 @@ func activate(event: ActivationEvent) -> void:
 	self_chance_effect.set_stats(event.attribute_map)
 	caster.add_child(self_chance_effect)
 
-	if self is TargetedSkill or self is AoeTargetSkill:
+	if self is TargetedSkill or self is AoeTargetSkill or self is NonTargetedSkill:
 		return
 
 	if projectile_scene != null and projectile_scene.can_instantiate():

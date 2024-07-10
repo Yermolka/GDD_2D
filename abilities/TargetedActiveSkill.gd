@@ -36,7 +36,7 @@ func activate(event: ActivationEvent) -> void:
 		scene.add_child(main_effect)
 		scene.add_child(main_chance_effect)
 		scene.add_child(main_timed_effect)
-		scene.texture = ui_icon
+		# scene.texture = ui_icon
 		scene.target = target
 		scene.speed = projectile_speed
 		if grant_tags.has("type.projectile"):
