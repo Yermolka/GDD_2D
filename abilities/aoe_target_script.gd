@@ -1,6 +1,6 @@
-class_name AoeTargetScript extends Sprite2D
+class_name AoeTargetScript extends Sprite3D
 
-signal targeting_ended(pos: Vector2, success: bool)
+signal targeting_ended(pos: Vector3, success: bool)
 var radius: float:
 	get:
 		return radius
@@ -9,11 +9,11 @@ var radius: float:
 		if radius <= 0:
 			radius = 0.01
 		var width: float = texture.get_width()
-		scale = Vector2.ONE
+		scale = Vector3.ONE
 		scale *= radius / width
 
 func _process(_delta: float) -> void:
-	global_position = get_global_mouse_position()
+	global_position = get_viewport().get_camera_3d().project_ray_origin(get_viewport().get_global_mouse_position())
 
 func _input(event: InputEvent) -> void:
 	event = event as InputEventMouseButton

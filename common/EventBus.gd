@@ -1,10 +1,10 @@
 extends Node
 
-signal onTargetSelected(target: CharacterBody2D)
+signal onTargetSelected(target: Entity)
 signal startDialogue(data: DialogueData, start: String)
 signal dialogueSignal(value: String)
 
 func _enter_tree() -> void:
-	onTargetSelected.connect(func (t: CharacterBody2D) -> void:
-		print(t.name)
+	onTargetSelected.connect(func (t: Entity) -> void:
+		print("Targeted: ", t.name)
 	)

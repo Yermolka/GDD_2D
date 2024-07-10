@@ -1,7 +1,7 @@
-class_name Selectable extends Area2D
+class_name Selectable extends Area3D
 
 var selected: bool = false
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: Sprite3D = $Sprite3D
 
 func _ready() -> void:
 	if owner == null:
@@ -24,7 +24,7 @@ func deselect() -> void:
 		selected = false
 		sprite.visible = false
 
-func _handle_input(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+func _handle_input(_camera: Node, event: InputEvent, _position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if selected:
 		return
 

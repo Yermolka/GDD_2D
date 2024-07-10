@@ -2,16 +2,17 @@
 
 [ext_resource type="Script" path="res://common/selectable/selectable.gd" id="1_rk335"]
 
-[sub_resource type="Gradient" id="Gradient_8yg40"]
+[sub_resource type="Gradient" id="Gradient_iaiie"]
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_86k3k"]
-gradient = SubResource("Gradient_8yg40")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qywlq"]
+gradient = SubResource("Gradient_iaiie")
 
-[node name="Selectable" type="Area2D"]
+[node name="Selectable" type="Area3D"]
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("1_rk335")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(4.17734, 0, 0, 0, 0.0218308, 0.985507, 0, -2.96395, 0.00725869, 0, 0.390923, 0)
 visible = false
-texture = SubResource("GradientTexture2D_86k3k")
+texture = SubResource("GradientTexture2D_qywlq")

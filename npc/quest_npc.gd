@@ -1,4 +1,4 @@
-class_name QuestNPC extends CharacterBody2D
+class_name QuestNPC extends CharacterBody3D
 
 @export var dialogue_data: DialogueData = null
 
@@ -20,7 +20,7 @@ func _ready() -> void:
 
 	quest = quest.instantiate()
 
-func _on_input_event(viewport:Node, event:InputEvent, shape_idx:int) -> void:
+func _on_input_event(_camera: Node, event: InputEvent, _position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	event = event as InputEventMouseButton
 	if not event:
 		return

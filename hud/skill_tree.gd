@@ -92,7 +92,6 @@ func _handle_skill_points_changed(value: int) -> void:
 func setup_equipment(eq: Equipment) -> void:
 	eq.equipped.connect(
 		func(_item: Item, _slot: EquipmentSlot) -> void:
-			print(1230)
 			var item: Weapon = _item as Weapon
 			if not item:
 				return

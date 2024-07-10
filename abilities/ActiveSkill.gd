@@ -89,7 +89,7 @@ func activate(event: ActivationEvent) -> void:
 		return
 
 	if projectile_scene != null and projectile_scene.can_instantiate():
-		var scene: Node2D = projectile_scene.instantiate()
+		var scene: Node3D = projectile_scene.instantiate()
 		caster.get_tree().root.add_child(scene)
 		scene.position = caster.global_position
 

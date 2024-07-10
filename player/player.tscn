@@ -1,20 +1,20 @@
-[gd_scene load_steps=26 format=3 uid="uid://cultyql87ixvl"]
+[gd_scene load_steps=25 format=3 uid="uid://cultyql87ixvl"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_31dcg"]
-[ext_resource type="Texture2D" uid="uid://dla76qr5vqp1r" path="res://addons/dialogue_nodes/icons/Character.svg" id="1_r2tra"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/ability_container.gd" id="2_kt3nr"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="3_4d36o"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute.gd" id="4_2qw15"]
-[ext_resource type="Resource" uid="uid://e3dsj8de7p7v" path="res://abilities/active/melee_projectile.tres" id="4_s7rsn"]
 [ext_resource type="Resource" uid="uid://xltm11epb5ep" path="res://stats/player_attributes.tres" id="5_5fmbk"]
-[ext_resource type="Resource" uid="uid://c1w64w0isqrub" path="res://abilities/active/aoe_target_test.tres" id="5_ca3sa"]
-[ext_resource type="Resource" uid="uid://bwe1yh7rpxxnt" path="res://abilities/active/teleport.tres" id="6_alx1l"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/inventory.gd" id="7_fdlqo"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/equipment.gd" id="8_ngsfb"]
 [ext_resource type="PackedScene" uid="uid://c3knc8japncl7" path="res://common/selectable/selectable.tscn" id="10_4pxso"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/resources/equipment_slot.gd" id="10_a4fio"]
 [ext_resource type="Resource" uid="uid://dqy2c0g5wqihv" path="res://items/weapons/test_weapon.tres" id="11_qsa7m"]
 [ext_resource type="PackedScene" uid="uid://cxh5dyttaogko" path="res://addons/godot_gameplay_systems/attributes_and_abilities/debug/abilities_debugger.tscn" id="12_2smb5"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_r0fkn"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8qjtp"]
 
 [sub_resource type="Resource" id="Resource_4bvb6"]
 script = ExtResource("4_2qw15")
@@ -75,23 +75,21 @@ script = ExtResource("10_a4fio")
 name = "scroll"
 accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([])
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3nhmo"]
+
+[node name="Player" type="CharacterBody3D"]
 collision_mask = 22
 script = ExtResource("1_31dcg")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-27, -53, 11, -39, 21, -16, 64, -23, 94, 7, 89, 20, 3, 70, -17, 69, -44, 42, -40, 28, -20, 8, -41, 11, -66, -13, -61, -28)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_r0fkn")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-rotation = -0.523599
-scale = Vector2(8.375, 8.375)
-skew = -0.261799
-texture = ExtResource("1_r2tra")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_8qjtp")
 
 [node name="AbilityContainer" type="Node" parent="."]
 script = ExtResource("2_kt3nr")
 gameplay_attribute_map_path = NodePath("../GameplayAttributeMap")
-abilities = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/ability.gd")]([ExtResource("4_s7rsn"), ExtResource("5_ca3sa"), ExtResource("6_alx1l")])
 
 [node name="GameplayAttributeMap" type="Node" parent="."]
 script = ExtResource("3_4d36o")
@@ -110,12 +108,13 @@ owner_path = NodePath("..")
 inventory_path = NodePath("../Inventory")
 slots = Array[ExtResource("10_a4fio")]([SubResource("Resource_vnchi"), SubResource("Resource_bdtrf"), SubResource("Resource_hr8py"), SubResource("Resource_6kkog"), SubResource("Resource_hqypi"), SubResource("Resource_373ht")])
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
 [node name="Selectable" parent="." instance=ExtResource("10_4pxso")]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Selectable"]
-polygon = PackedVector2Array(-27, -53, 11, -39, 21, -16, 64, -23, 94, 7, 89, 20, 3, 70, -17, 69, -44, 42, -40, 28, -20, 8, -41, 11, -66, -13, -61, -28)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Selectable"]
+shape = SubResource("CapsuleShape3D_3nhmo")
 
 [node name="AbilitiesDebugger" parent="." instance=ExtResource("12_2smb5")]
 ability_container_path = NodePath("../AbilityContainer")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.924785, 0.380489, 0, -0.380489, 0.924785, 0, 1.88302, 3.39728)

@@ -35,7 +35,7 @@ func _render() -> void:
 	if item and item.scene and item.scene.can_instantiate():
 		if rendered_item:
 			rendered_item.queue_free()
-		
+
 		rendered_item = item.scene.instantiate()
 		add_child(rendered_item)
 
