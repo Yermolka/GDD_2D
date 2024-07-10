@@ -13,13 +13,12 @@ func activate(event: ActivationEvent) -> void:
 	event.character.get_tree().root.add_child(scene)
 	scene.radius = ui_icon.get_width()
 	var res: Array = await scene.targeting_ended
-	print(res)
 	if not res[1]: # not success
 		return
 
 	if event.character.global_position.distance_to(res[0]) > max_range:
 		return
-	
+
 	await super.activate(event)
 	if event.ability_container.has_tag("moving"):
 		return
@@ -47,8 +46,9 @@ func activate(event: ActivationEvent) -> void:
 		p_scene.add_child(main_chance_effect)
 		p_scene.add_child(main_timed_effect)
 		p_scene.position = res[0]
-		p_scene.texture = ui_icon
-		p_scene.collision_shape.shape.radius = ui_icon.get_width() / 2.0
+		# p_scene.texture = ui_icon
+		# p_scene.collision_shape.shape.radius = ui_icon.get_width() / 2.0
+		p_scene.collision_shape.shape.radius = 5
 		p_scene.speed = projectile_speed
 
 func can_activate(event: ActivationEvent) -> bool:

@@ -1,4 +1,4 @@
-class_name NPC extends CharacterBody2D
+class_name NPC extends CharacterBody3D
 
 @onready var dialogue_bubble: DialogueBubble = $DialogueBubble
 @export var dialogue_data: DialogueData = null
@@ -10,7 +10,7 @@ const INTERACTION_DIST: float = 200.0
 func _ready() -> void:
 	dialogue_bubble.data = dialogue_data
 
-func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+func _on_input_event(_camera: Node, event: InputEvent, _position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	event = event as InputEventMouseButton
 	if not event:
 		return

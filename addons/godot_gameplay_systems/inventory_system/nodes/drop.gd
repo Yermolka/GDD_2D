@@ -7,7 +7,7 @@ class_name Drop extends Node
 ## Emitted when some [Item]s have been dropped.
 signal items_dropped(items: Array[Item], drop_owner: Node)
 
-@onready var item_drop: PackedScene = preload("res://items/item_drop.tscn")
+@onready var item_drop: PackedScene = preload("res://items/item_drop3d.tscn")
 
 @export_category("Drop")
 ## The table used to drop items
@@ -51,7 +51,7 @@ func _drop(items: Array[Item]) -> void:
 func drop_items(drop_modifier: float = 0.0) -> void:
 	if drop_table == null:
 		return
-		
+
 	var items = drop_table.drop(drop_modifier)
 
 	if items.size() > 0:
@@ -74,7 +74,7 @@ func find_nearest_drop() -> Node:
 	var position = owner_node.position
 	var is_2d = (owner_node as Node2D) != null
 	var is_3d = (owner_node as Node3D) != null
-	
+
 	if dropzones.size() == 0:
 		return null
 

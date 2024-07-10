@@ -1,15 +1,15 @@
 [gd_scene load_steps=12 format=3 uid="uid://h6j7611eadfq"]
 
 [ext_resource type="Script" path="res://npc/npc.gd" id="1_0og8i"]
-[ext_resource type="Texture2D" uid="uid://c2d8ar1vogsgq" path="res://addons/godot_gameplay_systems/attributes_and_abilities/assets/Ability.svg" id="2_4xm4a"]
 [ext_resource type="Theme" uid="uid://b4f152moh4ayu" path="res://addons/dialogue_nodes/themes/bubblyClean.theme" id="2_bs1bt"]
 [ext_resource type="Script" path="res://addons/dialogue_nodes/objects/bbcodeWait.gd" id="3_j77bw"]
 [ext_resource type="Script" path="res://addons/dialogue_nodes/objects/bbcodeGhost.gd" id="4_yeh0k"]
 [ext_resource type="Script" path="res://addons/dialogue_nodes/objects/bbcodeMatrix.gd" id="5_cfj0f"]
 [ext_resource type="Script" path="res://addons/dialogue_nodes/objects/DialogueBubble.gd" id="6_4mebl"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4xdrq"]
-size = Vector2(148, 148)
+[sub_resource type="SphereMesh" id="SphereMesh_5uwjn"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ksror"]
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_v3d7n"]
 script = ExtResource("3_j77bw")
@@ -20,17 +20,17 @@ script = ExtResource("4_yeh0k")
 [sub_resource type="RichTextEffect" id="RichTextEffect_45vkn"]
 script = ExtResource("5_cfj0f")
 
-[node name="NPC" type="CharacterBody2D"]
+[node name="NPC" type="CharacterBody3D"]
 collision_layer = 32
-input_pickable = true
 script = ExtResource("1_0og8i")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_4xm4a")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.490884, 0)
+mesh = SubResource("SphereMesh_5uwjn")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
-shape = SubResource("RectangleShape2D_4xdrq")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.488494, 0)
+shape = SubResource("SphereShape3D_ksror")
 
 [node name="DialogueBubble" type="RichTextLabel" parent="."]
 clip_contents = false

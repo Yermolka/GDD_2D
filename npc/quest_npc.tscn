@@ -1,20 +1,20 @@
 [gd_scene load_steps=4 format=3 uid="uid://bk151w22hm0gc"]
 
-[ext_resource type="Texture2D" uid="uid://dps8mwnnuc5nm" path="res://addons/dialogue_nodes/icons/DistractionFree.svg" id="1_gin86"]
 [ext_resource type="Script" path="res://npc/quest_npc.gd" id="1_spicp"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ja0oj"]
-size = Vector2(90, 80)
+[sub_resource type="SphereMesh" id="SphereMesh_aoljn"]
 
-[node name="QuestNPC" type="CharacterBody2D"]
-input_pickable = true
+[sub_resource type="SphereShape3D" id="SphereShape3D_807h3"]
+
+[node name="QuestNPC" type="CharacterBody3D"]
 script = ExtResource("1_spicp")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(6.25, 5.5)
-texture = ExtResource("1_gin86")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.506744, 0)
+mesh = SubResource("SphereMesh_aoljn")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_ja0oj")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.506744, 0)
+shape = SubResource("SphereShape3D_807h3")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]

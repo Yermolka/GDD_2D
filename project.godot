@@ -99,12 +99,20 @@ lmb={
 [layer_names]
 
 2d_physics/layer_1="Player"
+3d_physics/layer_1="Player"
 2d_physics/layer_2="Enemies"
+3d_physics/layer_2="Enemies"
 2d_physics/layer_3="Obstacles"
+3d_physics/layer_3="Obstacles"
 2d_physics/layer_4="Selection"
+3d_physics/layer_4="Selection"
 2d_physics/layer_5="Pickable"
+3d_physics/layer_5="Pickable"
 2d_physics/layer_6="Npc"
+3d_physics/layer_6="Npc"
 2d_physics/layer_7="Projectiles"
+3d_physics/layer_7="Projectiles"
+3d_physics/layer_8="Attacks"
 
 [questify]
 

@@ -6,11 +6,6 @@ class_name Player extends Entity
 @onready var equipment: Equipment = $Equipment
 @onready var ability_container: AbilityContainer = $AbilityContainer
 
-
-@onready var test_helm: EquipmentBase = preload("res://items/equipment/test_helm.tres").duplicate()
-@onready var healing_potion: ItemBase = preload("res://items/potions/healing_potion.tres")
-@onready var test_effect: ChanceAttributeEffect = ChanceAttributeEffect.new()
-
 @export var level: int = 1
 @export var current_xp: int = 0:
 	get:
@@ -27,7 +22,7 @@ class_name Player extends Entity
 signal current_xp_changed(value: int, maxValue: int)
 signal level_changed(value: int)
 
-const SPEED: float = 300.0
+const SPEED: float = 5.0
 var movement_speed: float:
 	get:
 		return SPEED * attribute_map.get_attribute_by_name("movement_speed").current_buffed_value / 100.0
@@ -54,11 +49,7 @@ func _setup_attr_map() -> void:
 
 func _setup_inventory() -> void:
 	inventory.item_added.connect(
-		func(item: Item) -> void:
-			print(item.name)
-			if item is EquipmentBase and item.name == "Default helm":
-				test_helm = item
-
+		func(_item: Item) -> void:
 			Questify.update_quests()
 	)
 
@@ -89,6 +80,7 @@ func _setup_equipped_items() -> void:
 					if upgrade.learned:
 						upgrade.apply(eqb.skill, ability_container)
 		add_child(eqb.effect)
+		equipment.equipped.emit(eqb, null)
 
 func _setup_quests() -> void:
 	Questify.condition_query_requested.connect(_quest_update)
@@ -112,20 +104,7 @@ func _ready() -> void:
 	_setup_inventory()
 	_setup_quests()
 
-	# inventory.add_item(test_helm)
-	var attr: AttributeSpec = AttributeSpec.new()
-	attr.attribute_name = "rage"
-	attr.minimum_value = 0
-	attr.maximum_value = 100
-	attr.current_value = 0
-
-	attribute_map.add_attribute(attr)
-	print(ability_container.grant_all_abilities())
-
-	test_effect.attribute_name = "rage"
-	test_effect.proc_chance = 50
-	test_effect.minimum_value = 10
-	test_effect.maximum_value = 50
+	print("Player: granted ", ability_container.grant_all_abilities(), " abilities")
 
 func _quest_update(type: String, key: String, value: Variant, requester: QuestCondition) -> void:
 	if type != "has_item":
@@ -167,14 +146,14 @@ func _process_movement() -> void:
 
 	var horizontal: float = Input.get_axis("move_left", "move_right")
 	var vertical: float = Input.get_axis("move_up", "move_down")
-	var direction: Vector2 = Vector2(horizontal, vertical).normalized()
+	var direction: Vector3 = Vector3(horizontal, 0, vertical).normalized()
 
 	if direction:
 		velocity = direction * movement_speed
 		ability_container.add_tag("moving")
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.y = move_toward(velocity.y, 0, SPEED)
+		velocity.z = move_toward(velocity.z, 0, SPEED)
 		ability_container.remove_tag("moving")
 
 	move_and_slide()

@@ -1,1 +1,1 @@
-class_name Entity extends CharacterBody2D
+class_name Entity extends CharacterBody3D

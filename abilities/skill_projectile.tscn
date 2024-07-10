@@ -2,18 +2,20 @@
 
 [ext_resource type="Script" path="res://abilities/skill_projectile.gd" id="1_dfwto"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_t5hf8"]
+[sub_resource type="SphereMesh" id="SphereMesh_dhvv0"]
+radius = 0.1
+height = 0.2
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_56vv4"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_7uiph"]
+radius = 0.1
 
-[node name="SkillProjectile" type="Area2D"]
+[node name="SkillProjectile" type="Area3D"]
 collision_layer = 64
 collision_mask = 3
 script = ExtResource("1_dfwto")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_t5hf8")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_dhvv0")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(20, 20)
-texture = SubResource("PlaceholderTexture2D_56vv4")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_7uiph")
