@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cultyql87ixvl"]
+[gd_scene load_steps=26 format=3 uid="uid://cultyql87ixvl"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_31dcg"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/ability_container.gd" id="2_kt3nr"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/resources/equipment_slot.gd" id="10_a4fio"]
 [ext_resource type="Resource" uid="uid://dqy2c0g5wqihv" path="res://items/weapons/test_weapon.tres" id="11_qsa7m"]
 [ext_resource type="PackedScene" uid="uid://cxh5dyttaogko" path="res://addons/godot_gameplay_systems/attributes_and_abilities/debug/abilities_debugger.tscn" id="12_2smb5"]
+[ext_resource type="PackedScene" uid="uid://b54ngq6in8rn8" path="res://hud/hud.tscn" id="12_x425h"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_r0fkn"]
 
@@ -80,6 +81,9 @@ accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_s
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 22
 script = ExtResource("1_31dcg")
+level = null
+current_xp = null
+xp_map = null
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_r0fkn")
@@ -118,3 +122,11 @@ ability_container_path = NodePath("../AbilityContainer")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.754916, 0.655822, 0, -0.655822, 0.754916, 0, 3.00282, 3.39728)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("12_x425h")]
+offset_left = 2.0
+offset_right = 2.0
+player_path = NodePath("../..")
+metadata/_edit_use_anchors_ = true

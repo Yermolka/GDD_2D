@@ -128,8 +128,8 @@ func _handle_item_refused_to_equip(item: Item, slot: EquipmentSlot):
 
 ## Used internally to handle a [signal EquipmentSlot.item_unequipped] signal.
 func _handle_item_unequipped(item: Item, slot: EquipmentSlot):
-	unequipped.emit(item, slot)	
 	item._unequip(self, slot)
+	unequipped.emit(item, slot)	
 	inventory.add_item(item)
 	_handle_life_cycle(LifeCycle.Unequip, item)
 

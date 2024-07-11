@@ -29,6 +29,34 @@ var movement_speed: float:
 	set(value):
 		attribute_map.get_attribute_by_name("movement_speed").current_value = value
 
+## For loading only
+var inventory_items: Array:
+	get:
+		return inventory.items.map(
+		func (x: ItemBase) -> Dictionary:
+			print(x.resource_path)
+			return {
+				"resource_path": x.get_resource_path(),
+				"quantity": x.quantity_current
+			}
+		)
+
+var equipped_items: Array:
+	get:
+		return equipment.slots.map(
+		func (x: EquipmentSlot) -> Dictionary:
+			return {
+				"name": x.name,
+				"item_path": x.equipped.get_resource_path() if x.has_equipped_item else null
+			}
+	)
+
+var stats: Dictionary:
+	get:
+		return attribute_map._attributes_dict
+	set(value):
+		attribute_map._attributes_dict = stats
+
 func _setup_attr_map() -> void:
 	attribute_map.attribute_changed.connect(
 		func (attr: AttributeSpec) -> void:
@@ -122,6 +150,7 @@ func _setup_quests() -> void:
 
 func _ready() -> void:
 	add_to_group("player")
+	add_to_group("persist")
 
 	_setup_attr_map()
 	_setup_inventory()
@@ -160,7 +189,11 @@ func _process_input() -> void:
 
 	# if Input.is_action_just_pressed("ability4"):
 	# 	pass
-	pass
+
+	if Input.is_action_just_pressed("quick_save"):
+		Globals.save()
+	if Input.is_action_just_pressed("quick_load"):
+		Globals.load()
 		
 
 func _process_movement() -> void:
@@ -181,9 +214,11 @@ func _process_movement() -> void:
 
 	move_and_slide()
 
+
 func helper(duration: float, gameplay_effect: GameplayEffect) -> void:
 	await get_tree().create_timer(duration).timeout
 	attribute_map.apply_effect(gameplay_effect)
+
 
 func give_xp(amount: int) -> void:
 	current_xp += amount
@@ -191,3 +226,42 @@ func give_xp(amount: int) -> void:
 	for w: EquipmentSlot in weapons:
 		if w.has_equipped_item:
 			w.equipped.give_xp(amount)
+
+
+func finalize_load() -> void:
+	load_inventory()
+	load_equipment()
+
+
+func serialize() -> Dictionary:
+	return {
+		"filename": scene_file_path,
+		"parent": get_parent().get_path(),
+		"pos_x": global_position.x,
+		"pos_y": global_position.y,
+		"pos_z": global_position.z,
+		"stats": stats,
+		"level": level,
+		"current_xp": current_xp,
+		"inventory_items": inventory_items,
+		"equipped_items": equipped_items
+	}
+
+
+func load_inventory() -> void:
+	for item: Dictionary in inventory_items:
+		var new_item: Item = load(item.resource_path)
+		new_item.quantity_current = item.quantity
+
+		inventory.add_item(new_item)
+
+
+func load_equipment() -> void:
+	for item: Dictionary in equipped_items:
+		for slot: EquipmentSlot in equipment.slots:
+			if slot.name == item.name:
+				if item.item_path:
+					# slot.equipped = load(item.item_path)
+					slot.equip(load(item.item_path))
+				else:
+					slot.equipped = null

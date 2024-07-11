@@ -18,13 +18,18 @@ var current_texture_name: String = "none":
 
 @export var dialogue_data: DialogueData = null
 
-@export var quest: QuestResource = null
-var can_accept: bool = false
-var can_turnin: bool = false
+@export var quest: QuestResource = null:
+	get:
+		return quest
+	set(value):
+		quest = value
+		quest = quest.instantiate()
 
 const INTERACTION_DIST: float = 200.0
 
 func _ready() -> void:
+	add_to_group("persist")
+
 	texture_map["excl"] = quest_excl_texture
 	texture_map["excl_highlight"] = quest_excl_highlight_texture
 	texture_map["not_done"] = quest_not_done_texture
@@ -33,7 +38,8 @@ func _ready() -> void:
 	texture_map["done_highlight"] = quest_done_highlight_texture
 	texture_map["none"] = null
 
-	quest = quest.instantiate()
+	if quest:
+		quest = quest.instantiate()
 
 	EventBus.dialogueSignal.connect(
 		func(value: String) -> void:
@@ -65,14 +71,17 @@ func _ready() -> void:
 
 	await get_tree().process_frame
 
-	Questify.register_quest(quest)
+	if quest:
+		Questify.register_quest(quest)
 
-	if quest.available:
-		current_texture_name = "excl"
-	elif quest.completed and not quest.turned_in:
-		current_texture_name = "done"
-	elif quest.started and not quest.completed:
-		current_texture_name = "not_done"
+		if quest.available:
+			current_texture_name = "excl"
+		elif quest.completed and not quest.turned_in:
+			current_texture_name = "done"
+		elif quest.started and not quest.completed:
+			current_texture_name = "not_done"
+
+	print(quest.resource_path)
 
 func _on_input_event(_camera: Node, event: InputEvent, _position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	event = event as InputEventMouseButton
@@ -104,3 +113,24 @@ func _on_mouse_exited() -> void:
 func _on_mouse_entered() -> void:
 	if current_texture_name != "none":
 		current_texture_name += "_highlight"
+
+
+func serialize() -> Dictionary:
+	var quest_path: Variant = null
+	if quest:
+		quest_path = quest.get_resource_path()
+
+	var dialogue_path: Variant = null
+	if dialogue_data:
+		dialogue_path = dialogue_data.resource_path
+
+	return {
+		"filename": scene_file_path,
+		"parent": get_parent().get_path(),
+		"pos_x": global_position.x,
+		"pos_y": global_position.y,
+		"pos_z": global_position.z,
+		"current_texture_name": current_texture_name,
+		"quest_path": quest_path,
+		"dialogue_data_path": dialogue_path,
+	}

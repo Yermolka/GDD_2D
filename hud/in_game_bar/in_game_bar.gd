@@ -76,6 +76,12 @@ func handle_cooldown_ended(ability: ActiveSkill) -> void:
 
 
 func setup_ability_container(ability_container: AbilityContainer) -> void:
+	print(ability_container)
+	for child: SelectedSkillButton in $SelectedSkills.get_children():
+		if child.ability_container == ability_container:
+			return
+		child.ability_container = ability_container
+
 	ability_container.ability_activated.connect(handle_ability_activated)
 	ability_container.ability_granted.connect(handle_ability_granted)
 	ability_container.ability_revoked.connect(handle_ability_revoked)
@@ -83,9 +89,6 @@ func setup_ability_container(ability_container: AbilityContainer) -> void:
 	ability_container.cooldown_ended.connect(handle_cooldown_ended)
 	ability_container.cast_started.connect(handle_cast_started)
 	ability_container.cast_ended.connect(handle_cast_ended)
-
-	for child: SelectedSkillButton in $SelectedSkills.get_children():
-		child.ability_container = ability_container
 
 
 func setup_gameplay_attribute_map(gameplay_attribute_map: GameplayAttributeMap) -> void:
@@ -103,3 +106,10 @@ func setup_gameplay_attribute_map(gameplay_attribute_map: GameplayAttributeMap) 
 	# initial setup
 	_set_progress_bar(health, gameplay_attribute_map.get_attribute_by_name(health_attribute_name))
 	_set_progress_bar(mana, gameplay_attribute_map.get_attribute_by_name(mana_attribute_name))
+
+
+# func _ready() -> void:
+# 	Globals.game_loaded.connect(
+# 		func() -> void:
+# 			skill_1.ability = skill_1.ability_container.granted_abilities[0]
+# 	)

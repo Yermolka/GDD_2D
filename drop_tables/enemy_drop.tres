@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DropTable" load_steps=5 format=3 uid="uid://chipeh8j2qg78"]
+
+[ext_resource type="Resource" uid="uid://dqy2c0g5wqihv" path="res://items/weapons/test_weapon.tres" id="1_4s86a"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/resources/drop_group.gd" id="3_t4klg"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/resources/drop_table.gd" id="4_eh5fr"]
+
+[sub_resource type="Resource" id="Resource_vgigj"]
+script = ExtResource("3_t4klg")
+items_pool = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([ExtResource("1_4s86a")])
+drop_chance = 100.0
+
+[resource]
+script = ExtResource("4_eh5fr")
+pools = Array[ExtResource("3_t4klg")]([SubResource("Resource_vgigj")])

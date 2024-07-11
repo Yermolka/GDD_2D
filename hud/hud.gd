@@ -10,14 +10,7 @@ var player: Player
 
 func _ready() -> void:
 	await get_tree().physics_frame
-	player = get_node(player_path) as Player
-	inventory_hud.setup(player.inventory, player.equipment)
-
-	in_game_bar.setup_ability_container(player.ability_container)
-	in_game_bar.setup_gameplay_attribute_map(player.attribute_map)
-
-	skill_tree.setup_ability_container(player.ability_container)
-	skill_tree.setup_equipment(player.equipment)
+	setup()
 
 	EventBus.startDialogue.connect(
 		func(data: DialogueData, start: String) -> void:
@@ -28,6 +21,17 @@ func _ready() -> void:
 		func(value: String) -> void:
 			EventBus.dialogueSignal.emit(value)
 	)
+	Globals.game_loaded.connect(setup)
+
+func setup() -> void:
+	player = get_tree().get_first_node_in_group("player") as Player
+	inventory_hud.setup(player.inventory, player.equipment)
+
+	in_game_bar.setup_ability_container(player.ability_container)
+	in_game_bar.setup_gameplay_attribute_map(player.attribute_map)
+
+	skill_tree.setup_ability_container(player.ability_container)
+	skill_tree.setup_equipment(player.equipment)
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("toggle_inventory"):

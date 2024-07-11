@@ -83,3 +83,10 @@ func _unequip(_equipment: Equipment, _equipment_slot: EquipmentSlot) -> void:
 
 func _can_equip(_equipment: Equipment) -> bool:
 	return true
+
+
+func get_resource_path() -> String:
+	if resource_path.is_empty():
+		return get_meta("resource_path")
+	else:
+		return resource_path

@@ -7,6 +7,8 @@ class_name Enemy extends Entity
 
 func _ready() -> void:
 	add_to_group("enemies")
+	add_to_group("persist")
+
 	attribute_map.attribute_changed.connect(
 		func (attr: AttributeSpec) -> void:
 			if attr.attribute_name == "health" and attr.current_buffed_value == 0:
@@ -24,3 +26,15 @@ func _ready() -> void:
 	# var abc: TargetedSkill = ability_container.find_by(func(x: Ability) -> bool: return x is TargetedSkill)
 	# abc.set_target(player)
 	# ability_container.activate_one(abc)
+
+
+func serialize() -> Dictionary:
+	return {
+		"filename": scene_file_path,
+		"parent": get_parent().get_path(),
+		"pos_x": global_position.x,
+		"pos_y": global_position.y,
+		"pos_z": global_position.z,
+		"xp_reward": xp_reward,
+		"drop_table": drop.drop_table.resource_path,
+	}

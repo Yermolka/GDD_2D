@@ -80,7 +80,7 @@ func _first_free_slot() -> InventorySlot:
 	for i: InventorySlot in inventory_map:
 		if i.item == null:
 			return i
-	
+
 	return null
 
 func toggle_inventory() -> void:
