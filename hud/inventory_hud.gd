@@ -88,3 +88,11 @@ func toggle_inventory() -> void:
 
 func toggle_char_screen() -> void:
 	$CharScreen.visible = not $CharScreen.visible
+
+
+func _on_close_button_pressed() -> void:
+	$Inventory.visible = false
+
+
+func _on_char_screen_close_button_pressed() -> void:
+	$CharScreen.visible = false
