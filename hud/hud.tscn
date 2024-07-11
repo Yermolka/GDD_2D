@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b54ngq6in8rn8"]
+[gd_scene load_steps=25 format=3 uid="uid://b54ngq6in8rn8"]
 
 [ext_resource type="Script" path="res://hud/hud.gd" id="1_d5fuj"]
 [ext_resource type="Script" path="res://hud/inventory_hud.gd" id="2_idcnv"]
@@ -9,6 +9,18 @@
 [ext_resource type="Script" path="res://addons/dialogue_nodes/objects/bbcodeGhost.gd" id="7_ppcym"]
 [ext_resource type="Script" path="res://addons/dialogue_nodes/objects/bbcodeMatrix.gd" id="8_o4wgr"]
 [ext_resource type="PackedScene" uid="uid://dkuujqavu6c60" path="res://hud/skill_tree.tscn" id="9_x0b8p"]
+[ext_resource type="Texture2D" uid="uid://cnwnesu83umsh" path="res://hud/images/btn_character.png" id="10_vkxdc"]
+[ext_resource type="Texture2D" uid="uid://bklvn2m4r4dli" path="res://hud/images/btn_character_pressed.png" id="11_eafti"]
+[ext_resource type="Texture2D" uid="uid://b0jegl61qp0ah" path="res://hud/images/btn_character_highlight.png" id="12_3diva"]
+[ext_resource type="Texture2D" uid="uid://dgl77q847d2a5" path="res://hud/images/btn_inventory.png" id="13_e7my0"]
+[ext_resource type="Texture2D" uid="uid://dm2ks7q0pmp77" path="res://hud/images/btn_inventory_pressed.png" id="14_7ia4x"]
+[ext_resource type="Texture2D" uid="uid://dyb0i6khbjkjk" path="res://hud/images/btn_inventory_highlight.png" id="15_ckew6"]
+[ext_resource type="Texture2D" uid="uid://b7qpbbdeg0rvi" path="res://hud/images/btn_map.png" id="16_skelx"]
+[ext_resource type="Texture2D" uid="uid://duld41n4pgm0m" path="res://hud/images/btn_map_pressed.png" id="17_erflc"]
+[ext_resource type="Texture2D" uid="uid://dovmmu6d43jkg" path="res://hud/images/btn_map_highlight.png" id="18_ojmg4"]
+[ext_resource type="Texture2D" uid="uid://dyrukdyvlcigi" path="res://hud/images/btn_skills.png" id="19_p0uv1"]
+[ext_resource type="Texture2D" uid="uid://by3jwb8ovx35x" path="res://hud/images/btn_skills_pressed.png" id="20_fuj0v"]
+[ext_resource type="Texture2D" uid="uid://c12rmi3v21lsi" path="res://hud/images/btn_skills_highlight.png" id="21_0clsx"]
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_xikk0"]
 script = ExtResource("6_nwfki")
@@ -117,3 +129,58 @@ custom_effects = Array[RichTextEffect]([SubResource("RichTextEffect_xikk0"), Sub
 layout_mode = 1
 root_skill = null
 data = null
+
+[node name="MicroMenu" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -147.0
+offset_top = -40.0
+offset_right = -7.0
+grow_horizontal = 0
+grow_vertical = 0
+columns = 4
+
+[node name="Character" type="TextureButton" parent="MicroMenu"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture_normal = ExtResource("10_vkxdc")
+texture_pressed = ExtResource("11_eafti")
+texture_hover = ExtResource("12_3diva")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Inventory" type="TextureButton" parent="MicroMenu"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture_normal = ExtResource("13_e7my0")
+texture_pressed = ExtResource("14_7ia4x")
+texture_hover = ExtResource("15_ckew6")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Map" type="TextureButton" parent="MicroMenu"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture_normal = ExtResource("16_skelx")
+texture_pressed = ExtResource("17_erflc")
+texture_hover = ExtResource("18_ojmg4")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Skills" type="TextureButton" parent="MicroMenu"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture_normal = ExtResource("19_p0uv1")
+texture_pressed = ExtResource("20_fuj0v")
+texture_hover = ExtResource("21_0clsx")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="MicroMenu/Character" to="." method="_on_character_btn_pressed"]
+[connection signal="pressed" from="MicroMenu/Inventory" to="." method="_on_inventory_btn_pressed"]
+[connection signal="pressed" from="MicroMenu/Map" to="." method="_on_map_btn_pressed"]
+[connection signal="pressed" from="MicroMenu/Skills" to="." method="_on_skills_btn_pressed"]

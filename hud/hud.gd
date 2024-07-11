@@ -38,3 +38,19 @@ func _input(_event: InputEvent) -> void:
 
 	if Input.is_action_just_pressed("toggle_ability_tree"):
 		skill_tree.visible = not skill_tree.visible
+
+
+
+func _on_skills_btn_pressed() -> void:
+	skill_tree.visible = not skill_tree.visible
+
+
+func _on_map_btn_pressed() -> void:
+	pass
+
+
+func _on_inventory_btn_pressed() -> void:
+	inventory_hud.toggle_inventory()
+
+func _on_character_btn_pressed() -> void:
+	inventory_hud.toggle_char_screen()
