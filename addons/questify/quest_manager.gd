@@ -22,7 +22,7 @@ func _ready() -> void:
 
 
 func start_quest(quest_resource: QuestResource) -> void:
-	if quest_resource in _quests:
+	if quest_resource in _quests and quest_resource.available:
 		quest_resource.start()
 
 

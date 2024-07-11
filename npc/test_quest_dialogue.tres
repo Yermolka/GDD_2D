@@ -40,7 +40,7 @@ nodes = {
 "text": "No"
 }
 },
-"size": Vector2(300, 242),
+"size": Vector2(300, 275),
 "speaker": "NPC"
 },
 "1_2": {
@@ -66,20 +66,25 @@ nodes = {
 "text": "You're welcome"
 }
 },
-"size": Vector2(300, 240),
+"size": Vector2(300, 242),
 "speaker": "NPC"
 },
 "3_1": {
 "link": "END",
 "offset": Vector2(120, -140),
-"signalValue": "quests.test.accepted"
+"signalValue": "quests.First quest.accepted"
 },
 "3_2": {
 "link": "END",
 "offset": Vector2(140, 560),
-"signalValue": "quests.test.completed"
+"signalValue": "quests.First quest.completed"
 }
 }
-variables = {}
+variables = {
+"quest.name": {
+"type": 4,
+"value": ""
+}
+}
 strays = Array[String]([])
 characters = ""

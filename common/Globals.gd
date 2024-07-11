@@ -13,6 +13,20 @@ var global_state: Dictionary = {}
 signal game_saved()
 signal game_loaded()
 
+func _enter_tree() -> void:
+	Questify.condition_query_requested.connect(
+		func (type: String, key: String, value: Variant, requester: QuestCondition) -> void:
+			if type == "global_var":
+				requester.set_completed(get_global_var(key) == value)
+	)
+
+func set_global_var(key: String, value: Variant) -> void:
+	global_state[key] = value
+	Questify.update_quests()
+
+func get_global_var(key: String) -> Variant:
+	return global_state.get(key)
+
 func save() -> void:
 	var da: DirAccess = DirAccess.open("res://")
 	if not da.dir_exists("saves"):

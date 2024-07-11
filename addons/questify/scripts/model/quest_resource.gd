@@ -22,9 +22,10 @@ var started: bool:
 
 var available: bool = false
 @export var required_level: int = 0
+@export var remove_items_on_complete: bool = true
 ## Global requirements are what key:value should be in Globals to become available
 @export var global_requirements: Dictionary = {} 
-@export var remove_items_on_complete: bool = true
+@export var global_vars_on_turn_in: Dictionary = {}
 
 var completed: bool = false
 var turned_in: bool = false
@@ -62,8 +63,9 @@ func update() -> void:
 	if not started and not available:
 		if not Globals.player_level >= required_level:
 			return
+		print(global_requirements, global_vars_on_turn_in)
 		for key in global_requirements:
-			if not Globals.global_state.has(key) or Globals.global_state[key] != global_requirements[key]:
+			if Globals.get_global_var(key) != global_requirements[key]:
 				return
 		available = true
 		Questify.quest_available.emit(self)
@@ -125,6 +127,8 @@ func complete_quest() -> void:
 
 func turn_in() -> void:
 	turned_in = true
+	for key in global_vars_on_turn_in:
+		Globals.set_global_var(key, global_vars_on_turn_in[key])
 	Questify.quest_turned_in.emit(self)
 
 
