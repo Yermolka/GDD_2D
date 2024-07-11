@@ -18,7 +18,7 @@ class_name Player extends Entity
 			level_changed.emit(level)
 		if xp_map.size() > level:
 			current_xp_changed.emit(current_xp, xp_map[level])
-@export var xp_map: Array[int]
+@export var xp_map: Array
 signal current_xp_changed(value: int, maxValue: int)
 signal level_changed(value: int)
 
@@ -47,7 +47,7 @@ var equipped_items: Array:
 		func (x: EquipmentSlot) -> Dictionary:
 			return {
 				"name": x.name,
-				"item_path": x.equipped.get_resource_path() if x.has_equipped_item else null
+				"resource_path": x.equipped.get_resource_path() if x.has_equipped_item else null
 			}
 	)
 
@@ -108,7 +108,6 @@ func _setup_equipped_items() -> void:
 					if upgrade.learned:
 						upgrade.apply(eqb.skill, ability_container)
 		add_child(eqb.effect)
-		equipment.equipped.emit(eqb, null)
 
 	Questify.update_quests()
 
@@ -138,10 +137,10 @@ func _setup_quests() -> void:
 					continue
 
 				var item: Item = inventory.find_by(func (x: Item) -> bool: return x.name == cond.key)
-				if item: 
+				if item:
 					inventory.remove_item(item, true)
 					continue
-				
+
 				item = equipment.find_item_by(func (x: Item) -> bool: return x.name == cond.key)
 				if item:
 					equipment.unequip(item, true)
@@ -194,7 +193,7 @@ func _process_input() -> void:
 		Globals.save()
 	if Input.is_action_just_pressed("quick_load"):
 		Globals.load()
-		
+
 
 func _process_movement() -> void:
 	if ability_container.has_tag("movement.dashing"):
@@ -228,40 +227,57 @@ func give_xp(amount: int) -> void:
 			w.equipped.give_xp(amount)
 
 
-func finalize_load() -> void:
-	load_inventory()
-	load_equipment()
-
-
 func serialize() -> Dictionary:
+	var attribute_map_data: Dictionary = {}
+	for key: String in attribute_map._attributes_dict.keys():
+		attribute_map_data[key] = {
+							"minimum_value": attribute_map._attributes_dict[key].minimum_value,
+							"maximum_value": attribute_map._attributes_dict[key].maximum_value,
+							"current_value": attribute_map._attributes_dict[key].current_value,
+							"buffing_value": attribute_map._attributes_dict[key].buffing_value,
+		}
+
 	return {
-		"filename": scene_file_path,
-		"parent": get_parent().get_path(),
-		"pos_x": global_position.x,
-		"pos_y": global_position.y,
-		"pos_z": global_position.z,
-		"stats": stats,
-		"level": level,
-		"current_xp": current_xp,
-		"inventory_items": inventory_items,
-		"equipped_items": equipped_items
+		"player": {
+			"global_position": global_position,
+			"level": level,
+			"current_xp": current_xp,
+			"xp_map": xp_map,
+			"inventory_data": {
+				"max_size": inventory.max_size,
+				"items": inventory_items,
+				"equipped_items": equipped_items,
+			},
+			"ability_container_tags": ability_container.tags,
+			"attribute_map_data": attribute_map_data,
+		}
 	}
 
 
-func load_inventory() -> void:
-	for item: Dictionary in inventory_items:
-		var new_item: Item = load(item.resource_path)
-		new_item.quantity_current = item.quantity
+func deserialize(body: Dictionary) -> void:
+	global_position = body.global_position
+	level = body.level
+	current_xp = body.current_xp
+	xp_map = body.xp_map
 
-		inventory.add_item(new_item)
+	var inventory_data: Dictionary = body.inventory_data
+	inventory.max_size = inventory_data.max_size
+	inventory.items = []
+	for item_dict: Dictionary in inventory_data.items:
+		var new_item: ItemBase = load(item_dict.resource_path)
+		new_item.quantity_current = item_dict.quantity
+		inventory.call_deferred("add_item", new_item)
+	
+	for item_dict: Dictionary in inventory_data.equipped_items:
+		if item_dict.resource_path == null:
+			continue
 
+		var slot: EquipmentSlot = equipment.find_slot_by(func (x: EquipmentSlot) -> bool: return x.name == item_dict.name)
+		slot.equipped = null
+		var new_item: EquipmentBase = load(item_dict.resource_path)
+		slot.call_deferred("equip", new_item)
 
-func load_equipment() -> void:
-	for item: Dictionary in equipped_items:
-		for slot: EquipmentSlot in equipment.slots:
-			if slot.name == item.name:
-				if item.item_path:
-					# slot.equipped = load(item.item_path)
-					slot.equip(load(item.item_path))
-				else:
-					slot.equipped = null
+	var typed_tags: Array[String] = []
+	typed_tags.assign(body.ability_container_tags)
+
+	ability_container.tags = typed_tags

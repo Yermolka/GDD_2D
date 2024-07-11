@@ -11,7 +11,7 @@ class_name InGameBar extends Control
 func _set_progress_bar(bar: ProgressBar, attribute_spec: AttributeSpec) -> void:
 	if attribute_spec == null:
 		return
-	
+
 	bar.min_value = attribute_spec.minimum_value
 	bar.max_value = attribute_spec.maximum_value
 	bar.value = attribute_spec.current_value
@@ -78,8 +78,6 @@ func handle_cooldown_ended(ability: ActiveSkill) -> void:
 func setup_ability_container(ability_container: AbilityContainer) -> void:
 	print(ability_container)
 	for child: SelectedSkillButton in $SelectedSkills.get_children():
-		if child.ability_container == ability_container:
-			return
 		child.ability_container = ability_container
 
 	ability_container.ability_activated.connect(handle_ability_activated)
@@ -90,11 +88,20 @@ func setup_ability_container(ability_container: AbilityContainer) -> void:
 	ability_container.cast_started.connect(handle_cast_started)
 	ability_container.cast_ended.connect(handle_cast_ended)
 
+	if ability_container.granted_abilities.size() > 0:
+		skill_1.ability = ability_container.granted_abilities[0]
+	
+	if ability_container.granted_abilities.size() > 1:
+		skill_2.ability = ability_container.granted_abilities[1]
+	
+	if ability_container.granted_abilities.size() > 2:
+		skill_3.ability = ability_container.granted_abilities[2]
+
 
 func setup_gameplay_attribute_map(gameplay_attribute_map: GameplayAttributeMap) -> void:
 	const health_attribute_name: String = "health"
 	const mana_attribute_name: String = "mana"
-	
+
 	gameplay_attribute_map.attribute_changed.connect(func (attribute_spec: AttributeSpec) -> void:
 		match attribute_spec.attribute_name:
 			health_attribute_name:
@@ -102,7 +109,7 @@ func setup_gameplay_attribute_map(gameplay_attribute_map: GameplayAttributeMap) 
 			mana_attribute_name:
 				_set_progress_bar(mana, attribute_spec)
 	)
-	
+
 	# initial setup
 	_set_progress_bar(health, gameplay_attribute_map.get_attribute_by_name(health_attribute_name))
 	_set_progress_bar(mana, gameplay_attribute_map.get_attribute_by_name(mana_attribute_name))
@@ -111,5 +118,6 @@ func setup_gameplay_attribute_map(gameplay_attribute_map: GameplayAttributeMap) 
 # func _ready() -> void:
 # 	Globals.game_loaded.connect(
 # 		func() -> void:
+# 			await get_tree().process_frame
 # 			skill_1.ability = skill_1.ability_container.granted_abilities[0]
 # 	)

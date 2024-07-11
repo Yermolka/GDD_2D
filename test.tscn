@@ -20,6 +20,8 @@ size = Vector3(100, 1, 100)
 
 [node name="Player" parent="." instance=ExtResource("2_i86u5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.90512, 0)
+level = 1
+current_xp = 0
 xp_map = Array[int]([0, 10])
 
 [node name="Enemy" parent="." instance=ExtResource("4_tmm5i")]

@@ -81,3 +81,7 @@ required_level = 0
 remove_items_on_complete = true
 global_requirements = {}
 global_vars_on_turn_in = {}
+reward_xp = 0
+reward_currency = 0
+reward_guaranteed_items = Array[Resource("res://items/item_base.gd")]([])
+reward_choice_items = Array[Resource("res://items/item_base.gd")]([])

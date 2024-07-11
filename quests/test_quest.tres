@@ -64,8 +64,12 @@ script = ExtResource("1_ok8x1")
 nodes = Array[Resource("res://addons/questify/scripts/model/quest_node.gd")]([SubResource("Resource_re7qy"), SubResource("Resource_0kxl2"), SubResource("Resource_cavnt"), SubResource("Resource_c48qx")])
 edges = Array[ExtResource("2_oj5ho")]([SubResource("Resource_kf5r3"), SubResource("Resource_nixcu"), SubResource("Resource_duyc4")])
 required_level = 0
-global_requirements = {}
 remove_items_on_complete = true
+global_requirements = {}
 global_vars_on_turn_in = {
 "test_quest_done": true
 }
+reward_xp = 0
+reward_currency = 0
+reward_guaranteed_items = Array[Resource("res://items/item_base.gd")]([])
+reward_choice_items = Array[Resource("res://items/item_base.gd")]([])

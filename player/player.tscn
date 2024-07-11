@@ -81,9 +81,6 @@ accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_s
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 22
 script = ExtResource("1_31dcg")
-level = null
-current_xp = null
-xp_map = null
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_r0fkn")
