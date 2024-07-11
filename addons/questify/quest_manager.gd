@@ -2,10 +2,13 @@ extends Node
 
 
 signal condition_query_requested(type: String, key: String, value: Variant, requester: QuestCondition)
+
+signal quest_available(quest: QuestResource)
 signal quest_started(quest: QuestResource)
 signal quest_objective_added(quest: QuestResource, objective: QuestObjective)
 signal quest_objective_completed(quest: QuestResource, objective: QuestObjective)
 signal quest_completed(quest: QuestResource)
+signal quest_turned_in(quest: QuestResource)
 
 
 var _quests: Array[QuestResource] = []
@@ -19,8 +22,14 @@ func _ready() -> void:
 
 
 func start_quest(quest_resource: QuestResource) -> void:
-	_quests.append(quest_resource)
-	quest_resource.start()
+	if quest_resource in _quests:
+		quest_resource.start()
+
+
+func register_quest(quest_resource: QuestResource) -> void:
+	if not quest_resource in _quests:
+		_quests.append(quest_resource)
+		quest_resource.update()
 
 
 func update_quests():
@@ -40,7 +49,7 @@ func get_active_quests() -> Array[QuestResource]:
 	var result: Array[QuestResource] = []
 	result.assign(_quests.filter(
 		func(quest: QuestResource):
-			return quest.started and not quest.completed
+			return quest.started and not quest.turned_in
 	))
 	return result
 
@@ -53,6 +62,13 @@ func get_completed_quests() -> Array[QuestResource]:
 	))
 	return result
 
+func get_available_quests() -> Array[QuestResource]:
+	var result: Array[QuestResource] = []
+	result.assign(_quests.filter(
+		func(quest: QuestResource):
+			return quest.available
+	))
+	return result
 
 func set_quests(quests: Array[QuestResource]) -> void:
 	clear()

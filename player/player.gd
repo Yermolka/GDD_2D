@@ -82,6 +82,8 @@ func _setup_equipped_items() -> void:
 		add_child(eqb.effect)
 		equipment.equipped.emit(eqb, null)
 
+	Questify.update_quests()
+
 func _setup_quests() -> void:
 	Questify.condition_query_requested.connect(_quest_update)
 	Questify.quest_started.connect(
@@ -94,7 +96,28 @@ func _setup_quests() -> void:
 	)
 	Questify.quest_completed.connect(
 		func(quest: QuestResource) -> void:
-			print("Completed ", quest.name)
+			print("Ready to turn in ", quest.name)
+	)
+	Questify.quest_turned_in.connect(
+		func(quest: QuestResource) -> void:
+			print("Turned in ", quest.name)
+			if not quest.remove_items_on_complete:
+				return
+
+			var conditions: Array[QuestNode] = quest.nodes.filter(func(node: QuestNode) -> bool: return node is QuestCondition)
+			for cond: QuestCondition in conditions:
+				if cond.type != "has_item":
+					continue
+
+				var item: Item = inventory.find_by(func (x: Item) -> bool: return x.name == cond.key)
+				if item: 
+					inventory.remove_item(item, true)
+					continue
+				
+				item = equipment.find_item_by(func (x: Item) -> bool: return x.name == cond.key)
+				if item:
+					equipment.unequip(item, true)
+					inventory.remove_items_by(func (x: Item) -> bool: return x.name == cond.key)
 	)
 
 func _ready() -> void:
@@ -110,7 +133,7 @@ func _quest_update(type: String, key: String, value: Variant, requester: QuestCo
 	if type != "has_item":
 		return
 
-	var found: Array[Item] = inventory.filter_by(func (item: Item) -> bool: return item.name == key)
+	var found: Array[Item] = inventory.filter_by(func (item: Item) -> bool: return item.name == key) + equipment.equipped_items.filter(func (item: Item) -> bool: return item.name == key)
 	var count: int = 0
 	for f: Item in found:
 		if f.can_stack:

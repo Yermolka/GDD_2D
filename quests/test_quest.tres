@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestResource" load_steps=14 format=3 uid="uid://b66a5yu6skapg"]
+[gd_resource type="Resource" script_class="QuestResource" load_steps=14 format=3 uid="uid://i34jb7p18eet"]
 
 [ext_resource type="Script" path="res://addons/questify/scripts/model/quest_start.gd" id="1_2qd4n"]
 [ext_resource type="Script" path="res://addons/questify/scripts/model/quest_resource.gd" id="1_ok8x1"]
@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://addons/questify/scripts/model/quest_condition.gd" id="4_yhpqx"]
 [ext_resource type="Script" path="res://addons/questify/scripts/model/quest_end.gd" id="5_255qi"]
 
-[sub_resource type="Resource" id="Resource_al5v4"]
+[sub_resource type="Resource" id="Resource_uur7r"]
 script = ExtResource("1_2qd4n")
 name = "First quest"
 description = ""
@@ -16,7 +16,7 @@ optional = false
 graph_editor_position = Vector2(-680, -260)
 graph_editor_size = Vector2(280, 503)
 
-[sub_resource type="Resource" id="Resource_vmilr"]
+[sub_resource type="Resource" id="Resource_ofsa0"]
 script = ExtResource("3_eqqwq")
 description = "Gather one test_helm"
 id = "Wls-DUaKkv"
@@ -24,42 +24,45 @@ optional = false
 graph_editor_position = Vector2(94.21, -33.3)
 graph_editor_size = Vector2(468, 499)
 
-[sub_resource type="Resource" id="Resource_j7v18"]
+[sub_resource type="Resource" id="Resource_7kp3o"]
 script = ExtResource("2_oj5ho")
-from = SubResource("Resource_al5v4")
-to = SubResource("Resource_vmilr")
+from = SubResource("Resource_uur7r")
+to = SubResource("Resource_ofsa0")
 edge_type = 0
 
-[sub_resource type="Resource" id="Resource_2nls8"]
+[sub_resource type="Resource" id="Resource_pbcql"]
 script = ExtResource("4_yhpqx")
 type = "has_item"
-key = "Default helm"
+key = "Test Weapon"
 id = "RnHNkF2m1p"
 optional = false
 graph_editor_position = Vector2(-520, 380)
 graph_editor_size = Vector2(377, 309)
 metadata/value = 1.0
 
-[sub_resource type="Resource" id="Resource_5w81s"]
+[sub_resource type="Resource" id="Resource_oidjf"]
 script = ExtResource("2_oj5ho")
-from = SubResource("Resource_2nls8")
-to = SubResource("Resource_vmilr")
+from = SubResource("Resource_pbcql")
+to = SubResource("Resource_ofsa0")
 edge_type = 1
 
-[sub_resource type="Resource" id="Resource_3tk7y"]
+[sub_resource type="Resource" id="Resource_1eywg"]
 script = ExtResource("5_255qi")
 id = "indwz4xKzp"
 optional = false
 graph_editor_position = Vector2(740, -40)
 graph_editor_size = Vector2(141, 78)
 
-[sub_resource type="Resource" id="Resource_yu8jt"]
+[sub_resource type="Resource" id="Resource_pmebu"]
 script = ExtResource("2_oj5ho")
-from = SubResource("Resource_vmilr")
-to = SubResource("Resource_3tk7y")
+from = SubResource("Resource_ofsa0")
+to = SubResource("Resource_1eywg")
 edge_type = 0
 
 [resource]
 script = ExtResource("1_ok8x1")
-nodes = Array[Resource("res://addons/questify/scripts/model/quest_node.gd")]([SubResource("Resource_vmilr"), SubResource("Resource_al5v4"), SubResource("Resource_2nls8"), SubResource("Resource_3tk7y")])
-edges = Array[ExtResource("2_oj5ho")]([SubResource("Resource_j7v18"), SubResource("Resource_5w81s"), SubResource("Resource_yu8jt")])
+nodes = Array[Resource("res://addons/questify/scripts/model/quest_node.gd")]([SubResource("Resource_ofsa0"), SubResource("Resource_uur7r"), SubResource("Resource_pbcql"), SubResource("Resource_1eywg")])
+edges = Array[ExtResource("2_oj5ho")]([SubResource("Resource_7kp3o"), SubResource("Resource_oidjf"), SubResource("Resource_pmebu")])
+required_level = 0
+global_requirements = {}
+remove_items_on_complete = true

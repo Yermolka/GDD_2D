@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd4txk5mad5wh"
-path="res://.godot/imported/quest_excl.png-cc83fa0697b476f79b6849591fe44967.ctex"
+uid="uid://cickh36ln8ocf"
+path="res://.godot/imported/quest_excl_gray.png-1dd5e4ab35ca13da33083a0ce11425a9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://hud/images/quest_excl.png"
-dest_files=["res://.godot/imported/quest_excl.png-cc83fa0697b476f79b6849591fe44967.ctex"]
+source_file="res://quests/quest_excl_gray.png"
+dest_files=["res://.godot/imported/quest_excl_gray.png-1dd5e4ab35ca13da33083a0ce11425a9.ctex"]
 
 [params]
 

@@ -20,6 +20,12 @@ var start_node: QuestStart:
 var started: bool:
 	get: return start_node.active
 
+var available: bool = false
+@export var required_level: int = 0
+## Global requirements are what key:value should be in Globals to become available
+@export var global_requirements: Dictionary = {} 
+@export var remove_items_on_complete: bool = true
+
 var completed: bool = false
 var turned_in: bool = false
 var is_instance := false
@@ -41,17 +47,27 @@ func start() -> void:
 	if not is_instance:
 		printerr("Quest must be instantiated to be started. Use instantiate().")
 		return
-	if not completed and not started:
+	if available and not completed and not started and not turned_in:
+		available = false
 		start_node.active = true
 		Questify.quest_started.emit(self)
 		_notify_active_objectives()
+	update()
 
 
 func update() -> void:
 	if not is_instance:
 		printerr("Quest must be instantiated to be updated. Use instantiate().")
 		return
-	if not completed:
+	if not started and not available:
+		if not Globals.player_level >= required_level:
+			return
+		for key in global_requirements:
+			if not Globals.global_state.has(key) or Globals.global_state[key] != global_requirements[key]:
+				return
+		available = true
+		Questify.quest_available.emit(self)
+	if not completed and not turned_in: 
 		start_node.update()
 
 
@@ -107,9 +123,16 @@ func complete_quest() -> void:
 	Questify.quest_completed.emit(self)
 
 
+func turn_in() -> void:
+	turned_in = true
+	Questify.quest_turned_in.emit(self)
+
+
 func serialize() -> Dictionary:
 	return {
 		completed = completed,
+		turned_in = turned_in,
+		available = available,
 		nodes = nodes.map(func(node: QuestNode): return node.serialize())
 	}
 
@@ -118,7 +141,10 @@ func deserialize(data: Dictionary) -> void:
 	if not is_instance:
 		printerr("Quest must be instantiated to be deserialized. Use instantiate().")
 		return
+
+	available = data.available
 	completed = data.completed
+	turned_in = data.turned_in
 	var node_map := {}
 	for node in nodes:
 		node_map[node.id] = node
