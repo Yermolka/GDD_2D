@@ -26,6 +26,10 @@ var available: bool = false
 ## Global requirements are what key:value should be in Globals to become available
 @export var global_requirements: Dictionary = {} 
 @export var global_vars_on_turn_in: Dictionary = {}
+@export var reward_xp: int = 0
+@export var reward_currency: int = 0
+@export var reward_guaranteed_items: Array[ItemBase] = []
+@export var reward_choice_items: Array[ItemBase] = []
 
 var completed: bool = false
 var turned_in: bool = false
@@ -126,6 +130,7 @@ func complete_quest() -> void:
 
 
 func turn_in() -> void:
+	# TODO: show turn in window with reward choice, await results and turn in on success
 	turned_in = true
 	for key in global_vars_on_turn_in:
 		Globals.set_global_var(key, global_vars_on_turn_in[key])
