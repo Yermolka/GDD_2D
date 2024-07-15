@@ -17,10 +17,6 @@ func _ready() -> void:
 			dialogue_box.data = data
 			dialogue_box.start(start)
 	)
-	dialogue_box.dialogue_signal.connect(
-		func(value: String) -> void:
-			EventBus.dialogueSignal.emit(value)
-	)
 	Globals.game_loaded.connect(setup)
 
 func setup() -> void:

@@ -11,8 +11,8 @@ starts = {
 }
 nodes = {
 "0_1": {
-"link": &"1_1",
-"offset": Vector2(-560, -280),
+"link": &"5_1",
+"offset": Vector2(-620, -260),
 "start_id": "start"
 },
 "0_2": {
@@ -27,7 +27,7 @@ nodes = {
 },
 "1_1": {
 "dialogue": "Wanna start a quest?",
-"offset": Vector2(-240, -280),
+"offset": Vector2(0, -480),
 "options": {
 0: {
 "condition": {},
@@ -36,7 +36,7 @@ nodes = {
 },
 1: {
 "condition": {},
-"link": "END",
+"link": &"4_1",
 "text": "No"
 }
 },
@@ -69,21 +69,49 @@ nodes = {
 "size": Vector2(300, 242),
 "speaker": "NPC"
 },
+"1_4": {
+"dialogue": "123",
+"offset": Vector2(43.6824, -128.221),
+"options": {
+0: {
+"condition": {},
+"link": "END",
+"text": ""
+}
+},
+"size": Vector2(300, 240),
+"speaker": "123"
+},
 "3_1": {
 "link": "END",
-"offset": Vector2(120, -140),
+"offset": Vector2(360, -340),
 "signalValue": "quests.First quest.accepted"
 },
 "3_2": {
 "link": "END",
 "offset": Vector2(140, 560),
 "signalValue": "quests.First quest.completed"
+},
+"4_1": {
+"link": "END",
+"offset": Vector2(520, -200),
+"type": 0,
+"value": "true",
+"variable": "global_test_var"
+},
+"5_1": {
+"false": &"1_1",
+"offset": Vector2(-380, -320),
+"operator": 0,
+"true": &"1_4",
+"value1": "{{global_test_var}}",
+"value2": "true"
 }
 }
 variables = {
-"quest.name": {
+"global_test_var": {
 "type": 4,
-"value": ""
+"value": "null"
 }
 }
 strays = Array[String]([])

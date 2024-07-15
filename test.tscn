@@ -8,7 +8,7 @@
 [ext_resource type="Resource" uid="uid://qcf815f8gx5s" path="res://quests/test_quest_line.tres" id="8_we7tq"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/drop_3d.gd" id="9_ciua3"]
 [ext_resource type="Resource" uid="uid://ck1sptbnvqg15" path="res://npc/test_quest_dialogue.tres" id="9_vnirw"]
-[ext_resource type="Resource" uid="uid://b6tpsvdluxrr5" path="res://quests/test_quest.tres" id="10_l20ja"]
+[ext_resource type="Resource" uid="uid://ccnxa27u4e0kj" path="res://quests/test_quest.tres" id="10_l20ja"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_82lg2"]
 size = Vector3(100, 1, 100)
