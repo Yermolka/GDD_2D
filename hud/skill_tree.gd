@@ -100,6 +100,8 @@ func setup_equipment(eq: Equipment) -> void:
 			data = item.skill_tree
 			available_points = item.skill_points
 
+			if item.skill_points_changed.is_connected(_handle_skill_points_changed):
+				item.skill_points_changed.disconnect(_handle_skill_points_changed)
 			item.skill_points_changed.connect(_handle_skill_points_changed)
 	)
 
@@ -113,7 +115,8 @@ func setup_equipment(eq: Equipment) -> void:
 			data = null
 			available_points = 0
 
-			item.skill_points_changed.disconnect(_handle_skill_points_changed)
+			if item.skill_points_changed.is_connected(_handle_skill_points_changed):
+				item.skill_points_changed.disconnect(_handle_skill_points_changed)
 	)
 
 func _on_close_button_pressed() -> void:

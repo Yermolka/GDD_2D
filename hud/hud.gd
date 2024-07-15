@@ -10,7 +10,17 @@ var player: Player
 
 func _ready() -> void:
 	await get_tree().physics_frame
-	player = get_node(player_path) as Player
+	setup()
+
+	EventBus.startDialogue.connect(
+		func(data: DialogueData, start: String) -> void:
+			dialogue_box.data = data
+			dialogue_box.start(start)
+	)
+	Globals.game_loaded.connect(setup)
+
+func setup() -> void:
+	player = get_tree().get_first_node_in_group("player") as Player
 	inventory_hud.setup(player.inventory, player.equipment)
 
 	in_game_bar.setup_ability_container(player.ability_container)
@@ -18,16 +28,6 @@ func _ready() -> void:
 
 	skill_tree.setup_ability_container(player.ability_container)
 	skill_tree.setup_equipment(player.equipment)
-
-	EventBus.startDialogue.connect(
-		func(data: DialogueData, start: String) -> void:
-			dialogue_box.data = data
-			dialogue_box.start(start)
-	)
-	dialogue_box.dialogue_signal.connect(
-		func(value: String) -> void:
-			EventBus.dialogueSignal.emit(value)
-	)
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("toggle_inventory"):
@@ -38,3 +38,19 @@ func _input(_event: InputEvent) -> void:
 
 	if Input.is_action_just_pressed("toggle_ability_tree"):
 		skill_tree.visible = not skill_tree.visible
+
+
+
+func _on_skills_btn_pressed() -> void:
+	skill_tree.visible = not skill_tree.visible
+
+
+func _on_map_btn_pressed() -> void:
+	pass
+
+
+func _on_inventory_btn_pressed() -> void:
+	inventory_hud.toggle_inventory()
+
+func _on_character_btn_pressed() -> void:
+	inventory_hud.toggle_char_screen()

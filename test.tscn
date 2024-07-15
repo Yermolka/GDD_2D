@@ -1,14 +1,14 @@
 [gd_scene load_steps=12 format=3 uid="uid://4s3ws5qp4xgi"]
 
 [ext_resource type="PackedScene" uid="uid://cultyql87ixvl" path="res://player/player.tscn" id="2_i86u5"]
-[ext_resource type="PackedScene" uid="uid://b54ngq6in8rn8" path="res://hud/hud.tscn" id="3_dwtxw"]
 [ext_resource type="PackedScene" uid="uid://dbx4mf5ywvhdr" path="res://enemies/enemy.tscn" id="4_tmm5i"]
 [ext_resource type="PackedScene" uid="uid://h6j7611eadfq" path="res://npc/npc.tscn" id="6_tyudm"]
 [ext_resource type="Resource" uid="uid://54wayaddf1qw" path="res://npc/test_dialogue.tres" id="7_skvad"]
 [ext_resource type="PackedScene" uid="uid://bk151w22hm0gc" path="res://npc/quest_npc.tscn" id="8_1t471"]
+[ext_resource type="Resource" uid="uid://qcf815f8gx5s" path="res://quests/test_quest_line.tres" id="8_we7tq"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/drop_3d.gd" id="9_ciua3"]
 [ext_resource type="Resource" uid="uid://ck1sptbnvqg15" path="res://npc/test_quest_dialogue.tres" id="9_vnirw"]
-[ext_resource type="Resource" uid="uid://b66a5yu6skapg" path="res://quests/test_quest.tres" id="10_l20ja"]
+[ext_resource type="Resource" uid="uid://ccnxa27u4e0kj" path="res://quests/test_quest.tres" id="10_l20ja"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_82lg2"]
 size = Vector3(100, 1, 100)
@@ -20,14 +20,7 @@ size = Vector3(100, 1, 100)
 
 [node name="Player" parent="." instance=ExtResource("2_i86u5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.90512, 0)
-xp_map = Array[int]([0, 10])
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Player"]
-
-[node name="HUD" parent="Player/CanvasLayer" instance=ExtResource("3_dwtxw")]
-offset_left = 2.0
-offset_right = 2.0
-player_path = NodePath("../..")
+xp_map = [0, 10]
 
 [node name="Enemy" parent="." instance=ExtResource("4_tmm5i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.87397, 1.14334, -4.90812)
@@ -49,6 +42,11 @@ dialogue_data = ExtResource("7_skvad")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.93057, 0, -5.47077)
 dialogue_data = ExtResource("9_vnirw")
 quest = ExtResource("10_l20ja")
+
+[node name="QuestNPC2" parent="." instance=ExtResource("8_1t471")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.36649, 0, -5.47077)
+dialogue_data = ExtResource("9_vnirw")
+quest = ExtResource("8_we7tq")
 
 [node name="Drop3D" type="Node3D" parent="."]
 script = ExtResource("9_ciua3")

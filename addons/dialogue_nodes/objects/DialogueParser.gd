@@ -69,6 +69,9 @@ func start(start_id : String):
 		printerr('Start ID ', start_id, ' not found in dialogue data!')
 		return
 	
+	for variable_name: String in variables:
+		if variable_name.begins_with("global_"):
+			variables[variable_name] = Globals.get_global_var(variable_name.split("_", true, 1)[1])
 	_running = true
 	dialogue_started.emit(start_id)
 	_proceed(data.starts[start_id])
@@ -145,6 +148,7 @@ func _process_dialogue(dict : Dictionary):
 # Processes the signal node data (dict).
 func _process_signal(dict : Dictionary):
 	dialogue_signal.emit(dict.signalValue)
+	EventBus.dialogueSignal.emit(dict.signalValue)
 	_proceed(dict.link)
 
 
@@ -196,6 +200,7 @@ func _process_set(dict : Dictionary):
 			variables[dict.variable] /= value
 	
 	variable_changed.emit(dict.variable, variables[dict.variable])
+	EventBus.dialogueSetVariable.emit(dict.variable, variables[dict.variable])
 	_proceed(dict.link)
 
 

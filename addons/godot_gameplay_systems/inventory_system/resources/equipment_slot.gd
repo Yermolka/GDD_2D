@@ -39,7 +39,8 @@ func _init(_accepted_items: Array[Item] = [], _equipped_item: Item = null) -> vo
 	accepted_items = _accepted_items
 	
 	if can_equip(_equipped_item):
-		equipped = _equipped_item
+		equip(_equipped_item)
+		# equipped = _equipped_item
 
 
 ## Determines if the slot can accept an [Item]

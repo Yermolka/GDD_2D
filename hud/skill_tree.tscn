@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dkuujqavu6c60"]
+[gd_scene load_steps=7 format=3 uid="uid://dkuujqavu6c60"]
 
 [ext_resource type="Script" path="res://hud/skill_tree.gd" id="1_3y0ys"]
 [ext_resource type="Resource" uid="uid://blxg4t7jutslw" path="res://abilities/ability_tree/skill_tree1.tres" id="3_kmksp"]
 [ext_resource type="Resource" uid="uid://cq2lmto3pfn1s" path="res://abilities/active/melee.tres" id="4_of8aj"]
-[ext_resource type="Texture2D" uid="uid://bo52q0gri82h" path="res://hud/ui_close.png" id="11_artqc"]
+[ext_resource type="Texture2D" uid="uid://b13nlyyg5rrul" path="res://hud/images/btn_close.png" id="4_xd28g"]
+[ext_resource type="Texture2D" uid="uid://ddrqoccwbcs5t" path="res://hud/images/btn_close_pressed.png" id="5_hd7g0"]
+[ext_resource type="Texture2D" uid="uid://dbeqf2nwev04j" path="res://hud/images/btn_close_highlight.png" id="6_5wo3m"]
 
 [node name="SkillTree" type="Control"]
 layout_mode = 3
@@ -25,15 +27,9 @@ available_points = 3
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.409
-anchor_top = 0.099
-anchor_right = 0.769
-anchor_bottom = 0.88
-offset_left = -0.167999
-offset_top = -0.152008
-offset_right = 0.111938
-offset_bottom = -0.240051
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -63,34 +59,28 @@ text = "0"
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.409
-anchor_top = 0.099
-anchor_right = 0.77
-anchor_bottom = 0.877
-offset_left = -2.168
-offset_top = 456.848
-offset_right = -1.04004
-offset_bottom = 2.70398
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 theme_override_constants/separation = 32
 alignment = 1
 
 [node name="CloseButton" type="TextureButton" parent="."]
 texture_filter = 1
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.768
-anchor_top = 0.1
-anchor_right = 0.768
-anchor_bottom = 0.1
-offset_left = -21.736
-offset_top = 0.199997
-offset_right = 0.263977
-offset_bottom = 23.2
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -22.0
+offset_bottom = 23.0
 grow_horizontal = 0
-texture_normal = ExtResource("11_artqc")
+texture_normal = ExtResource("4_xd28g")
+texture_pressed = ExtResource("5_hd7g0")
+texture_hover = ExtResource("6_5wo3m")
 stretch_mode = 0
 
 [connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]

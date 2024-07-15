@@ -4,6 +4,9 @@ var slot: EquipmentSlot
 @onready var texture_rect: TextureRect = $TextureRect
 
 func setup(_slot: EquipmentSlot) -> void:
+	if slot == _slot:
+		return
+		
 	slot = _slot
 	slot.item_equipped.connect(_draw_slot)
 	slot.item_unequipped.connect(

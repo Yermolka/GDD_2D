@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="NonTargetedSkill" load_steps=5 format=3 uid="uid://dtr7xlpvxtjct"]
+[gd_resource type="Resource" script_class="NonTargetedSkill" load_steps=6 format=3 uid="uid://dtr7xlpvxtjct"]
 
 [ext_resource type="Script" path="res://abilities/NonTargetedActiveSkill.gd" id="1_3tyan"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_wlvxe"]
 [ext_resource type="PackedScene" uid="uid://bpk0jj1gmx86h" path="res://abilities/scenes/WhirlwindScene.tscn" id="2_gyeyx"]
+[ext_resource type="Texture2D" uid="uid://dr0i7ng6lymhm" path="res://addons/dialogue_nodes/icons/DialogueParser.svg" id="4_8aclh"]
 
 [sub_resource type="Resource" id="Resource_43n4g"]
 script = ExtResource("1_wlvxe")
@@ -32,11 +33,12 @@ instant_self_effects = Array[ExtResource("1_wlvxe")]([])
 instant_self_timed_effects = Array[ExtResource("1_wlvxe")]([])
 instant_self_timed_effects_duration = 1.0
 self_chance_effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])
+ui_icon = ExtResource("4_8aclh")
 ui_name = ""
 cooldown_duration = 0.0
 cooldown_continuos = false
 grant_automatic = true
-grant_tags = Array[String]([])
+grant_tags = Array[String](["type.melee"])
 grant_tags_required = Array[String]([])
 tags_activation = Array[String]([])
 tags_activation_required = Array[String]([])

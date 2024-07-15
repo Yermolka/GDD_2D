@@ -118,6 +118,7 @@ func add_item(item: Item) -> Item:
 				var duplicated_item = found.duplicate() as Item
 
 				duplicated_item.quantity_current = new_quantity - found.quantity_max
+				duplicated_item.set_meta("resource_path", item.resource_path)
 
 				return add_item(duplicated_item)
 		# Stacking it to infinite value
@@ -133,6 +134,7 @@ func add_item(item: Item) -> Item:
 
 	_handle_lifecycle_tags(LifeCycle.Added, item_to_return)
 
+	item_to_return.set_meta("resource_path", item.resource_path)
 	return item_to_return
 
 
