@@ -28,7 +28,10 @@ func activate(event: ActivationEvent) -> void:
 		scene.add_child(main_chance_effect)
 		scene.add_child(main_timed_effect)
 		# scene.position = caster.global_position
-		caster.add_child(scene)
+		if grant_tags.has("type.melee"):
+			caster.add_child(scene)
+		else:
+			caster.get_tree().root.add_child(scene)
 		return
 
 func can_activate(event: ActivationEvent) -> bool:

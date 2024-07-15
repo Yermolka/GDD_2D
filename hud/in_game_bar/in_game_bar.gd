@@ -88,6 +88,8 @@ func setup_ability_container(ability_container: AbilityContainer) -> void:
 	ability_container.cast_started.connect(handle_cast_started)
 	ability_container.cast_ended.connect(handle_cast_ended)
 
+
+	# TODO: load player's selected abilities
 	if ability_container.granted_abilities.size() > 0:
 		skill_1.ability = ability_container.granted_abilities[0]
 	
