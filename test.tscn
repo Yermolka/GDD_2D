@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://4s3ws5qp4xgi"]
+[gd_scene load_steps=13 format=3 uid="uid://4s3ws5qp4xgi"]
 
 [ext_resource type="PackedScene" uid="uid://cultyql87ixvl" path="res://player/player.tscn" id="2_i86u5"]
 [ext_resource type="PackedScene" uid="uid://dbx4mf5ywvhdr" path="res://enemies/enemy.tscn" id="4_tmm5i"]
@@ -9,6 +9,10 @@
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/drop_3d.gd" id="9_ciua3"]
 [ext_resource type="Resource" uid="uid://ck1sptbnvqg15" path="res://npc/test_quest_dialogue.tres" id="9_vnirw"]
 [ext_resource type="Resource" uid="uid://ccnxa27u4e0kj" path="res://quests/test_quest.tres" id="10_l20ja"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_toqrd"]
+vertices = PackedVector3Array(-49.5, 0.075681, -49.5, -49.5, 0.075681, 49.5, 49.5, 0.075681, 49.5, 49.5, 0.075681, -49.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="BoxMesh" id="BoxMesh_82lg2"]
 size = Vector3(100, 1, 100)
@@ -51,15 +55,18 @@ quest = ExtResource("8_we7tq")
 [node name="Drop3D" type="Node3D" parent="."]
 script = ExtResource("9_ciua3")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.87384, 0.486213, 0, -0.486213, 0.87384, 0, 4.97712, 5.89642)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_toqrd")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.924319, 0)
 collision_layer = 4
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D"]
 mesh = SubResource("BoxMesh_82lg2")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_h4kj5")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.87384, 0.486213, 0, -0.486213, 0.87384, 0, 4.97712, 5.89642)

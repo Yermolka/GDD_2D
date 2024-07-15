@@ -21,6 +21,8 @@ TurnManager="*res://addons/godot_gameplay_systems/turn_based/./autoloads/turn_ma
 Questify="*res://addons/questify/quest_manager.gd"
 EventBus="*res://common/EventBus.gd"
 Globals="*res://common/Globals.gd"
+BeehaveGlobalMetrics="*res://addons/beehave/metrics/beehave_global_metrics.gd"
+BeehaveGlobalDebugger="*res://addons/beehave/debug/global_debugger.gd"
 
 [debug]
 
@@ -31,7 +33,7 @@ gdscript/warnings/unsafe_call_argument=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_nodes/plugin.cfg", "res://addons/godot_gameplay_systems/plugin.cfg", "res://addons/questify/plugin.cfg")
+enabled=PackedStringArray("res://addons/beehave/plugin.cfg", "res://addons/dialogue_nodes/plugin.cfg", "res://addons/godot_gameplay_systems/plugin.cfg", "res://addons/questify/plugin.cfg")
 
 [input]
 

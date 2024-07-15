@@ -1,13 +1,23 @@
-[gd_scene load_steps=19 format=3 uid="uid://dbx4mf5ywvhdr"]
+[gd_scene load_steps=28 format=3 uid="uid://dbx4mf5ywvhdr"]
 
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="1_kjur6"]
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="1_s888k"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute.gd" id="2_k2awv"]
 [ext_resource type="Resource" uid="uid://ckjdlmyik1555" path="res://stats/enemy_base_attributes.tres" id="3_b0b3x"]
-[ext_resource type="PackedScene" uid="uid://c3knc8japncl7" path="res://common/selectable/selectable.tscn" id="6_ybr71"]
 [ext_resource type="Resource" uid="uid://chipeh8j2qg78" path="res://drop_tables/enemy_drop.tres" id="7_2q2yn"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/drop.gd" id="7_vo5q4"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="8_pjyuy"]
+[ext_resource type="Resource" uid="uid://dtr7xlpvxtjct" path="res://abilities/active/melee_non_target.tres" id="8_y8e14"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/delayer.gd" id="9_1t51j"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="9_fsbvl"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="10_p48e8"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/ability_container.gd" id="11_8y1re"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_get_player.gd" id="11_f8yei"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence_reactive.gd" id="12_gqfrl"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_move_to.gd" id="12_vsvwg"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_target_player.gd" id="13_btpa1"]
+[ext_resource type="Script" path="res://addons/beehave/blackboard.gd" id="13_w6h3a"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_use_ability.gd" id="17_75ld0"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_3r0t3"]
 
@@ -58,8 +68,6 @@ minimum_value = 1.0
 maximum_value = 20.0
 current_value = 2.0
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_bmar1"]
-
 [node name="Enemy" type="CharacterBody3D"]
 collision_layer = 2
 collision_mask = 7
@@ -78,11 +86,6 @@ owning_character = NodePath("..")
 attributes = Array[ExtResource("2_k2awv")]([SubResource("Resource_5mqa3"), SubResource("Resource_6pbgw"), SubResource("Resource_p5s3w"), SubResource("Resource_8jjlt"), SubResource("Resource_vcgko"), SubResource("Resource_cixur")])
 table = ExtResource("3_b0b3x")
 
-[node name="Selectable" parent="." instance=ExtResource("6_ybr71")]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Selectable"]
-shape = SubResource("CylinderShape3D_bmar1")
-
 [node name="Drop" type="Node" parent="."]
 script = ExtResource("7_vo5q4")
 drop_table = ExtResource("7_2q2yn")
@@ -91,4 +94,45 @@ owning_node_path = NodePath("..")
 [node name="AbilityContainer" type="Node" parent="."]
 script = ExtResource("11_8y1re")
 gameplay_attribute_map_path = NodePath("../GameplayAttributeMap")
-active = false
+abilities = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/ability.gd")]([ExtResource("8_y8e14")])
+
+[node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("8_pjyuy")
+blackboard = NodePath("../Blackboard")
+actor = NodePath("..")
+
+[node name="SelectorComposite" type="Node" parent="BeehaveTree"]
+script = ExtResource("10_p48e8")
+
+[node name="Hostile" type="Node" parent="BeehaveTree/SelectorComposite"]
+script = ExtResource("9_fsbvl")
+
+[node name="Debounce" type="Node" parent="BeehaveTree/SelectorComposite/Hostile"]
+script = ExtResource("9_1t51j")
+wait_time = 0.1
+
+[node name="Move" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce"]
+script = ExtResource("12_gqfrl")
+
+[node name="PlayerInRange" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce/Move"]
+script = ExtResource("11_f8yei")
+
+[node name="TargetPlayer" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce/Move"]
+script = ExtResource("13_btpa1")
+
+[node name="MoveToPlayer" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce/Move"]
+script = ExtResource("12_vsvwg")
+
+[node name="UseAbility" type="Node" parent="BeehaveTree/SelectorComposite/Hostile"]
+script = ExtResource("17_75ld0")
+ability_name = "Melee"
+
+[node name="TargetPlayer" type="Node" parent="."]
+script = ExtResource("13_btpa1")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+debug_enabled = true
+
+[node name="Blackboard" type="Node" parent="."]
+script = ExtResource("13_w6h3a")
