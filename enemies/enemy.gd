@@ -4,6 +4,7 @@ class_name Enemy extends Entity
 @export var xp_reward: int = 0
 @onready var attribute_map: GameplayAttributeMap = $GameplayAttributeMap
 @onready var ability_container: AbilityContainer = $AbilityContainer
+@export var ui_name: String = "enemy"
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -15,6 +16,7 @@ func _ready() -> void:
 				drop.drop_items()
 				var player: Player = get_tree().get_first_node_in_group("player")
 				player.give_xp(xp_reward)
+				EventBus.enemyKilled.emit(self)
 				call_deferred("queue_free")
 			print(attr.attribute_name, ": ", attr.current_buffed_value)
 	)

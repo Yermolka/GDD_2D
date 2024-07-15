@@ -19,6 +19,23 @@ func _ready() -> void:
 	if QuestifySettings.polling_enabled:
 		_add_timer()
 		_quest_update_timer.timeout.connect(update_quests)
+	EventBus.enemyKilled.connect(_handle_enemy_killed)
+
+
+func _handle_enemy_killed(enemy: Enemy) -> void:
+	for q: QuestResource in get_active_quests():
+		for obj: QuestObjective in q.get_active_objectives():
+			var cond: Array[QuestNode] = obj.conditions
+			for c: QuestNode in obj.conditions:
+				c = c as QuestCondition
+				
+				if not c:
+					continue
+				if c.type == "kill" and c.key == enemy.ui_name:
+					c.set_meta("value", c.value - 1)
+					if c.value <= 0:
+						c.set_completed(true)
+						update_quests()
 
 
 func start_quest(quest_resource: QuestResource) -> void:
