@@ -196,7 +196,12 @@ func _process_input() -> void:
 
 
 func _process_movement() -> void:
+	velocity = Vector3.ZERO
+	if not is_on_floor():
+		velocity.y -= 9.8
+
 	if ability_container.has_tag("movement.dashing"):
+		move_and_slide()
 		return
 
 	var horizontal: float = Input.get_axis("move_left", "move_right")
@@ -204,7 +209,7 @@ func _process_movement() -> void:
 	var direction: Vector3 = Vector3(horizontal, 0, vertical).normalized()
 
 	if direction:
-		velocity = direction * movement_speed
+		velocity += direction * movement_speed
 		ability_container.add_tag("moving")
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)

@@ -41,7 +41,7 @@ enum {
 		emit_changed()
 
 @export_category("Attribute modifier")
-@export_enum("Value modification", "Value buff") var applies_as = 0:
+@export_enum("Value modification", "Value buff", "Max value increase") var applies_as = 0:
 	get:
 		return applies_as
 	set(value):

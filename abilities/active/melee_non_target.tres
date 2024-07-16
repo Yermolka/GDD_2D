@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://abilities/NonTargetedActiveSkill.gd" id="1_3tyan"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_wlvxe"]
-[ext_resource type="PackedScene" uid="uid://bpk0jj1gmx86h" path="res://abilities/scenes/WhirlwindScene.tscn" id="2_gyeyx"]
+[ext_resource type="PackedScene" uid="uid://8uqytm7th4gi" path="res://abilities/scenes/MeleeScene.tscn" id="2_a73mt"]
 [ext_resource type="Texture2D" uid="uid://dr0i7ng6lymhm" path="res://addons/dialogue_nodes/icons/DialogueParser.svg" id="4_8aclh"]
 
 [sub_resource type="Resource" id="Resource_43n4g"]
@@ -18,7 +18,7 @@ maximum_value = 0.0
 
 [resource]
 script = ExtResource("1_3tyan")
-projectile_scene = ExtResource("2_gyeyx")
+projectile_scene = ExtResource("2_a73mt")
 projectile_speed = 1000.0
 resource_costs = {}
 min_range = 0.0
@@ -34,8 +34,8 @@ instant_self_timed_effects = Array[ExtResource("1_wlvxe")]([])
 instant_self_timed_effects_duration = 1.0
 self_chance_effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])
 ui_icon = ExtResource("4_8aclh")
-ui_name = ""
-cooldown_duration = 0.0
+ui_name = "Melee"
+cooldown_duration = 1.0
 cooldown_continuos = false
 grant_automatic = true
 grant_tags = Array[String](["type.melee"])

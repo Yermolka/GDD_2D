@@ -1,0 +1,326 @@
+[gd_scene load_steps=35 format=3 uid="uid://cnmhjtbhyjhph"]
+
+[ext_resource type="Script" path="res://enemies/bosses/skeleton_boss.gd" id="1_ducpo"]
+[ext_resource type="PackedScene" uid="uid://c21ku2lw4u3l1" path="res://enemies/models/skeleton/Skelet top.gltf" id="1_na6vp"]
+[ext_resource type="PackedScene" uid="uid://cyeikx8hhonnc" path="res://enemies/models/skeleton/Skelet bot.gltf" id="2_et1er"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/drop.gd" id="4_a8n68"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="5_olbb2"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute.gd" id="6_y2p62"]
+[ext_resource type="Resource" uid="uid://ckjdlmyik1555" path="res://stats/enemy_base_attributes.tres" id="7_jf8r4"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/ability_container.gd" id="8_1awuq"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="9_h26f1"]
+[ext_resource type="Resource" uid="uid://dxvot3oayf5cs" path="res://abilities/boss_abilities/summon_skeletons.tres" id="9_rgk0u"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="10_0tuhh"]
+[ext_resource type="Resource" uid="uid://dtr7xlpvxtjct" path="res://abilities/active/melee_non_target.tres" id="10_meitg"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="11_1v8e5"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="12_df24o"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_is_player_in_range.gd" id="13_0a4si"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_play_animation.gd" id="14_1c286"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_skeleton_boss_blackboard.gd" id="15_exxm0"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence_reactive.gd" id="15_tfrv2"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/blackboard_compare.gd" id="16_ow2j2"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_check_cd.gd" id="18_ngcww"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_target_player.gd" id="19_iuew3"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/succeeder.gd" id="20_u2ply"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector_reactive.gd" id="21_2ehie"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/time_limiter.gd" id="21_acygu"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_move_to_player.gd" id="22_o6ee1"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_use_ability.gd" id="24_q41my"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_can_use_ability.gd" id="26_20g5y"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_t4emm"]
+height = 4.23536
+radius = 0.740708
+
+[sub_resource type="Resource" id="Resource_onvgr"]
+script = ExtResource("6_y2p62")
+attribute_name = "health"
+minimum_value = 0.0
+maximum_value = 500.0
+current_value = 500.0
+
+[sub_resource type="Resource" id="Resource_vwl0q"]
+script = ExtResource("6_y2p62")
+attribute_name = "mana"
+minimum_value = 0.0
+maximum_value = 500.0
+current_value = 500.0
+
+[sub_resource type="Resource" id="Resource_vober"]
+script = ExtResource("6_y2p62")
+attribute_name = "movement_speed"
+minimum_value = 60.0
+maximum_value = 500.0
+current_value = 100.0
+
+[sub_resource type="Resource" id="Resource_5lxx0"]
+script = ExtResource("6_y2p62")
+attribute_name = "base_damage"
+minimum_value = 20.0
+maximum_value = 20.0
+current_value = 20.0
+
+[sub_resource type="Resource" id="Resource_wog5k"]
+script = ExtResource("6_y2p62")
+attribute_name = "crit_chance"
+minimum_value = 20.0
+maximum_value = 20.0
+current_value = 20.0
+
+[sub_resource type="Resource" id="Resource_l7kgj"]
+script = ExtResource("6_y2p62")
+attribute_name = "crit_multiplier"
+minimum_value = 200.0
+maximum_value = 200.0
+current_value = 200.0
+
+[node name="SkeletonBoss" type="CharacterBody3D" node_paths=PackedStringArray("body_top", "body_top_anim", "body_bot", "body_bot_anim")]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("1_ducpo")
+xp_reward = 500
+ui_name = "Skeleton Lord"
+body_top = NodePath("Body/Skelet top")
+body_top_anim = NodePath("Body/Skelet top/AnimationPlayer")
+body_bot = NodePath("Body/Skelet bot")
+body_bot_anim = NodePath("Body/Skelet bot/AnimationPlayer")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.105084, 1.97603, 0)
+shape = SubResource("CylinderShape3D_t4emm")
+
+[node name="Body" type="Node3D" parent="."]
+transform = Transform3D(-0.2, 0, -1.74846e-08, 0, 0.2, 0, 1.74846e-08, 0, -0.2, 0, 0.236905, 0)
+
+[node name="Skelet top" parent="Body" instance=ExtResource("1_na6vp")]
+
+[node name="Skelet bot" parent="Body" instance=ExtResource("2_et1er")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.41079, 0)
+
+[node name="Drop" type="Node" parent="."]
+script = ExtResource("4_a8n68")
+
+[node name="GameplayAttributeMap" type="Node" parent="."]
+script = ExtResource("5_olbb2")
+owning_character = NodePath("..")
+attributes = Array[ExtResource("6_y2p62")]([SubResource("Resource_onvgr"), SubResource("Resource_vwl0q"), SubResource("Resource_vober"), SubResource("Resource_5lxx0"), SubResource("Resource_wog5k"), SubResource("Resource_l7kgj")])
+table = ExtResource("7_jf8r4")
+
+[node name="AbilityContainer" type="Node" parent="."]
+script = ExtResource("8_1awuq")
+gameplay_attribute_map_path = NodePath("../GameplayAttributeMap")
+abilities = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/ability.gd")]([ExtResource("9_rgk0u"), ExtResource("10_meitg")])
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("9_h26f1")
+blackboard = NodePath("../SkeletonBossBlackboard")
+actor = NodePath("..")
+
+[node name="Root" type="Node" parent="BeehaveTree"]
+script = ExtResource("10_0tuhh")
+
+[node name="Idle" type="Node" parent="BeehaveTree/Root"]
+script = ExtResource("11_1v8e5")
+
+[node name="InverterDecorator" type="Node" parent="BeehaveTree/Root/Idle"]
+script = ExtResource("12_df24o")
+
+[node name="PlayerInRange" type="Node" parent="BeehaveTree/Root/Idle/InverterDecorator"]
+script = ExtResource("13_0a4si")
+
+[node name="PlayAnimation" type="Node" parent="BeehaveTree/Root/Idle"]
+script = ExtResource("14_1c286")
+anim_name = &"Idle"
+
+[node name="Phase1" type="Node" parent="BeehaveTree/Root"]
+script = ExtResource("15_tfrv2")
+
+[node name="BlackboardCompareCondition" type="Node" parent="BeehaveTree/Root/Phase1"]
+script = ExtResource("16_ow2j2")
+left_operand = "get_value(\"phase\")"
+right_operand = "1"
+
+[node name="WalkOrAttack" type="Node" parent="BeehaveTree/Root/Phase1"]
+script = ExtResource("10_0tuhh")
+
+[node name="Attack" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack"]
+script = ExtResource("15_tfrv2")
+
+[node name="PlayerInRange" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Attack"]
+script = ExtResource("13_0a4si")
+range = 2.0
+
+[node name="AttackOrIdle" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Attack"]
+script = ExtResource("10_0tuhh")
+
+[node name="SequenceReactiveComposite" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Attack/AttackOrIdle"]
+script = ExtResource("15_tfrv2")
+
+[node name="IsAbilityOnCooldown" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Attack/AttackOrIdle/SequenceReactiveComposite"]
+script = ExtResource("18_ngcww")
+ability_name = "Melee"
+
+[node name="PlayAnimation3" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Attack/AttackOrIdle/SequenceReactiveComposite"]
+script = ExtResource("14_1c286")
+which = 0
+anim_name = &"attack"
+
+[node name="PlayAnimation4" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Attack/AttackOrIdle/SequenceReactiveComposite"]
+script = ExtResource("14_1c286")
+which = 1
+anim_name = &"Idle"
+
+[node name="UseAbility" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Attack/AttackOrIdle/SequenceReactiveComposite"]
+script = ExtResource("24_q41my")
+ability_name = "Melee"
+
+[node name="SelectorReactiveComposite" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Attack/AttackOrIdle"]
+script = ExtResource("21_2ehie")
+
+[node name="PlayAnimation" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Attack/AttackOrIdle/SelectorReactiveComposite"]
+script = ExtResource("14_1c286")
+anim_name = &"Idle"
+interrupt_current = false
+loop = true
+
+[node name="Walk" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack"]
+script = ExtResource("15_tfrv2")
+
+[node name="PlayAnimation" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Walk"]
+script = ExtResource("14_1c286")
+which = 1
+anim_name = &"walk"
+loop = true
+
+[node name="PlayAnimation2" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Walk"]
+script = ExtResource("14_1c286")
+which = 0
+anim_name = &"walk"
+interrupt_current = false
+loop = true
+
+[node name="TargetPlayer" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Walk"]
+script = ExtResource("19_iuew3")
+
+[node name="AlwaysSucceedDecorator" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Walk"]
+script = ExtResource("20_u2ply")
+
+[node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Walk/AlwaysSucceedDecorator"]
+script = ExtResource("21_acygu")
+wait_time = 0.25
+
+[node name="MoveToPlayer" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Walk/AlwaysSucceedDecorator/TimeLimiterDecorator"]
+script = ExtResource("22_o6ee1")
+
+[node name="Phase2" type="Node" parent="BeehaveTree/Root"]
+script = ExtResource("15_tfrv2")
+
+[node name="BlackboardCompareCondition" type="Node" parent="BeehaveTree/Root/Phase2"]
+script = ExtResource("16_ow2j2")
+left_operand = "get_value(\"phase\")"
+right_operand = "2"
+
+[node name="WalkOrAttack" type="Node" parent="BeehaveTree/Root/Phase2"]
+script = ExtResource("10_0tuhh")
+
+[node name="UseSummon" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack"]
+script = ExtResource("15_tfrv2")
+
+[node name="IsAbilityOnCooldown" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/UseSummon"]
+script = ExtResource("18_ngcww")
+ability_name = "Summon Skeletons"
+
+[node name="CanUseAbility" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/UseSummon"]
+script = ExtResource("26_20g5y")
+ability_name = "Summon Skeletons"
+
+[node name="PlayAnimation3" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/UseSummon"]
+script = ExtResource("14_1c286")
+which = 0
+anim_name = &"attack"
+
+[node name="PlayAnimation4" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/UseSummon"]
+script = ExtResource("14_1c286")
+which = 1
+anim_name = &"Idle"
+
+[node name="UseAbility" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/UseSummon"]
+script = ExtResource("24_q41my")
+ability_name = "Summon Skeletons"
+
+[node name="Attack" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack"]
+script = ExtResource("15_tfrv2")
+
+[node name="PlayerInRange" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Attack"]
+script = ExtResource("13_0a4si")
+range = 2.0
+
+[node name="AttackOrIdle" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Attack"]
+script = ExtResource("10_0tuhh")
+
+[node name="UseMelee" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Attack/AttackOrIdle"]
+script = ExtResource("15_tfrv2")
+
+[node name="IsAbilityOnCooldown" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Attack/AttackOrIdle/UseMelee"]
+script = ExtResource("18_ngcww")
+ability_name = "Melee"
+
+[node name="PlayAnimation3" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Attack/AttackOrIdle/UseMelee"]
+script = ExtResource("14_1c286")
+which = 0
+anim_name = &"attack"
+
+[node name="PlayAnimation4" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Attack/AttackOrIdle/UseMelee"]
+script = ExtResource("14_1c286")
+which = 1
+anim_name = &"Idle"
+
+[node name="UseAbility" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Attack/AttackOrIdle/UseMelee"]
+script = ExtResource("24_q41my")
+ability_name = "Melee"
+
+[node name="SelectorReactiveComposite" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Attack/AttackOrIdle"]
+script = ExtResource("21_2ehie")
+
+[node name="PlayAnimation" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Attack/AttackOrIdle/SelectorReactiveComposite"]
+script = ExtResource("14_1c286")
+anim_name = &"Idle"
+interrupt_current = false
+loop = true
+
+[node name="Walk" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack"]
+script = ExtResource("15_tfrv2")
+
+[node name="PlayAnimation" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Walk"]
+script = ExtResource("14_1c286")
+which = 1
+anim_name = &"walk"
+loop = true
+
+[node name="PlayAnimation2" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Walk"]
+script = ExtResource("14_1c286")
+which = 0
+anim_name = &"walk"
+interrupt_current = false
+loop = true
+
+[node name="TargetPlayer" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Walk"]
+script = ExtResource("19_iuew3")
+
+[node name="AlwaysSucceedDecorator" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Walk"]
+script = ExtResource("20_u2ply")
+
+[node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Walk/AlwaysSucceedDecorator"]
+script = ExtResource("21_acygu")
+wait_time = 0.25
+
+[node name="MoveToPlayer" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Walk/AlwaysSucceedDecorator/TimeLimiterDecorator"]
+script = ExtResource("22_o6ee1")
+
+[node name="SkeletonBossBlackboard" type="Node" parent="."]
+script = ExtResource("15_exxm0")
+
+[editable path="Body/Skelet top"]
+[editable path="Body/Skelet bot"]

@@ -12,6 +12,7 @@ var global_state: Dictionary = {}
 
 signal game_saved()
 signal game_loaded()
+signal global_var_changed(key: String, value: Variant)
 
 func _enter_tree() -> void:
 	Questify.condition_query_requested.connect(
@@ -28,6 +29,7 @@ func _enter_tree() -> void:
 func set_global_var(key: String, value: Variant) -> void:
 	global_state[key] = value
 	Questify.update_quests()
+	global_var_changed.emit(key, value)
 
 
 func get_global_var(key: String) -> Variant:
