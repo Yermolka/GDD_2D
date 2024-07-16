@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dbx4mf5ywvhdr"]
+[gd_scene load_steps=35 format=3 uid="uid://dbx4mf5ywvhdr"]
 
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="1_kjur6"]
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="1_s888k"]
@@ -12,18 +12,23 @@
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="9_fsbvl"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="10_p48e8"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/ability_container.gd" id="11_8y1re"]
-[ext_resource type="Script" path="res://enemies/ai_scripts/bh_get_player.gd" id="11_f8yei"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence_reactive.gd" id="12_gqfrl"]
-[ext_resource type="Script" path="res://enemies/ai_scripts/bh_move_to.gd" id="12_vsvwg"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="12_jnpe4"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_choose_random_point.gd" id="12_q4eac"]
 [ext_resource type="Script" path="res://enemies/ai_scripts/bh_target_player.gd" id="13_btpa1"]
-[ext_resource type="Script" path="res://addons/beehave/blackboard.gd" id="13_w6h3a"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_is_player_in_range.gd" id="13_gcxum"]
 [ext_resource type="Script" path="res://enemies/ai_scripts/bh_play_animation.gd" id="15_oamaw"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_move_to_player.gd" id="16_aem6r"]
 [ext_resource type="Script" path="res://enemies/ai_scripts/bh_use_ability.gd" id="17_75ld0"]
 [ext_resource type="Script" path="res://enemies/ai_scripts/bh_check_cd.gd" id="18_oks02"]
 [ext_resource type="PackedScene" uid="uid://cyeikx8hhonnc" path="res://enemies/models/skeleton/Skelet bot.gltf" id="19_1uvy2"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/time_limiter.gd" id="20_ibk3o"]
 [ext_resource type="PackedScene" uid="uid://c21ku2lw4u3l1" path="res://enemies/models/skeleton/Skelet top.gltf" id="20_stbjq"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_enemy_blackboard.gd" id="21_p4g6i"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_3r0t3"]
+height = 1.11943
+radius = 0.194985
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_23mcq"]
 
@@ -84,6 +89,7 @@ body_bot = NodePath("Body/Skelet bot")
 body_bot_anim = NodePath("Body/Skelet bot/AnimationPlayer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.31132, 0)
 shape = SubResource("CylinderShape3D_3r0t3")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -109,58 +115,84 @@ abilities = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_a
 
 [node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("8_pjyuy")
-blackboard = NodePath("../Blackboard")
+blackboard = NodePath("../EnemyBlackboard")
 actor = NodePath("..")
 
 [node name="SelectorComposite" type="Node" parent="BeehaveTree"]
 script = ExtResource("10_p48e8")
 
-[node name="Hostile" type="Node" parent="BeehaveTree/SelectorComposite"]
+[node name="Idle" type="Node" parent="BeehaveTree/SelectorComposite"]
 script = ExtResource("9_fsbvl")
 
-[node name="Debounce" type="Node" parent="BeehaveTree/SelectorComposite/Hostile"]
+[node name="InverterDecorator" type="Node" parent="BeehaveTree/SelectorComposite/Idle"]
+script = ExtResource("12_jnpe4")
+
+[node name="PlayerInRange" type="Node" parent="BeehaveTree/SelectorComposite/Idle/InverterDecorator"]
+script = ExtResource("13_gcxum")
+
+[node name="DelayDecorator" type="Node" parent="BeehaveTree/SelectorComposite/Idle"]
 script = ExtResource("9_1t51j")
+wait_time = 2.0
 
-[node name="Move" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce"]
-script = ExtResource("12_gqfrl")
-
-[node name="PlayerInRange" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce/Move"]
-script = ExtResource("11_f8yei")
-
-[node name="PlayAnimation" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce/Move"]
+[node name="PlayAnimation2" type="Node" parent="BeehaveTree/SelectorComposite/Idle/DelayDecorator"]
 script = ExtResource("15_oamaw")
 anim_name = &"walk"
-interrupt_current = false
+loop = true
 
-[node name="TargetPlayer" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce/Move"]
+[node name="ChooseRandomPoint" type="Node" parent="BeehaveTree/SelectorComposite/Idle"]
+script = ExtResource("12_q4eac")
+
+[node name="MoveToIdle" type="Node" parent="BeehaveTree/SelectorComposite/Idle"]
+script = ExtResource("16_aem6r")
+
+[node name="PlayAnimation" type="Node" parent="BeehaveTree/SelectorComposite/Idle"]
+script = ExtResource("15_oamaw")
+anim_name = &"Idle"
+loop = true
+
+[node name="Hostile" type="Node" parent="BeehaveTree/SelectorComposite"]
+script = ExtResource("12_gqfrl")
+
+[node name="PlayAnimation" type="Node" parent="BeehaveTree/SelectorComposite/Hostile"]
+script = ExtResource("15_oamaw")
+which = 1
+anim_name = &"walk"
+loop = true
+
+[node name="PlayAnimation3" type="Node" parent="BeehaveTree/SelectorComposite/Hostile"]
+script = ExtResource("15_oamaw")
+which = 0
+anim_name = &"walk"
+interrupt_current = false
+loop = true
+
+[node name="TargetPlayer" type="Node" parent="BeehaveTree/SelectorComposite/Hostile"]
 script = ExtResource("13_btpa1")
 
-[node name="MoveToPlayer" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce/Move"]
-script = ExtResource("12_vsvwg")
+[node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/SelectorComposite/Hostile"]
+script = ExtResource("20_ibk3o")
+wait_time = 2.0
 
-[node name="IsAbilityOnCooldown" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce/Move"]
+[node name="MoveToPlayer" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/TimeLimiterDecorator"]
+script = ExtResource("16_aem6r")
+
+[node name="IsAbilityOnCooldown" type="Node" parent="BeehaveTree/SelectorComposite/Hostile"]
 script = ExtResource("18_oks02")
 ability_name = "Melee"
 
-[node name="UseAbility" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce/Move"]
+[node name="UseAbility" type="Node" parent="BeehaveTree/SelectorComposite/Hostile"]
 script = ExtResource("17_75ld0")
 ability_name = "Melee"
 
-[node name="PlayAnimation2" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce/Move"]
+[node name="PlayAnimation2" type="Node" parent="BeehaveTree/SelectorComposite/Hostile"]
 script = ExtResource("15_oamaw")
 which = 0
 anim_name = &"attack"
-
-[node name="TargetPlayer" type="Node" parent="."]
-script = ExtResource("13_btpa1")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 avoidance_enabled = true
 max_neighbors = 1
 debug_enabled = true
-
-[node name="Blackboard" type="Node" parent="."]
-script = ExtResource("13_w6h3a")
 
 [node name="Body" type="Node3D" parent="."]
 transform = Transform3D(-0.05, 0, -4.37114e-09, 0, 0.05, 0, 4.37114e-09, 0, -0.05, 0, 0, 0)
@@ -184,6 +216,9 @@ transform = Transform3D(1, 0, 0, 0, -1, -1.50996e-07, 0, 1.50996e-07, -1, 4, 9, 
 
 [node name="Ruka2-Global" parent="Body/Skelet top/World-Global/Telo-Global" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 9, 0)
+
+[node name="EnemyBlackboard" type="Node" parent="."]
+script = ExtResource("21_p4g6i")
 
 [editable path="Body/Skelet bot"]
 [editable path="Body/Skelet top"]

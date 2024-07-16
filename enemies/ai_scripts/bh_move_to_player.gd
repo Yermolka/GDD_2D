@@ -6,11 +6,12 @@ class_name MoveToPlayer extends ActionLeaf
 func tick(actor: Node, blackboard: Blackboard) -> int:
 	actor = actor as Enemy
 	var player: Player = get_tree().get_first_node_in_group("player")
-	# actor.body_top.look_at(player.global_position)
-	# actor.body_top.rotate_y(PI)
-	# actor.body_bot.look_at(player.global_position)
-	# actor.body_bot.rotate_y(PI)
-	actor.look_at(player.global_position)
+	if not actor.nav_agent.is_navigation_finished():
+		actor.look_at(actor.nav_agent.get_next_path_position())
+	else:
+		actor.look_at(player.global_position)
+	actor.global_rotation.x = 0
+	actor.global_rotation.z = 0
 	if actor.nav_agent.distance_to_target() > max_range:
 		actor.nav_agent.target_position = actor.global_position
 		return FAILURE

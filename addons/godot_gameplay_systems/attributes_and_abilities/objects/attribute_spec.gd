@@ -70,6 +70,10 @@ func apply_attribute_effect(attribute_effect: AttributeEffect) -> void:
 	
 	if attribute_effect.applies_as == 1:
 		buffing_value += value
+	elif attribute_effect.applies_as == 2:
+		var percent: float = current_value / maximum_value
+		maximum_value += value
+		current_value = maximum_value * percent
 	else:
 		if buffing_value > 0.0 and value < 0.0:
 			var diff = buffing_value + value
