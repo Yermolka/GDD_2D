@@ -32,13 +32,16 @@ func _ready() -> void:
 	print("Enemy: ", name, " was granted ", ability_container.grant_all_abilities(), " abilities")
 
 func _physics_process(delta: float) -> void:
+	var old_rotation: Vector3 = global_rotation
 	if not nav_agent.is_navigation_finished():
+		global_rotation = Vector3.ZERO
 		var next_point: Vector3 = to_local(nav_agent.get_next_path_position())
 		
 		velocity = next_point.normalized() * SPEED * delta
 	else:
 		velocity = Vector3.ZERO
 	move_and_slide()
+	global_rotation = old_rotation
 
 
 func serialize() -> Dictionary:

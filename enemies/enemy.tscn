@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dbx4mf5ywvhdr"]
+[gd_scene load_steps=32 format=3 uid="uid://dbx4mf5ywvhdr"]
 
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="1_kjur6"]
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="1_s888k"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://addons/beehave/blackboard.gd" id="13_w6h3a"]
 [ext_resource type="Script" path="res://enemies/ai_scripts/bh_play_animation.gd" id="15_oamaw"]
 [ext_resource type="Script" path="res://enemies/ai_scripts/bh_use_ability.gd" id="17_75ld0"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_check_cd.gd" id="18_oks02"]
 [ext_resource type="PackedScene" uid="uid://cyeikx8hhonnc" path="res://enemies/models/skeleton/Skelet bot.gltf" id="19_1uvy2"]
 [ext_resource type="PackedScene" uid="uid://c21ku2lw4u3l1" path="res://enemies/models/skeleton/Skelet top.gltf" id="20_stbjq"]
 
@@ -77,10 +78,10 @@ collision_mask = 7
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource("1_s888k")
-body_top = NodePath("Node3D/Skelet top")
-body_top_anim = NodePath("Node3D/Skelet top/AnimationPlayer")
-body_bot = NodePath("Node3D/Skelet bot")
-body_bot_anim = NodePath("Node3D/Skelet bot/AnimationPlayer")
+body_top = NodePath("Body/Skelet top")
+body_top_anim = NodePath("Body/Skelet top/AnimationPlayer")
+body_bot = NodePath("Body/Skelet bot")
+body_bot_anim = NodePath("Body/Skelet bot/AnimationPlayer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_3r0t3")
@@ -137,11 +138,15 @@ script = ExtResource("13_btpa1")
 [node name="MoveToPlayer" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce/Move"]
 script = ExtResource("12_vsvwg")
 
-[node name="UseAbility" type="Node" parent="BeehaveTree/SelectorComposite/Hostile"]
+[node name="IsAbilityOnCooldown" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce/Move"]
+script = ExtResource("18_oks02")
+ability_name = "Melee"
+
+[node name="UseAbility" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce/Move"]
 script = ExtResource("17_75ld0")
 ability_name = "Melee"
 
-[node name="PlayAnimation" type="Node" parent="BeehaveTree/SelectorComposite/Hostile"]
+[node name="PlayAnimation2" type="Node" parent="BeehaveTree/SelectorComposite/Hostile/Debounce/Move"]
 script = ExtResource("15_oamaw")
 which = 0
 anim_name = &"attack"
@@ -157,28 +162,28 @@ debug_enabled = true
 [node name="Blackboard" type="Node" parent="."]
 script = ExtResource("13_w6h3a")
 
-[node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+[node name="Body" type="Node3D" parent="."]
+transform = Transform3D(-0.05, 0, -4.37114e-09, 0, 0.05, 0, 4.37114e-09, 0, -0.05, 0, 0, 0)
 
-[node name="Skelet bot" parent="Node3D" instance=ExtResource("19_1uvy2")]
+[node name="Skelet bot" parent="Body" instance=ExtResource("19_1uvy2")]
 
-[node name="Noga1-Global" parent="Node3D/Skelet bot/World-Global" index="1"]
+[node name="Noga1-Global" parent="Body/Skelet bot/World-Global" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, 0)
 
-[node name="Noga2-Global" parent="Node3D/Skelet bot/World-Global" index="2"]
+[node name="Noga2-Global" parent="Body/Skelet bot/World-Global" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 0.508608)
 
-[node name="Skelet top" parent="Node3D" instance=ExtResource("20_stbjq")]
+[node name="Skelet top" parent="Body" instance=ExtResource("20_stbjq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.25, 0)
 
-[node name="Golodvs-Global" parent="Node3D/Skelet top/World-Global/Telo-Global" index="1"]
+[node name="Golodvs-Global" parent="Body/Skelet top/World-Global/Telo-Global" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 
-[node name="Ruka1-Global" parent="Node3D/Skelet top/World-Global/Telo-Global" index="2"]
+[node name="Ruka1-Global" parent="Body/Skelet top/World-Global/Telo-Global" index="2"]
 transform = Transform3D(1, 0, 0, 0, -1, -1.50996e-07, 0, 1.50996e-07, -1, 4, 9, -7.50584e-08)
 
-[node name="Ruka2-Global" parent="Node3D/Skelet top/World-Global/Telo-Global" index="3"]
+[node name="Ruka2-Global" parent="Body/Skelet top/World-Global/Telo-Global" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 9, 0)
 
-[editable path="Node3D/Skelet bot"]
-[editable path="Node3D/Skelet top"]
+[editable path="Body/Skelet bot"]
+[editable path="Body/Skelet top"]
