@@ -6,7 +6,13 @@ class_name Enemy extends Entity
 @onready var ability_container: AbilityContainer = $AbilityContainer
 @export var ui_name: String = "enemy"
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
-const SPEED: float = 10.0
+const SPEED: float = 100.0
+
+@export_group("animation")
+@export var body_top: Node3D
+@export var body_top_anim: AnimationPlayer
+@export var body_bot: Node3D
+@export var body_bot_anim: AnimationPlayer
 
 func _ready() -> void:
 	add_to_group("enemies")
