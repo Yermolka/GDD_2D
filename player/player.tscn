@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cultyql87ixvl"]
+[gd_scene load_steps=28 format=3 uid="uid://cultyql87ixvl"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_31dcg"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/ability_container.gd" id="2_kt3nr"]
@@ -47,6 +47,13 @@ current_value = 100.0
 script = ExtResource("4_2qw15")
 attribute_name = "base_damage"
 minimum_value = 10.0
+maximum_value = 10.0
+current_value = 10.0
+
+[sub_resource type="Resource" id="Resource_6u6m3"]
+script = ExtResource("4_2qw15")
+attribute_name = "defense"
+minimum_value = -10.0
 maximum_value = 10.0
 current_value = 10.0
 
@@ -104,7 +111,7 @@ gameplay_attribute_map_path = NodePath("../GameplayAttributeMap")
 [node name="GameplayAttributeMap" type="Node" parent="."]
 script = ExtResource("3_4d36o")
 owning_character = NodePath("..")
-attributes = Array[ExtResource("4_2qw15")]([SubResource("Resource_4bvb6"), SubResource("Resource_c0ocp"), SubResource("Resource_o5x7h"), SubResource("Resource_xdma3")])
+attributes = Array[ExtResource("4_2qw15")]([SubResource("Resource_4bvb6"), SubResource("Resource_c0ocp"), SubResource("Resource_o5x7h"), SubResource("Resource_xdma3"), SubResource("Resource_6u6m3")])
 table = ExtResource("5_5fmbk")
 
 [node name="Inventory" type="Node" parent="."]

@@ -125,6 +125,8 @@ quick_load={
 2d_physics/layer_7="Projectiles"
 3d_physics/layer_7="Projectiles"
 3d_physics/layer_8="Attacks"
+3d_physics/layer_9="PhysicsBodies"
+3d_physics/layer_10="HurtBoxes"
 
 [questify]
 

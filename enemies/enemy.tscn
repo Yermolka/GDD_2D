@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://dbx4mf5ywvhdr"]
+[gd_scene load_steps=40 format=3 uid="uid://dbx4mf5ywvhdr"]
 
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="1_kjur6"]
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="1_s888k"]
@@ -25,6 +25,8 @@
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/time_limiter.gd" id="20_ibk3o"]
 [ext_resource type="PackedScene" uid="uid://c21ku2lw4u3l1" path="res://enemies/models/skeleton/Skelet top.gltf" id="20_stbjq"]
 [ext_resource type="Script" path="res://enemies/ai_scripts/bh_enemy_blackboard.gd" id="21_p4g6i"]
+[ext_resource type="Script" path="res://common/hurtbox/hurt_box.gd" id="26_3aeg3"]
+[ext_resource type="PackedScene" uid="uid://duqifpy1ec0bg" path="res://common/hurtbox/hurt_box.tscn" id="26_q3ao2"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_3r0t3"]
 height = 1.11943
@@ -77,9 +79,18 @@ minimum_value = 1.0
 maximum_value = 20.0
 current_value = 2.0
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_qijiu"]
+size = Vector3(1, 6.96533, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_65fia"]
+size = Vector3(5.18378, 6.47217, 4.92542)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ypgm2"]
+size = Vector3(6.92789, 9.66785, 4.05759)
+
 [node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("body_top", "body_top_anim", "body_bot", "body_bot_anim")]
-collision_layer = 2
-collision_mask = 7
+collision_layer = 256
+collision_mask = 261
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource("1_s888k")
@@ -202,20 +213,45 @@ transform = Transform3D(-0.05, 0, -4.37114e-09, 0, 0.05, 0, 4.37114e-09, 0, -0.0
 [node name="Noga1-Global" parent="Body/Skelet bot/World-Global" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, 0)
 
+[node name="HurtBox" parent="Body/Skelet bot/World-Global/Noga1-Global" index="1" instance=ExtResource("26_q3ao2")]
+transform = Transform3D(1, 8.74228e-08, 8.74228e-08, 8.74228e-08, -1, 0, 8.74228e-08, 7.64274e-15, -1, 1, -2, 1.69407e-21)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body/Skelet bot/World-Global/Noga1-Global/HurtBox"]
+transform = Transform3D(1, 6.6815e-22, 5.68434e-14, 6.6815e-22, 1, -1.78724e-19, -5.68434e-14, -3.38813e-21, 1, -1.51059, 1.46899, -1.3206e-07)
+shape = SubResource("BoxShape3D_qijiu")
+
 [node name="Noga2-Global" parent="Body/Skelet bot/World-Global" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 0.508608)
+
+[node name="HurtBox" parent="Body/Skelet bot/World-Global/Noga2-Global" index="1" instance=ExtResource("26_q3ao2")]
+transform = Transform3D(1, 8.74228e-08, 8.74228e-08, 8.74228e-08, -1, 0, 8.74228e-08, 7.64274e-15, -1, 2.01318, -2, 0)
+script = null
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body/Skelet bot/World-Global/Noga2-Global/HurtBox"]
+transform = Transform3D(1, 6.6815e-22, 5.68434e-14, 6.6815e-22, 1, -1.78724e-19, -5.68434e-14, -3.38813e-21, 1, -1.51059, 1.46899, -1.3206e-07)
+shape = SubResource("BoxShape3D_qijiu")
 
 [node name="Skelet top" parent="Body" instance=ExtResource("20_stbjq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.25, 0)
 
-[node name="Golodvs-Global" parent="Body/Skelet top/World-Global/Telo-Global" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+[node name="HurtBox" type="Area3D" parent="Body/Skelet top/World-Global/Telo-Global/Golodvs-Global" index="1"]
+script = ExtResource("26_3aeg3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body/Skelet top/World-Global/Telo-Global/Golodvs-Global/HurtBox"]
+transform = Transform3D(1, 0, -5.0822e-21, 0, 1, 0, 5.0822e-21, 0, 1, 0.376068, 2.73608, 0.483215)
+shape = SubResource("BoxShape3D_65fia")
 
 [node name="Ruka1-Global" parent="Body/Skelet top/World-Global/Telo-Global" index="2"]
-transform = Transform3D(1, 0, 0, 0, -1, -1.50996e-07, 0, 1.50996e-07, -1, 4, 9, -7.50584e-08)
+transform = Transform3D(0.939693, 0.342019, 1.50996e-07, 0.342019, -0.939693, -1.4189e-07, 9.33607e-08, 1.84976e-07, -1, 4.00001, 9.05168, -9.63746e-08)
 
 [node name="Ruka2-Global" parent="Body/Skelet top/World-Global/Telo-Global" index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 9, 0)
+transform = Transform3D(0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 0, 1, -3, 9, 0)
+
+[node name="HurtBox" parent="Body/Skelet top/World-Global/Telo-Global" index="4" instance=ExtResource("26_q3ao2")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body/Skelet top/World-Global/Telo-Global/HurtBox"]
+transform = Transform3D(1, 0, -5.0822e-21, 0, 1, 0, 5.0822e-21, 0, 1, 0.476792, 4.1881, -0.0358124)
+shape = SubResource("BoxShape3D_ypgm2")
 
 [node name="EnemyBlackboard" type="Node" parent="."]
 script = ExtResource("21_p4g6i")

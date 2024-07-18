@@ -13,6 +13,4 @@ func _ready() -> void:
 	get_tree().root.add_child(enemy_1)
 	enemy_1.position = position + (Vector3.LEFT * radius)
 
-	print(global_position, " ", enemy_1.position, " ", enemy_0.position)
-
 	queue_free()

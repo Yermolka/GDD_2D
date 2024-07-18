@@ -92,8 +92,6 @@ func activate(event: ActivationEvent) -> void:
 		var scene: Node3D = projectile_scene.instantiate()
 		caster.get_tree().root.add_child(scene)
 		scene.global_position = caster.global_position
-		print(caster, " ", caster.global_position)
-		print(scene, " ", scene.position)
 
 
 func _cast(timer: SceneTreeTimer, ac: AbilityContainer) -> void:

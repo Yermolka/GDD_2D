@@ -209,6 +209,25 @@ func apply_timed_effect(effect: TimedGameplayEffect) -> void:
 
 	timed_effect_applied.emit(_effect)
 
+func consider_defense(effect: AttributeEffect) -> AttributeEffect:
+	if effect.attribute_name != "health" or effect.get_current_value() >= 0.0 or effect.applies_as != 0:
+		return effect
+
+	var defense: AttributeSpec = _attributes_dict.get("defense", null)
+	if not defense:
+		return effect
+
+	var res: AttributeEffect = effect.duplicate(true)
+	res.stats = effect.stats
+
+	if not res.value_formula.is_empty():
+		res.value_formula = "(" + res.value_formula + ")+(" + str(defense.current_buffed_value) + ")"
+	else:
+		res.minimum_value = min(res.minimum_value + defense.current_buffed_value, 0.0)
+		res.maximum_value = min(res.maximum_value + defense.current_buffed_value, 0.0)
+
+	return res
+
 ## Applies an effect on current GameplayAttributeMap
 func apply_effect(effect: GameplayEffect) -> void:
 	var _effect = effect.duplicate()
@@ -231,7 +250,9 @@ func apply_effect(effect: GameplayEffect) -> void:
 			if not attribute_affected.should_apply(_effect, self):
 				continue
 
-			_attributes_dict[attribute_affected.attribute_name].apply_attribute_effect(attribute_affected)
+			var considered: AttributeEffect = consider_defense(attribute_affected)
+			print(considered.attribute_name, considered.get_current_value())
+			_attributes_dict[attribute_affected.attribute_name].apply_attribute_effect(considered)
 
 			attribute_effect_applied.emit(attribute_affected, spec)
 		elif attribute_affected.life_time == AttributeEffect.LIFETIME_TIME_BASED:

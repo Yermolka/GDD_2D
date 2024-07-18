@@ -29,7 +29,6 @@ func _ready() -> void:
 			print(attr.attribute_name, ": ", attr.current_buffed_value)
 	)
 
-	print("Enemy: ", name, " was granted ", ability_container.grant_all_abilities(), " abilities")
 
 func _physics_process(delta: float) -> void:
 	var old_rotation: Vector3 = global_rotation

@@ -76,7 +76,6 @@ func handle_cooldown_ended(ability: ActiveSkill) -> void:
 
 
 func setup_ability_container(ability_container: AbilityContainer) -> void:
-	print(ability_container)
 	for child: SelectedSkillButton in $SelectedSkills.get_children():
 		child.ability_container = ability_container
 

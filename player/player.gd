@@ -37,7 +37,6 @@ var inventory_items: Array:
 	get:
 		return inventory.items.map(
 		func (x: ItemBase) -> Dictionary:
-			print(x.resource_path)
 			return {
 				"resource_path": x.get_resource_path(),
 				"quantity": x.quantity_current
@@ -157,8 +156,7 @@ func _ready() -> void:
 	_setup_attr_map()
 	_setup_inventory()
 	_setup_quests()
-
-	print("Player: granted ", ability_container.grant_all_abilities(), " abilities")
+	
 
 func _quest_update(type: String, key: String, value: Variant, requester: QuestCondition) -> void:
 	if type != "has_item":
