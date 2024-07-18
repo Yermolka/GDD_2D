@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestResource" load_steps=16 format=3 uid="uid://qcf815f8gx5s"]
+[gd_resource type="Resource" script_class="QuestResource" load_steps=14 format=3 uid="uid://hyaxvy2tl7k5"]
 
 [ext_resource type="Script" path="res://addons/questify/scripts/model/quest_start.gd" id="1_7ulno"]
 [ext_resource type="Script" path="res://addons/questify/scripts/model/quest_edge.gd" id="2_ddvc3"]
@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://addons/questify/scripts/model/quest_end.gd" id="5_qx0dk"]
 [ext_resource type="Script" path="res://addons/questify/scripts/model/quest_resource.gd" id="6_8mtmp"]
 
-[sub_resource type="Resource" id="Resource_bl8mi"]
+[sub_resource type="Resource" id="Resource_yj14n"]
 script = ExtResource("1_7ulno")
 name = "Quest line"
 description = ""
@@ -16,7 +16,7 @@ optional = false
 graph_editor_position = Vector2(-1232.11, -567.249)
 graph_editor_size = Vector2(280, 503)
 
-[sub_resource type="Resource" id="Resource_noi4i"]
+[sub_resource type="Resource" id="Resource_cyqsn"]
 script = ExtResource("3_xjhqv")
 description = "Lalalala"
 id = "1u81IoFVBF"
@@ -24,62 +24,50 @@ optional = false
 graph_editor_position = Vector2(-360, -360)
 graph_editor_size = Vector2(468, 499)
 
-[sub_resource type="Resource" id="Resource_3ynxr"]
+[sub_resource type="Resource" id="Resource_yra2r"]
 script = ExtResource("2_ddvc3")
-from = SubResource("Resource_bl8mi")
-to = SubResource("Resource_noi4i")
+from = SubResource("Resource_yj14n")
+to = SubResource("Resource_cyqsn")
 edge_type = 0
 
-[sub_resource type="Resource" id="Resource_46vt8"]
+[sub_resource type="Resource" id="Resource_1qw7p"]
 script = ExtResource("4_1uda0")
-type = "global_var"
-key = "lalala"
+type = "kill"
+key = "Skeleton Lord"
 id = "Gy_H1I6VyS"
 optional = false
-graph_editor_position = Vector2(-1500, 140)
+graph_editor_position = Vector2(-960, 20)
 graph_editor_size = Vector2(377, 309)
-metadata/value = true
+metadata/value = 1.0
 
-[sub_resource type="Resource" id="Resource_6003u"]
+[sub_resource type="Resource" id="Resource_1qqnu"]
 script = ExtResource("2_ddvc3")
-from = SubResource("Resource_46vt8")
-to = SubResource("Resource_noi4i")
+from = SubResource("Resource_1qw7p")
+to = SubResource("Resource_cyqsn")
 edge_type = 1
 
-[sub_resource type="Resource" id="Resource_ug4j2"]
-script = ExtResource("3_xjhqv")
-description = ""
-id = "L2TIV1-nnq"
-optional = false
-graph_editor_position = Vector2(420, 120)
-graph_editor_size = Vector2(468, 499)
-
-[sub_resource type="Resource" id="Resource_72jdt"]
-script = ExtResource("2_ddvc3")
-from = SubResource("Resource_noi4i")
-to = SubResource("Resource_ug4j2")
-edge_type = 0
-
-[sub_resource type="Resource" id="Resource_twmck"]
+[sub_resource type="Resource" id="Resource_lhb0w"]
 script = ExtResource("5_qx0dk")
 id = "VGJhVTwGxS"
 optional = false
 graph_editor_position = Vector2(575.969, -205.19)
 graph_editor_size = Vector2(141, 78)
 
-[sub_resource type="Resource" id="Resource_xe48e"]
+[sub_resource type="Resource" id="Resource_gjm1o"]
 script = ExtResource("2_ddvc3")
-from = SubResource("Resource_ug4j2")
-to = SubResource("Resource_twmck")
+from = SubResource("Resource_cyqsn")
+to = SubResource("Resource_lhb0w")
 edge_type = 0
 
 [resource]
 script = ExtResource("6_8mtmp")
-nodes = Array[Resource("res://addons/questify/scripts/model/quest_node.gd")]([SubResource("Resource_bl8mi"), SubResource("Resource_twmck"), SubResource("Resource_noi4i"), SubResource("Resource_46vt8"), SubResource("Resource_ug4j2")])
-edges = Array[ExtResource("2_ddvc3")]([SubResource("Resource_3ynxr"), SubResource("Resource_6003u"), SubResource("Resource_72jdt"), SubResource("Resource_xe48e")])
+nodes = Array[Resource("res://addons/questify/scripts/model/quest_node.gd")]([SubResource("Resource_yj14n"), SubResource("Resource_lhb0w"), SubResource("Resource_cyqsn"), SubResource("Resource_1qw7p")])
+edges = Array[ExtResource("2_ddvc3")]([SubResource("Resource_yra2r"), SubResource("Resource_1qqnu"), SubResource("Resource_gjm1o")])
 required_level = 0
 remove_items_on_complete = true
-global_requirements = {}
+global_requirements = {
+"first_quest_done": true
+}
 global_vars_on_turn_in = {}
 reward_xp = 0
 reward_currency = 0

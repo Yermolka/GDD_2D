@@ -118,7 +118,7 @@ shape = SubResource("CapsuleShape3D_3nhmo")
 ability_container_path = NodePath("../AbilityContainer")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.754916, 0.655822, 0, -0.655822, 0.754916, 0, 3.00282, 3.39728)
+transform = Transform3D(1, 0, 0, 0, 0.754916, 0.655822, 0, -0.655822, 0.754916, 0, 4.33388, 3.39728)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

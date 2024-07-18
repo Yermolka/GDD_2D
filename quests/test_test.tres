@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="QuestResource" load_steps=2 format=3 uid="uid://c8eh25ogjs6g5"]
+
+[ext_resource type="Script" path="res://addons/questify/scripts/model/quest_resource.gd" id="1_udgtg"]
+
+[resource]
+script = ExtResource("1_udgtg")
+nodes = Array[Resource("res://addons/questify/scripts/model/quest_node.gd")]([])
+edges = Array[Resource("res://addons/questify/scripts/model/quest_edge.gd")]([])

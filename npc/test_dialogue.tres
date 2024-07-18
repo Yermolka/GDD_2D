@@ -5,7 +5,9 @@
 [resource]
 script = ExtResource("1_t71ng")
 starts = {
-"start": &"0_1"
+"not_ready": &"0_2",
+"start": &"0_1",
+"turn_in": &"0_3"
 }
 nodes = {
 "0_1": {
@@ -13,9 +15,32 @@ nodes = {
 "offset": Vector2(-210, -190),
 "start_id": "start"
 },
+"0_2": {
+"link": &"1_2",
+"offset": Vector2(-190.402, 132.809),
+"start_id": "not_ready"
+},
+"0_3": {
+"link": &"1_3",
+"offset": Vector2(-200, 540),
+"start_id": "turn_in"
+},
 "1_1": {
 "dialogue": "Hello, hero!",
 "offset": Vector2(63, -178),
+"options": {
+0: {
+"condition": {},
+"link": &"3_1",
+"text": ""
+}
+},
+"size": Vector2(300, 240),
+"speaker": "NPC"
+},
+"1_2": {
+"dialogue": "123",
+"offset": Vector2(40, 160),
 "options": {
 0: {
 "condition": {},
@@ -25,6 +50,29 @@ nodes = {
 },
 "size": Vector2(300, 240),
 "speaker": "NPC"
+},
+"1_3": {
+"dialogue": "Thank you!",
+"offset": Vector2(81.9203, 576.431),
+"options": {
+0: {
+"condition": {},
+"link": &"3_2",
+"text": ""
+}
+},
+"size": Vector2(300, 240),
+"speaker": "NPC"
+},
+"3_1": {
+"link": "END",
+"offset": Vector2(439.56, -22.918),
+"signalValue": "quests.Quest line.accepted"
+},
+"3_2": {
+"link": "END",
+"offset": Vector2(442.089, 705.272),
+"signalValue": "quests.Quest line.completed"
 }
 }
 variables = {}

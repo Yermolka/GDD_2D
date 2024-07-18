@@ -43,8 +43,7 @@ func _ready() -> void:
 	texture_map["none"] = null
 
 	if quest:
-		if quest.name == "Quest line":
-			quest.global_requirements = {"test_quest_done": true}
+		print(quest.name)
 		quest = quest.instantiate()
 
 	EventBus.dialogueSignal.connect(
