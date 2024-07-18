@@ -21,6 +21,9 @@ class_name Player extends Entity
 @export var xp_map: Array
 signal current_xp_changed(value: int, maxValue: int)
 signal level_changed(value: int)
+@onready var forward: Vector3 = $Camera3D.global_transform.basis.z
+@onready var player_screen_pos: Vector2 = $Camera3D.unproject_position(global_position)
+@onready var mesh: MeshInstance3D = $MeshInstance3D
 
 const SPEED: float = 5.0
 var movement_speed: float:
@@ -196,6 +199,9 @@ func _process_input() -> void:
 
 
 func _process_movement() -> void:
+	var mouse_relative: Vector2 = (get_viewport().get_mouse_position() - player_screen_pos).normalized()
+	global_rotation.y = -mouse_relative.angle() - PI / 3
+
 	velocity = Vector3.ZERO
 	if not is_on_floor():
 		velocity.y -= 9.8
@@ -204,9 +210,9 @@ func _process_movement() -> void:
 		move_and_slide()
 		return
 
-	var horizontal: float = Input.get_axis("move_left", "move_right")
-	var vertical: float = Input.get_axis("move_up", "move_down")
-	var direction: Vector3 = Vector3(horizontal, 0, vertical).normalized()
+	var horizontal: Vector3 = (Input.get_axis("move_left", "move_right") * forward).rotated(Vector3.UP, PI / 2)
+	var vertical: Vector3 = Input.get_axis("move_up", "move_down") * forward
+	var direction: Vector3 = (horizontal + vertical).normalized()
 
 	if direction:
 		velocity += direction * movement_speed
