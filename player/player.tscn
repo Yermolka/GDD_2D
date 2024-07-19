@@ -114,9 +114,6 @@ axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource("1_31dcg")
 movement_skill = ExtResource("2_7daoa")
-level = null
-current_xp = null
-xp_map = null
 mesh_anim = NodePath("Model/AnimationPlayer")
 
 [node name="Model" parent="." instance=ExtResource("2_ahb14")]

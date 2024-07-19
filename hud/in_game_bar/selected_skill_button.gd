@@ -23,6 +23,9 @@ func _on_pressed() -> void:
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	
 	var events: Array[InputEvent] = InputMap.action_get_events("ability" + skill_number)
 	if events.size() > 0:
 		label.text = events[0].as_text().split(" ")[0]

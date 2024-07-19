@@ -22,8 +22,8 @@ class_name Player extends Entity
 @export var xp_map: Array
 signal current_xp_changed(value: int, maxValue: int)
 signal level_changed(value: int)
-@onready var forward: Vector3 = $Camera3D.global_transform.basis.z
-@onready var player_screen_pos: Vector2 = $Camera3D.unproject_position(global_position)
+@onready var forward: Vector3 = get_viewport().get_camera_3d().global_transform.basis.z
+@onready var player_screen_pos: Vector2 = get_viewport().get_camera_3d().unproject_position(global_position)
 @onready var mesh: Node3D = $Model
 
 @export_group("Animation")
@@ -32,12 +32,14 @@ signal level_changed(value: int)
 @export var body_bot: Node3D
 @onready var blackboard: PlayerBlackboard = $PlayerBlackboard
 
+
 const SPEED: float = 5.0
 var movement_speed: float:
 	get:
 		return SPEED * attribute_map.get_attribute_by_name("movement_speed").current_buffed_value / 100.0
 	set(value):
 		attribute_map.get_attribute_by_name("movement_speed").current_value = value
+
 
 ## For loading only
 var inventory_items: Array:
@@ -50,6 +52,7 @@ var inventory_items: Array:
 			}
 		)
 
+
 var equipped_items: Array:
 	get:
 		return equipment.slots.map(
@@ -60,11 +63,13 @@ var equipped_items: Array:
 			}
 	)
 
+
 var stats: Dictionary:
 	get:
 		return attribute_map._attributes_dict
 	set(value):
 		attribute_map._attributes_dict = stats
+
 
 func _setup_attr_map() -> void:
 	attribute_map.attribute_changed.connect(
@@ -83,6 +88,7 @@ func _setup_attr_map() -> void:
 		func (attr: AttributeSpec) -> void:
 			ability_container.remove_tag("resources." + attr.attribute_name)
 	)
+
 
 func _setup_inventory() -> void:
 	inventory.item_added.connect(
@@ -108,6 +114,7 @@ func _setup_inventory() -> void:
 
 	call_deferred("_setup_equipped_items")
 
+
 func _setup_equipped_items() -> void:
 	for eqb: EquipmentBase in equipment.equipped_items:
 		if eqb is Weapon:
@@ -119,6 +126,7 @@ func _setup_equipped_items() -> void:
 		add_child(eqb.effect)
 
 	Questify.update_quests()
+
 
 func _setup_quests() -> void:
 	Questify.condition_query_requested.connect(_quest_update)
@@ -186,6 +194,10 @@ func _ready() -> void:
 	_setup_inventory()
 	_setup_quests()
 	_setup_ability_container()
+
+	await get_tree().physics_frame
+
+	forward = get_viewport().get_camera_3d().global_transform.basis.z
 	
 
 func _quest_update(type: String, key: String, value: Variant, requester: QuestCondition) -> void:
@@ -202,6 +214,7 @@ func _quest_update(type: String, key: String, value: Variant, requester: QuestCo
 
 	if count >= value:
 		requester.completed = true
+
 
 func _physics_process(_delta: float) -> void:
 	_process_movement()
@@ -227,8 +240,9 @@ func _process_input() -> void:
 
 
 func _process_movement() -> void:
-	var mouse_relative: Vector2 = (get_viewport().get_mouse_position() - player_screen_pos).normalized()
-	global_rotation.y = -mouse_relative.angle() - PI / 3
+	# player_screen_pos = get_viewport().get_camera_3d().unproject_position(global_position - Vector3(0, 1, 0))
+	# var mouse_relative: Vector2 = (get_viewport().get_mouse_position() - player_screen_pos)
+	# global_rotation.y = get_viewport().get_camera_3d().global_rotation.y + mouse_relative.angle_to(Vector2(0, -1))
 
 	velocity = Vector3.ZERO
 	if not is_on_floor():

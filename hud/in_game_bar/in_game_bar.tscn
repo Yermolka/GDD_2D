@@ -59,7 +59,6 @@ offset_left = 167.0
 offset_top = 55.0
 offset_right = 196.0
 offset_bottom = 83.0
-skill_number = 1
 
 [node name="Skill1" parent="SelectedSkills" instance=ExtResource("2_jg8h4")]
 layout_mode = 2
