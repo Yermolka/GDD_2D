@@ -23,7 +23,27 @@ func _on_pressed() -> void:
 
 
 func _ready() -> void:
-	label.text = str(skill_number)	
+	var events: Array[InputEvent] = InputMap.action_get_events("ability" + str(skill_number))
+	if events.size() > 0:
+		label.text = events[0].as_text().split(" ")[0]
+	else:
+		label.text = ""
+	Globals.keybind_changed.connect(
+		func (action_name: StringName, event: InputEvent) -> void:
+			if action_name == "ability" + str(skill_number):
+				if event != null:
+					if event is InputEventKey:
+						label.text = event.as_text_physical_keycode()
+					else:
+						if event.button_index == MOUSE_BUTTON_LEFT:
+							label.text = "LMB"
+						elif event.button_index == MOUSE_BUTTON_RIGHT:
+							label.text = "RMB"
+						elif event.button_index == MOUSE_BUTTON_MIDDLE:
+							label.text = "MMB"
+				else:
+					label.text = ""
+	)
 	pressed.connect(_on_pressed)
 	time_label.hide()
 	timer.timeout.connect(func () -> void:

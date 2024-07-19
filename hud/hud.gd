@@ -8,6 +8,7 @@ var player: Player
 @onready var dialogue_box: DialogueBox = $DialogueBox
 @onready var skill_tree: SkillTree = $SkillTree
 
+
 func _ready() -> void:
 	await get_tree().physics_frame
 	setup()
@@ -19,6 +20,7 @@ func _ready() -> void:
 	)
 	Globals.game_loaded.connect(setup)
 
+
 func setup() -> void:
 	player = get_tree().get_first_node_in_group("player") as Player
 	inventory_hud.setup(player.inventory, player.equipment)
@@ -29,6 +31,7 @@ func setup() -> void:
 	skill_tree.setup_ability_container(player.ability_container)
 	skill_tree.setup_equipment(player.equipment)
 
+
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("toggle_inventory"):
 		inventory_hud.toggle_inventory()
@@ -38,7 +41,6 @@ func _input(_event: InputEvent) -> void:
 
 	if Input.is_action_just_pressed("toggle_ability_tree"):
 		skill_tree.visible = not skill_tree.visible
-
 
 
 func _on_skills_btn_pressed() -> void:

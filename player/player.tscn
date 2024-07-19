@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://cultyql87ixvl"]
+[gd_scene load_steps=39 format=3 uid="uid://cultyql87ixvl"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_31dcg"]
 [ext_resource type="PackedScene" uid="uid://kqkq27m2y66u" path="res://player/model/Char.gltf" id="2_ahb14"]
@@ -9,7 +9,6 @@
 [ext_resource type="Resource" uid="uid://xltm11epb5ep" path="res://stats/player_attributes.tres" id="5_5fmbk"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/inventory.gd" id="7_fdlqo"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/equipment.gd" id="8_ngsfb"]
-[ext_resource type="PackedScene" uid="uid://c3knc8japncl7" path="res://common/selectable/selectable.tscn" id="10_4pxso"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/resources/equipment_slot.gd" id="10_a4fio"]
 [ext_resource type="Resource" uid="uid://dqy2c0g5wqihv" path="res://items/weapons/test_weapon.tres" id="11_qsa7m"]
 [ext_resource type="PackedScene" uid="uid://cxh5dyttaogko" path="res://addons/godot_gameplay_systems/attributes_and_abilities/debug/abilities_debugger.tscn" id="12_2smb5"]
@@ -20,7 +19,8 @@
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence_reactive.gd" id="18_r5gn3"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/leaves/blackboard_compare.gd" id="19_syi6t"]
 [ext_resource type="Script" path="res://player/bh_play_player_animation.gd" id="20_17bhg"]
-[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/until_fail.gd" id="21_jaqs7"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/delayer.gd" id="21_xi0g0"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/blackboard_set.gd" id="22_qy5me"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wwpa3"]
 size = Vector3(5.80646, 1, 1)
@@ -105,10 +105,8 @@ script = ExtResource("10_a4fio")
 name = "scroll"
 accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([])
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3nhmo"]
-
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("mesh_anim")]
-collision_layer = 256
+collision_layer = 257
 collision_mask = 22
 script = ExtResource("1_31dcg")
 mesh_anim = NodePath("Model/AnimationPlayer")
@@ -212,11 +210,6 @@ owner_path = NodePath("..")
 inventory_path = NodePath("../Inventory")
 slots = Array[ExtResource("10_a4fio")]([SubResource("Resource_vnchi"), SubResource("Resource_bdtrf"), SubResource("Resource_hr8py"), SubResource("Resource_6kkog"), SubResource("Resource_hqypi"), SubResource("Resource_373ht")])
 
-[node name="Selectable" parent="." instance=ExtResource("10_4pxso")]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Selectable"]
-shape = SubResource("CapsuleShape3D_3nhmo")
-
 [node name="AbilitiesDebugger" parent="." instance=ExtResource("12_2smb5")]
 ability_container_path = NodePath("../AbilityContainer")
 
@@ -266,7 +259,6 @@ right_operand = "false"
 [node name="PlayPlayerAnimation" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Idle"]
 script = ExtResource("20_17bhg")
 anim_name = "Idle"
-interrupt_current = false
 loop = 1
 
 [node name="Walk" type="Node" parent="BeehaveTree/SelectorReactiveComposite"]
@@ -304,12 +296,13 @@ right_operand = "true"
 script = ExtResource("20_17bhg")
 anim_name = "T-Pose"
 
-[node name="UntilFailDecorator" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack"]
-script = ExtResource("21_jaqs7")
+[node name="DelayDecorator" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack"]
+script = ExtResource("21_xi0g0")
+wait_time = 0.2
 
-[node name="BlackboardCompareCondition" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack/UntilFailDecorator"]
-script = ExtResource("19_syi6t")
-left_operand = "get_value(\"attacking\")"
-right_operand = "false"
+[node name="BlackboardSetAction" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack/DelayDecorator"]
+script = ExtResource("22_qy5me")
+key = "\"attacking\""
+value = "false"
 
 [editable path="Model"]

@@ -30,6 +30,15 @@ func _ready() -> void:
 	visibility_changed.connect(_draw_items)
 	hide()
 
+	await get_tree().physics_frame
+
+	var player: Player = get_tree().get_first_node_in_group("player")
+	for eqb: EquipmentBase in player.equipment.equipped_items:
+		if eqb is Weapon:
+			root_skill = eqb.skill
+			data = eqb.skill_tree
+			available_points = eqb.skill_points
+
 func _draw_items() -> void:
 	if not visible or not vbox_container:
 		return

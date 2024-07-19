@@ -1,8 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://dkuujqavu6c60"]
+[gd_scene load_steps=5 format=3 uid="uid://dkuujqavu6c60"]
 
 [ext_resource type="Script" path="res://hud/skill_tree.gd" id="1_3y0ys"]
-[ext_resource type="Resource" uid="uid://blxg4t7jutslw" path="res://abilities/ability_tree/skill_tree1.tres" id="3_kmksp"]
-[ext_resource type="Resource" uid="uid://cq2lmto3pfn1s" path="res://abilities/active/melee.tres" id="4_of8aj"]
 [ext_resource type="Texture2D" uid="uid://b13nlyyg5rrul" path="res://hud/images/btn_close.png" id="4_xd28g"]
 [ext_resource type="Texture2D" uid="uid://ddrqoccwbcs5t" path="res://hud/images/btn_close_pressed.png" id="5_hd7g0"]
 [ext_resource type="Texture2D" uid="uid://dbeqf2nwev04j" path="res://hud/images/btn_close_highlight.png" id="6_5wo3m"]
@@ -21,9 +19,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_3y0ys")
-root_skill = ExtResource("4_of8aj")
-data = ExtResource("3_kmksp")
-available_points = 3
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1

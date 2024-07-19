@@ -9,10 +9,12 @@ var player_level: int:
 			return 0
 
 var global_state: Dictionary = {}
+var keybinds: Dictionary = {}
 
 signal game_saved()
 signal game_loaded()
 signal global_var_changed(key: String, value: Variant)
+signal keybind_changed(action_name: StringName, event: InputEvent)
 
 func _enter_tree() -> void:
 	Questify.condition_query_requested.connect(
@@ -44,6 +46,8 @@ func save() -> void:
 	var save_file: FileAccess = FileAccess.open_encrypted_with_pass("res://saves/test_save_bin.save", FileAccess.WRITE, "hard_password")
 	var player: Player = get_tree().get_first_node_in_group("player")
 	save_file.store_var(player.serialize())
+	save_file.store_var(global_state)
+	save_file.store_var(keybinds)
 
 
 func load() -> void:
@@ -61,7 +65,15 @@ func load() -> void:
 	player_parent.add_child(player)
 	player.deserialize(player_dict["player"])
 
+	global_state = save_file.get_var()
+	keybinds = save_file.get_var()
+
 	game_loaded.emit()
+
+	await get_tree().physics_frame
+
+	for key: String in global_state:
+		global_var_changed.emit(key, global_state[key])
 
 
 func serialize() -> Dictionary:
