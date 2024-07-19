@@ -9,7 +9,7 @@ class_name SelectedSkillButton extends TextureButton
 		ability = value
 		draw_ability()
 		
-@export_range(1, 4) var skill_number: int = 1
+@export_enum("1", "2", "3", "_movement") var skill_number: String = "1"
 
 
 @onready var label: Label = $Label
@@ -23,7 +23,7 @@ func _on_pressed() -> void:
 
 
 func _ready() -> void:
-	var events: Array[InputEvent] = InputMap.action_get_events("ability" + str(skill_number))
+	var events: Array[InputEvent] = InputMap.action_get_events("ability" + skill_number)
 	if events.size() > 0:
 		label.text = events[0].as_text().split(" ")[0]
 	else:
@@ -62,7 +62,7 @@ func _process(_delta: float) -> void:
 		if not timer.is_stopped():
 			time_label.text = "%3.1f" % timer.time_left
 			cd_bar.value = int((timer.time_left / ability.cooldown_duration) * 100)
-		if Input.is_action_just_pressed("ability" + str(skill_number)):
+		if Input.is_action_just_pressed("ability" + skill_number):
 			activate()
 
 

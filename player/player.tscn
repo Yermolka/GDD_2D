@@ -1,6 +1,7 @@
-[gd_scene load_steps=40 format=3 uid="uid://cultyql87ixvl"]
+[gd_scene load_steps=41 format=3 uid="uid://cultyql87ixvl"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_31dcg"]
+[ext_resource type="Resource" uid="uid://bwe1yh7rpxxnt" path="res://abilities/active/teleport.tres" id="2_7daoa"]
 [ext_resource type="PackedScene" uid="uid://kqkq27m2y66u" path="res://player/model/Char.gltf" id="2_ahb14"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/ability_container.gd" id="2_kt3nr"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="3_4d36o"]
@@ -109,7 +110,13 @@ accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_s
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("mesh_anim")]
 collision_layer = 257
 collision_mask = 22
+axis_lock_angular_x = true
+axis_lock_angular_z = true
 script = ExtResource("1_31dcg")
+movement_skill = ExtResource("2_7daoa")
+level = null
+current_xp = null
+xp_map = null
 mesh_anim = NodePath("Model/AnimationPlayer")
 
 [node name="Model" parent="." instance=ExtResource("2_ahb14")]

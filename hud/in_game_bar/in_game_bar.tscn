@@ -59,6 +59,7 @@ offset_left = 167.0
 offset_top = 55.0
 offset_right = 196.0
 offset_bottom = 83.0
+skill_number = 1
 
 [node name="Skill1" parent="SelectedSkills" instance=ExtResource("2_jg8h4")]
 layout_mode = 2
@@ -66,7 +67,7 @@ offset_left = 244.0
 offset_top = 55.0
 offset_right = 272.0
 offset_bottom = 83.0
-skill_number = 2
+skill_number = "2"
 
 [node name="Skill2" parent="SelectedSkills" instance=ExtResource("2_jg8h4")]
 layout_mode = 2
@@ -74,7 +75,15 @@ offset_left = 319.0
 offset_top = 55.0
 offset_right = 348.0
 offset_bottom = 83.0
-skill_number = 3
+skill_number = "3"
+
+[node name="Skill3" parent="SelectedSkills" instance=ExtResource("2_jg8h4")]
+layout_mode = 2
+offset_left = 398.0
+offset_top = 55.0
+offset_right = 427.0
+offset_bottom = 83.0
+skill_number = "_movement"
 
 [node name="CastBar" type="ProgressBar" parent="."]
 visible = false

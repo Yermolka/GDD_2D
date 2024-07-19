@@ -5,6 +5,7 @@ class_name Player extends Entity
 @onready var inventory: Inventory = $Inventory
 @onready var equipment: Equipment = $Equipment
 @onready var ability_container: AbilityContainer = $AbilityContainer
+@export var movement_skill: MovementSkill
 
 @export var level: int = 1
 @export var current_xp: int = 0:
@@ -157,6 +158,9 @@ func _setup_quests() -> void:
 
 
 func _setup_ability_container() -> void:
+	ability_container.abilities.append(movement_skill)
+	print(ability_container.grant_all_abilities())
+
 	ability_container.ability_activated.connect(handle_ability_activated)
 	ability_container.ability_ended.connect(handle_ability_ended)
 
@@ -231,8 +235,7 @@ func _process_movement() -> void:
 		velocity.y -= 9.8
 
 	if ability_container.has_tag("movement.dashing"):
-		blackboard.set_value("moving", false)
-		move_and_slide()
+		blackboard.set_value("moving", true)
 		return
 
 	var horizontal: Vector3 = (Input.get_axis("move_left", "move_right") * forward).rotated(Vector3.UP, PI / 2)

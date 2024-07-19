@@ -165,8 +165,6 @@ offset_left = -83.32
 offset_top = 4.55199
 offset_right = -87.736
 offset_bottom = 3.76001
-root_skill = null
-data = null
 
 [node name="MicroMenu" type="GridContainer" parent="."]
 layout_mode = 1
