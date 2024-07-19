@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://cultyql87ixvl"]
+[gd_scene load_steps=40 format=3 uid="uid://cultyql87ixvl"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_31dcg"]
 [ext_resource type="PackedScene" uid="uid://kqkq27m2y66u" path="res://player/model/Char.gltf" id="2_ahb14"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://common/hurtbox/hurt_box.gd" id="3_xt1qf"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute.gd" id="4_2qw15"]
 [ext_resource type="Resource" uid="uid://xltm11epb5ep" path="res://stats/player_attributes.tres" id="5_5fmbk"]
+[ext_resource type="Resource" uid="uid://t7wmj13oigdl" path="res://abilities/active/fireball.tres" id="5_rdyt2"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/inventory.gd" id="7_fdlqo"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/equipment.gd" id="8_ngsfb"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/resources/equipment_slot.gd" id="10_a4fio"]
@@ -192,6 +193,7 @@ shape = SubResource("CapsuleShape3D_8qjtp")
 [node name="AbilityContainer" type="Node" parent="."]
 script = ExtResource("2_kt3nr")
 gameplay_attribute_map_path = NodePath("../GameplayAttributeMap")
+abilities = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/ability.gd")]([ExtResource("5_rdyt2")])
 
 [node name="GameplayAttributeMap" type="Node" parent="."]
 script = ExtResource("3_4d36o")
