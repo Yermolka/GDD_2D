@@ -89,3 +89,10 @@ projection = 1
 current = true
 size = 15.0
 script = ExtResource("12_lt4he")
+
+[node name="Enemy4" parent="." instance=ExtResource("11_22uw4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.4266, 1.01946, 0)
+
+[editable path="Enemy3"]
+[editable path="Enemy3/Body/Skelet bot"]
+[editable path="Enemy3/Body/Skelet top"]

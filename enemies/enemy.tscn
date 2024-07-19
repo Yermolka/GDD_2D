@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://dbx4mf5ywvhdr"]
+[gd_scene load_steps=45 format=3 uid="uid://dbx4mf5ywvhdr"]
 
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="1_kjur6"]
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="1_s888k"]
@@ -6,12 +6,15 @@
 [ext_resource type="Resource" uid="uid://ckjdlmyik1555" path="res://stats/enemy_base_attributes.tres" id="3_b0b3x"]
 [ext_resource type="Resource" uid="uid://chipeh8j2qg78" path="res://drop_tables/enemy_drop.tres" id="7_2q2yn"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/drop.gd" id="7_vo5q4"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="8_mnjep"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="8_pjyuy"]
-[ext_resource type="Resource" uid="uid://dtr7xlpvxtjct" path="res://abilities/active/melee_non_target.tres" id="8_y8e14"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/delayer.gd" id="9_1t51j"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="9_fsbvl"]
+[ext_resource type="PackedScene" uid="uid://8uqytm7th4gi" path="res://abilities/scenes/MeleeScene.tscn" id="9_r3g8y"]
+[ext_resource type="Script" path="res://abilities/NonTargetedActiveSkill.gd" id="10_lrhwl"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="10_p48e8"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/ability_container.gd" id="11_8y1re"]
+[ext_resource type="Texture2D" uid="uid://dr0i7ng6lymhm" path="res://addons/dialogue_nodes/icons/DialogueParser.svg" id="11_u4ots"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence_reactive.gd" id="12_gqfrl"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="12_jnpe4"]
 [ext_resource type="Script" path="res://enemies/ai_scripts/bh_choose_random_point.gd" id="12_q4eac"]
@@ -27,6 +30,55 @@
 [ext_resource type="Script" path="res://enemies/ai_scripts/bh_enemy_blackboard.gd" id="21_p4g6i"]
 [ext_resource type="Script" path="res://common/hurtbox/hurt_box.gd" id="26_3aeg3"]
 [ext_resource type="PackedScene" uid="uid://duqifpy1ec0bg" path="res://common/hurtbox/hurt_box.tscn" id="26_q3ao2"]
+
+[sub_resource type="Resource" id="Resource_43n4g"]
+script = ExtResource("8_mnjep")
+life_time = 0
+apply_every_second = 1.0
+max_applications = 1
+applies_as = 0
+attribute_name = "health"
+value_formula = "-DMG*2"
+minimum_value = 0.0
+maximum_value = 0.0
+
+[sub_resource type="Resource" id="Resource_nkjnn"]
+script = ExtResource("10_lrhwl")
+projectile_scene = ExtResource("9_r3g8y")
+projectile_speed = 1000.0
+resource_costs = {}
+min_range = 0.0
+max_range = 0.0
+cast_time = 0.0
+instant_effects = Array[ExtResource("8_mnjep")]([SubResource("Resource_43n4g")])
+instant_timed_effects = Array[ExtResource("8_mnjep")]([])
+timed_effects_duration = 1.0
+chance_effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])
+generator_effects = Array[ExtResource("8_mnjep")]([])
+instant_self_effects = Array[ExtResource("8_mnjep")]([])
+instant_self_timed_effects = Array[ExtResource("8_mnjep")]([])
+instant_self_timed_effects_duration = 1.0
+self_chance_effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])
+ui_icon = ExtResource("11_u4ots")
+ui_name = "Melee"
+cooldown_duration = 1.0
+cooldown_continuos = false
+grant_automatic = true
+grant_tags = Array[String](["type.melee"])
+grant_tags_required = Array[String]([])
+tags_activation = Array[String]([])
+tags_activation_required = Array[String]([])
+tags_block = Array[String]([])
+tags_cancellation_required = Array[String]([])
+tags_cooldown_start = Array[String]([])
+tags_cooldown_end = Array[String]([])
+tags_end_blocking = Array[String]([])
+tags_to_remove_on_activation = Array[String]([])
+tags_to_remove_on_block = Array[String]([])
+tags_to_remove_on_cancellation = Array[String]([])
+tags_to_remove_on_cooldown_start = Array[String]([])
+tags_to_remove_on_cooldown_end = Array[String]([])
+tags_to_remove_on_end = Array[String]([])
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_3r0t3"]
 height = 1.11943
@@ -94,6 +146,7 @@ collision_mask = 261
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource("1_s888k")
+abilities = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/ability.gd")]([SubResource("Resource_nkjnn")])
 body_top = NodePath("Body/Skelet top")
 body_top_anim = NodePath("Body/Skelet top/AnimationPlayer")
 body_bot = NodePath("Body/Skelet bot")
@@ -122,7 +175,6 @@ owning_node_path = NodePath("..")
 [node name="AbilityContainer" type="Node" parent="."]
 script = ExtResource("11_8y1re")
 gameplay_attribute_map_path = NodePath("../GameplayAttributeMap")
-abilities = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/ability.gd")]([ExtResource("8_y8e14")])
 
 [node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("8_pjyuy")
