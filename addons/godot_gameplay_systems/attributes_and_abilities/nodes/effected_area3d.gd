@@ -30,7 +30,7 @@ func _ready() -> void:
 		area_entered.connect(func (body: Node3D):
 			if body is HurtBox:
 				body = body.owner
-
+				
 			if should_apply_effect(body):
 				for effect in effects:
 					if remove_effects_on_apply:

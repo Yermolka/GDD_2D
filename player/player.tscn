@@ -1,8 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://cultyql87ixvl"]
+[gd_scene load_steps=40 format=3 uid="uid://cultyql87ixvl"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_31dcg"]
+[ext_resource type="PackedScene" uid="uid://kqkq27m2y66u" path="res://player/model/Char.gltf" id="2_ahb14"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/ability_container.gd" id="2_kt3nr"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="3_4d36o"]
+[ext_resource type="Script" path="res://common/hurtbox/hurt_box.gd" id="3_xt1qf"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute.gd" id="4_2qw15"]
 [ext_resource type="Resource" uid="uid://xltm11epb5ep" path="res://stats/player_attributes.tres" id="5_5fmbk"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/inventory.gd" id="7_fdlqo"]
@@ -12,13 +14,28 @@
 [ext_resource type="Resource" uid="uid://dqy2c0g5wqihv" path="res://items/weapons/test_weapon.tres" id="11_qsa7m"]
 [ext_resource type="PackedScene" uid="uid://cxh5dyttaogko" path="res://addons/godot_gameplay_systems/attributes_and_abilities/debug/abilities_debugger.tscn" id="12_2smb5"]
 [ext_resource type="PackedScene" uid="uid://b54ngq6in8rn8" path="res://hud/hud.tscn" id="12_x425h"]
+[ext_resource type="Script" path="res://player/bh_player_blackboard.gd" id="15_2a1oi"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="16_1cydk"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector_reactive.gd" id="17_gjcfs"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence_reactive.gd" id="18_r5gn3"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/blackboard_compare.gd" id="19_syi6t"]
+[ext_resource type="Script" path="res://player/bh_play_player_animation.gd" id="20_17bhg"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/until_fail.gd" id="21_jaqs7"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_r0fkn"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_wwpa3"]
+size = Vector3(5.80646, 1, 1)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_7rd2o"]
-top_radius = 0.1
-bottom_radius = 0.1
-height = 0.5
+[sub_resource type="BoxShape3D" id="BoxShape3D_f1bgi"]
+size = Vector3(6.19604, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qd3n3"]
+size = Vector3(5.9841, 5.85211, 5.92706)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vabiw"]
+size = Vector3(1.8457, 6.77097, 2.02234)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_drnju"]
+size = Vector3(6.15138, 6.41867, 4.92143)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8qjtp"]
 
@@ -90,16 +107,86 @@ accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_s
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3nhmo"]
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("mesh_anim")]
+collision_layer = 256
 collision_mask = 22
 script = ExtResource("1_31dcg")
+mesh_anim = NodePath("Model/AnimationPlayer")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_r0fkn")
+[node name="Model" parent="." instance=ExtResource("2_ahb14")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.184872, -1.03503, 0.383333)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.54043, -0.62641)
-mesh = SubResource("CylinderMesh_7rd2o")
+[node name="Body-Global" parent="Model/World-Global" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.18464e-06, 0, 1.18464e-06, 1, -2, 6, 4)
+
+[node name="Arm1-Global" parent="Model/World-Global/Body-Global" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 3, 4, 1)
+
+[node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global/Arm1-Global" index="1"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_xt1qf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/World-Global/Body-Global/Arm1-Global/HurtBox"]
+transform = Transform3D(1, -2.59244e-13, -3.41061e-13, -2.98026e-08, 1, -1.13687e-13, 0, 4.26326e-14, 1, 1.99318, 0.485121, -0.549096)
+shape = SubResource("BoxShape3D_wwpa3")
+
+[node name="Arm2-Global" parent="Model/World-Global/Body-Global" index="2"]
+transform = Transform3D(1, -1.19209e-07, 0, 1.19209e-07, 1, 0, 0, 0, 1, -3, 4, 0)
+
+[node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global/Arm2-Global" index="1"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_xt1qf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/World-Global/Body-Global/Arm2-Global/HurtBox"]
+transform = Transform3D(1, 1.1921e-07, 1.13687e-13, -1.19209e-07, 1, -1.7053e-13, 1.75078e-11, 1.09992e-11, 1, -1.91313, 0.503566, 0.526521)
+shape = SubResource("BoxShape3D_f1bgi")
+
+[node name="Head-Global" parent="Model/World-Global/Body-Global" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+
+[node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global/Head-Global" index="1"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_xt1qf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/World-Global/Body-Global/Head-Global/HurtBox"]
+transform = Transform3D(1, 2.61564e-18, 0, 2.75116e-18, 1, -6.59384e-11, 0, 6.59384e-11, 1, -0.000411794, 3.61801, -0.00393681)
+shape = SubResource("BoxShape3D_qd3n3")
+
+[node name="Leg1-Global" parent="Model/World-Global/Body-Global" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -1)
+
+[node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global/Leg1-Global" index="1"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_xt1qf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/World-Global/Body-Global/Leg1-Global/HurtBox"]
+transform = Transform3D(1, 2.08031e-18, 0, 2.20229e-18, 1, -5.28644e-11, 0, 5.28644e-11, 1, 0.932898, -0.512555, 0.98046)
+shape = SubResource("BoxShape3D_vabiw")
+
+[node name="Leg2-Global" parent="Model/World-Global/Body-Global" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -1)
+
+[node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global/Leg2-Global" index="1"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_xt1qf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/World-Global/Body-Global/Leg2-Global/HurtBox"]
+transform = Transform3D(1, 2.10064e-18, 0, 2.21584e-18, 1, -5.32054e-11, 0, 5.32054e-11, 1, -1.05996, -0.512555, 0.98046)
+shape = SubResource("BoxShape3D_vabiw")
+
+[node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global" index="6"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_xt1qf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/World-Global/Body-Global/HurtBox"]
+transform = Transform3D(1, 3.53043e-18, 0, 3.72694e-18, 1, -8.93579e-11, 0, 8.93579e-11, 1, 0.0669482, 3.33993, 0.169685)
+shape = SubResource("BoxShape3D_drnju")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_8qjtp")
@@ -145,3 +232,84 @@ offset_left = 2.0
 offset_right = 2.0
 player_path = NodePath("../..")
 metadata/_edit_use_anchors_ = true
+
+[node name="PlayerBlackboard" type="Node" parent="."]
+script = ExtResource("15_2a1oi")
+
+[node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("16_1cydk")
+actor_node_path = NodePath("..")
+blackboard = NodePath("../PlayerBlackboard")
+actor = NodePath("..")
+
+[node name="SelectorReactiveComposite" type="Node" parent="BeehaveTree"]
+script = ExtResource("17_gjcfs")
+
+[node name="Idle" type="Node" parent="BeehaveTree/SelectorReactiveComposite"]
+script = ExtResource("18_r5gn3")
+
+[node name="BlackboardCompareCondition" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Idle"]
+script = ExtResource("19_syi6t")
+left_operand = "get_value(\"moving\")"
+right_operand = "false"
+
+[node name="BlackboardCompareCondition2" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Idle"]
+script = ExtResource("19_syi6t")
+left_operand = "get_value(\"attacking\")"
+right_operand = "false"
+
+[node name="BlackboardCompareCondition3" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Idle"]
+script = ExtResource("19_syi6t")
+left_operand = "get_value(\"casting\")"
+right_operand = "false"
+
+[node name="PlayPlayerAnimation" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Idle"]
+script = ExtResource("20_17bhg")
+anim_name = "Idle"
+interrupt_current = false
+loop = 1
+
+[node name="Walk" type="Node" parent="BeehaveTree/SelectorReactiveComposite"]
+script = ExtResource("18_r5gn3")
+
+[node name="BlackboardCompareCondition" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Walk"]
+script = ExtResource("19_syi6t")
+left_operand = "get_value(\"moving\")"
+right_operand = "true"
+
+[node name="BlackboardCompareCondition2" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Walk"]
+script = ExtResource("19_syi6t")
+left_operand = "get_value(\"attacking\")"
+right_operand = "false"
+
+[node name="BlackboardCompareCondition3" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Walk"]
+script = ExtResource("19_syi6t")
+left_operand = "get_value(\"casting\")"
+right_operand = "false"
+
+[node name="PlayPlayerAnimation" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Walk"]
+script = ExtResource("20_17bhg")
+anim_name = "Run"
+loop = 1
+
+[node name="Attack" type="Node" parent="BeehaveTree/SelectorReactiveComposite"]
+script = ExtResource("18_r5gn3")
+
+[node name="BlackboardCompareCondition2" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack"]
+script = ExtResource("19_syi6t")
+left_operand = "get_value(\"attacking\")"
+right_operand = "true"
+
+[node name="PlayPlayerAnimation" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack"]
+script = ExtResource("20_17bhg")
+anim_name = "T-Pose"
+
+[node name="UntilFailDecorator" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack"]
+script = ExtResource("21_jaqs7")
+
+[node name="BlackboardCompareCondition" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack/UntilFailDecorator"]
+script = ExtResource("19_syi6t")
+left_operand = "get_value(\"attacking\")"
+right_operand = "false"
+
+[editable path="Model"]

@@ -148,7 +148,7 @@ wait_time = 2.0
 [node name="PlayAnimation2" type="Node" parent="BeehaveTree/SelectorComposite/Idle/DelayDecorator"]
 script = ExtResource("15_oamaw")
 anim_name = &"walk"
-loop = true
+loop = 1
 
 [node name="ChooseRandomPoint" type="Node" parent="BeehaveTree/SelectorComposite/Idle"]
 script = ExtResource("12_q4eac")
@@ -159,7 +159,6 @@ script = ExtResource("16_aem6r")
 [node name="PlayAnimation" type="Node" parent="BeehaveTree/SelectorComposite/Idle"]
 script = ExtResource("15_oamaw")
 anim_name = &"Idle"
-loop = true
 
 [node name="Hostile" type="Node" parent="BeehaveTree/SelectorComposite"]
 script = ExtResource("12_gqfrl")
@@ -168,14 +167,14 @@ script = ExtResource("12_gqfrl")
 script = ExtResource("15_oamaw")
 which = 1
 anim_name = &"walk"
-loop = true
+loop = 1
 
 [node name="PlayAnimation3" type="Node" parent="BeehaveTree/SelectorComposite/Hostile"]
 script = ExtResource("15_oamaw")
 which = 0
 anim_name = &"walk"
 interrupt_current = false
-loop = true
+loop = 1
 
 [node name="TargetPlayer" type="Node" parent="BeehaveTree/SelectorComposite/Hostile"]
 script = ExtResource("13_btpa1")

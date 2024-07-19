@@ -23,7 +23,13 @@ signal current_xp_changed(value: int, maxValue: int)
 signal level_changed(value: int)
 @onready var forward: Vector3 = $Camera3D.global_transform.basis.z
 @onready var player_screen_pos: Vector2 = $Camera3D.unproject_position(global_position)
-@onready var mesh: MeshInstance3D = $MeshInstance3D
+@onready var mesh: Node3D = $Model
+
+@export_group("Animation")
+@export var mesh_anim: AnimationPlayer
+@export var body_top: Node3D
+@export var body_bot: Node3D
+@onready var blackboard: PlayerBlackboard = $PlayerBlackboard
 
 const SPEED: float = 5.0
 var movement_speed: float:
@@ -149,6 +155,25 @@ func _setup_quests() -> void:
 					inventory.remove_items_by(func (x: Item) -> bool: return x.name == cond.key)
 	)
 
+
+func _setup_ability_container() -> void:
+	ability_container.ability_activated.connect(handle_ability_activated)
+	ability_container.ability_ended.connect(handle_ability_ended)
+
+
+func handle_ability_ended(ability: ActiveSkill, activation_event: ActivationEvent) -> void:
+	blackboard.set_value("attacking", false)
+
+
+func handle_ability_activated(ability: ActiveSkill, activation_event: ActivationEvent) -> void:
+	if ability.cast_time > 0.0:
+		blackboard.set_value("casting", true)
+		await ability.cast_ended
+		blackboard.set_value("casting", false)
+	else:
+		blackboard.set_value("attacking", true)
+
+
 func _ready() -> void:
 	add_to_group("player")
 	add_to_group("persist")
@@ -156,6 +181,7 @@ func _ready() -> void:
 	_setup_attr_map()
 	_setup_inventory()
 	_setup_quests()
+	_setup_ability_container()
 	
 
 func _quest_update(type: String, key: String, value: Variant, requester: QuestCondition) -> void:
@@ -205,6 +231,7 @@ func _process_movement() -> void:
 		velocity.y -= 9.8
 
 	if ability_container.has_tag("movement.dashing"):
+		blackboard.set_value("moving", false)
 		move_and_slide()
 		return
 
@@ -213,9 +240,11 @@ func _process_movement() -> void:
 	var direction: Vector3 = (horizontal + vertical).normalized()
 
 	if direction:
+		blackboard.set_value("moving", true)
 		velocity += direction * movement_speed
 		ability_container.add_tag("moving")
 	else:
+		blackboard.set_value("moving", false)
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 		ability_container.remove_tag("moving")

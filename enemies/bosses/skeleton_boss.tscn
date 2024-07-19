@@ -183,7 +183,6 @@ script = ExtResource("21_2ehie")
 script = ExtResource("14_1c286")
 anim_name = &"Idle"
 interrupt_current = false
-loop = true
 
 [node name="Walk" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack"]
 script = ExtResource("15_tfrv2")
@@ -192,14 +191,12 @@ script = ExtResource("15_tfrv2")
 script = ExtResource("14_1c286")
 which = 1
 anim_name = &"walk"
-loop = true
 
 [node name="PlayAnimation2" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Walk"]
 script = ExtResource("14_1c286")
 which = 0
 anim_name = &"walk"
 interrupt_current = false
-loop = true
 
 [node name="TargetPlayer" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Walk"]
 script = ExtResource("19_iuew3")
@@ -288,7 +285,6 @@ script = ExtResource("21_2ehie")
 script = ExtResource("14_1c286")
 anim_name = &"Idle"
 interrupt_current = false
-loop = true
 
 [node name="Walk" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack"]
 script = ExtResource("15_tfrv2")
@@ -297,14 +293,12 @@ script = ExtResource("15_tfrv2")
 script = ExtResource("14_1c286")
 which = 1
 anim_name = &"walk"
-loop = true
 
 [node name="PlayAnimation2" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Walk"]
 script = ExtResource("14_1c286")
 which = 0
 anim_name = &"walk"
 interrupt_current = false
-loop = true
 
 [node name="TargetPlayer" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Walk"]
 script = ExtResource("19_iuew3")
