@@ -18,4 +18,5 @@ func _ready() -> void:
 				
 				if attr.current_buffed_value == 0:
 					Globals.set_global_var("skeleton_boss_killed", true)
+					EventBus.boss_fight_ended.emit()
 	)

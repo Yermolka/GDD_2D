@@ -28,6 +28,7 @@ xp_map = Array[int]([0, 10])
 stats = Array[ExtResource("4_2qh25")]([SubResource("Resource_xgee3")])
 required_level = 0
 ui_icon = ExtResource("3_6n4kn")
+desription = ""
 name = &"Test Weapon"
 can_stack = false
 decrease_stack_on_use = false

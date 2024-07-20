@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://cnmhjtbhyjhph"]
+[gd_scene load_steps=43 format=3 uid="uid://cnmhjtbhyjhph"]
 
 [ext_resource type="Script" path="res://enemies/bosses/skeleton_boss.gd" id="1_ducpo"]
 [ext_resource type="PackedScene" uid="uid://c21ku2lw4u3l1" path="res://enemies/models/skeleton/Skelet top.gltf" id="1_na6vp"]
@@ -22,6 +22,7 @@
 [ext_resource type="Script" path="res://addons/beehave/nodes/leaves/blackboard_compare.gd" id="16_ow2j2"]
 [ext_resource type="Script" path="res://enemies/ai_scripts/bh_check_cd.gd" id="18_ngcww"]
 [ext_resource type="Script" path="res://enemies/ai_scripts/bh_target_player.gd" id="19_iuew3"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_global_signal.gd" id="19_ixwmx"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/succeeder.gd" id="20_u2ply"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector_reactive.gd" id="21_2ehie"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/time_limiter.gd" id="21_acygu"]
@@ -209,6 +210,10 @@ anim_name = &"Idle"
 
 [node name="Phase1" type="Node" parent="BeehaveTree/Root"]
 script = ExtResource("15_tfrv2")
+
+[node name="GlobalSignal" type="Node" parent="BeehaveTree/Root/Phase1"]
+script = ExtResource("19_ixwmx")
+signal_name = "boss_fight_started"
 
 [node name="BlackboardCompareCondition" type="Node" parent="BeehaveTree/Root/Phase1"]
 script = ExtResource("16_ow2j2")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://dbx4mf5ywvhdr"]
+[gd_scene load_steps=47 format=3 uid="uid://dbx4mf5ywvhdr"]
 
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="1_kjur6"]
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="1_s888k"]
@@ -30,6 +30,8 @@
 [ext_resource type="Script" path="res://enemies/ai_scripts/bh_enemy_blackboard.gd" id="21_p4g6i"]
 [ext_resource type="Script" path="res://common/hurtbox/hurt_box.gd" id="26_3aeg3"]
 [ext_resource type="PackedScene" uid="uid://duqifpy1ec0bg" path="res://common/hurtbox/hurt_box.tscn" id="26_q3ao2"]
+[ext_resource type="Script" path="res://enemies/HpBar.gd" id="31_pg8by"]
+[ext_resource type="Texture2D" uid="uid://dfu2cqctwjsck" path="res://hud/ui_hp_middle.png" id="31_pjw35"]
 
 [sub_resource type="Resource" id="Resource_43n4g"]
 script = ExtResource("8_mnjep")
@@ -306,6 +308,20 @@ shape = SubResource("BoxShape3D_ypgm2")
 
 [node name="EnemyBlackboard" type="Node" parent="."]
 script = ExtResource("21_p4g6i")
+
+[node name="HpBar" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.04616, 0)
+script = ExtResource("31_pg8by")
+
+[node name="Label3D" type="Label3D" parent="HpBar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0508181, 0.182633, 0.00966209)
+billboard = 1
+text = "100/100
+"
+
+[node name="Sprite3D" type="Sprite3D" parent="HpBar"]
+billboard = 1
+texture = ExtResource("31_pjw35")
 
 [editable path="Body/Skelet bot"]
 [editable path="Body/Skelet top"]

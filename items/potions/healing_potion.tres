@@ -20,6 +20,7 @@ script = ExtResource("2_psunk")
 effects = Array[ExtResource("1_2fo4n")]([SubResource("Resource_ts4wf")])
 duration = 0.0
 ui_icon = ExtResource("3_xhihl")
+desription = ""
 name = &"Healing Potion"
 can_stack = true
 decrease_stack_on_use = true

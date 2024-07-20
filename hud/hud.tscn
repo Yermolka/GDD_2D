@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://b54ngq6in8rn8"]
+[gd_scene load_steps=36 format=3 uid="uid://b54ngq6in8rn8"]
 
 [ext_resource type="Script" path="res://hud/hud.gd" id="1_d5fuj"]
 [ext_resource type="Script" path="res://hud/inventory_hud.gd" id="2_idcnv"]
@@ -27,6 +27,11 @@
 [ext_resource type="Texture2D" uid="uid://by3jwb8ovx35x" path="res://hud/images/btn_skills_pressed.png" id="20_fuj0v"]
 [ext_resource type="Texture2D" uid="uid://c12rmi3v21lsi" path="res://hud/images/btn_skills_highlight.png" id="21_0clsx"]
 [ext_resource type="PackedScene" uid="uid://d11noh8u6bqlc" path="res://hud/settings/settings.tscn" id="25_flnaa"]
+[ext_resource type="Texture2D" uid="uid://urlfitmcfcog" path="res://hud/ui_hp_bar.png" id="28_hqgdd"]
+[ext_resource type="Script" path="res://hud/BossUI.gd" id="28_hv8of"]
+[ext_resource type="Texture2D" uid="uid://dfu2cqctwjsck" path="res://hud/ui_hp_middle.png" id="29_0d34k"]
+[ext_resource type="Texture2D" uid="uid://q3j8j1bgalim" path="res://hud/ui_hp_left.png" id="30_3bq2o"]
+[ext_resource type="Texture2D" uid="uid://bo43ud76enyvm" path="res://hud/ui_hp_right.png" id="31_jcnkd"]
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_xikk0"]
 script = ExtResource("6_nwfki")
@@ -389,6 +394,74 @@ stretch_mode = 0
 [node name="Settings" parent="." instance=ExtResource("25_flnaa")]
 visible = false
 layout_mode = 1
+
+[node name="BossUI" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchor_left = 0.338
+anchor_right = 0.666
+anchor_bottom = 0.123
+offset_left = -0.376038
+offset_right = -189.232
+offset_bottom = -39.704
+grow_horizontal = 2
+scale = Vector2(2, 2)
+mouse_filter = 2
+script = ExtResource("28_hv8of")
+
+[node name="TextureRect3" type="TextureRect" parent="BossUI"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.0
+offset_top = -23.0
+offset_right = 73.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("28_hqgdd")
+stretch_mode = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="BossUI"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -9.0
+offset_right = 54.5
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 40.0
+nine_patch_stretch = true
+texture_progress = ExtResource("29_0d34k")
+
+[node name="TextureRect" type="TextureRect" parent="BossUI/TextureProgressBar"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -2.5
+offset_top = 0.5
+offset_right = 0.5
+offset_bottom = 13.5
+texture = ExtResource("30_3bq2o")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="BossUI/TextureProgressBar"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 107.0
+offset_top = 1.0
+offset_right = 110.0
+offset_bottom = 14.0
+texture = ExtResource("31_jcnkd")
 
 [connection signal="pressed" from="Inventory/Inventory/CloseButton" to="Inventory" method="_on_close_button_pressed"]
 [connection signal="pressed" from="Inventory/CharScreen/CloseButton" to="Inventory" method="_on_char_screen_close_button_pressed"]
