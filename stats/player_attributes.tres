@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_7rpny")
-attributes = Array[String](["health", "mana", "movement_speed", "base_damage", "defense"])
+attributes = Array[String](["health", "movement_speed", "base_damage", "defense"])

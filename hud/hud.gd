@@ -31,7 +31,8 @@ func setup() -> void:
 	skill_tree.setup_ability_container(player.ability_container)
 	skill_tree.setup_equipment(player.equipment)
 
-
+@onready var test_res: PassiveSkill = load("res://abilities/passive/mana_resource.tres") as PassiveSkill
+		
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("toggle_inventory"):
 		inventory_hud.toggle_inventory()
@@ -41,6 +42,13 @@ func _input(_event: InputEvent) -> void:
 
 	if Input.is_action_just_pressed("toggle_ability_tree"):
 		skill_tree.visible = not skill_tree.visible
+
+	if Input.is_physical_key_pressed(KEY_B):
+		if not test_res.applied:
+			test_res.activate(player)
+			player.ability_container.grant_all_abilities()
+		else:
+			test_res.deactivate(player)
 
 
 func _on_skills_btn_pressed() -> void:

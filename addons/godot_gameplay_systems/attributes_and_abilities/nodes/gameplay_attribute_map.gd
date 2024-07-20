@@ -108,11 +108,6 @@ func _setup_attributes() -> void:
 	_attributes_dict = {}
 
 	for attribute in attributes:
-		var previous = get_attribute_by_name(attribute.attribute_name)
-
-		if previous:
-			previous.free()
-
 		var spec = AttributeSpec.from_attribute(attribute)
 
 		spec.changed.connect(func (attribute):
@@ -143,11 +138,6 @@ func _update_attribute(index: int, key: String, value: float) -> void:
 
 
 func add_attribute(attribute: AttributeSpec) -> void:
-	var previous = get_attribute_by_name(attribute.attribute_name)
-	
-	if previous:
-		previous.free()
-
 	attribute.changed.connect(func (attribute):
 		attribute_changed.emit(attribute)
 	)
@@ -158,7 +148,7 @@ func add_attribute(attribute: AttributeSpec) -> void:
 func remove_attribute(attribute_name: String) -> void:
 	var attr = get_attribute_by_name(attribute_name)
 
-	if attr:	
+	if attr:
 		_attributes_dict.erase(attribute_name)
 		attribute_removed.emit(attr)
 
@@ -251,7 +241,7 @@ func apply_effect(effect: GameplayEffect) -> void:
 				continue
 
 			var considered: AttributeEffect = consider_defense(attribute_affected)
-			print(considered.attribute_name, considered.get_current_value())
+			print(considered.attribute_name, " ", considered.get_current_value(), " ", considered.value_formula)
 			_attributes_dict[attribute_affected.attribute_name].apply_attribute_effect(considered)
 
 			attribute_effect_applied.emit(attribute_affected, spec)
@@ -265,7 +255,9 @@ func apply_effect(effect: GameplayEffect) -> void:
 			timer.wait_time = attribute_affected.apply_every_second
 
 			timer.timeout.connect(func ():
-				var spec = _attributes_dict[attribute_affected.attribute_name]
+				var spec = _attributes_dict.get(attribute_affected.attribute_name, null)
+				if not spec:
+					return
 
 				if not attribute_affected.should_apply(_effect, self):
 					return

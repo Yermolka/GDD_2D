@@ -31,7 +31,9 @@ maximum_value = 0.0
 script = ExtResource("1_d5s83")
 projectile_scene = ExtResource("1_bdalc")
 projectile_speed = 1000.0
-resource_costs = {}
+resource_costs = {
+"mana": 25
+}
 min_range = 0.0
 max_range = 0.0
 cast_time = 1.0
@@ -50,7 +52,7 @@ cooldown_duration = 0.0
 cooldown_continuos = false
 grant_automatic = true
 grant_tags = Array[String]([])
-grant_tags_required = Array[String]([])
+grant_tags_required = Array[String](["resources.mana"])
 tags_activation = Array[String](["gcd", "casting"])
 tags_activation_required = Array[String]([])
 tags_block = Array[String](["moving", "casting"])
