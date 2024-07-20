@@ -260,6 +260,7 @@ offset_bottom = -0.155014
 
 [node name="Helm" parent="Inventory/EquipmentContainer" instance=ExtResource("3_dacoc")]
 custom_minimum_size = Vector2(0, 0)
+layout_mode = 0
 offset_left = 1.0
 offset_top = 1.0
 offset_right = 33.0
@@ -267,6 +268,7 @@ offset_bottom = 33.0
 
 [node name="Chest" parent="Inventory/EquipmentContainer" instance=ExtResource("3_dacoc")]
 custom_minimum_size = Vector2(0, 0)
+layout_mode = 0
 offset_left = 1.0
 offset_top = 33.0
 offset_right = 33.0
@@ -274,6 +276,7 @@ offset_bottom = 65.0
 
 [node name="Legs" parent="Inventory/EquipmentContainer" instance=ExtResource("3_dacoc")]
 custom_minimum_size = Vector2(0, 0)
+layout_mode = 0
 offset_left = 1.0
 offset_top = 65.0
 offset_right = 33.0
@@ -281,6 +284,7 @@ offset_bottom = 97.0
 
 [node name="Feet" parent="Inventory/EquipmentContainer" instance=ExtResource("3_dacoc")]
 custom_minimum_size = Vector2(0, 0)
+layout_mode = 0
 offset_left = 1.0
 offset_top = 97.0
 offset_right = 33.0
@@ -288,6 +292,7 @@ offset_bottom = 129.0
 
 [node name="Weapon" parent="Inventory/EquipmentContainer" instance=ExtResource("3_dacoc")]
 custom_minimum_size = Vector2(0, 0)
+layout_mode = 0
 offset_left = 124.0
 offset_top = 1.0
 offset_right = 156.0
@@ -295,6 +300,7 @@ offset_bottom = 33.0
 
 [node name="Scroll" parent="Inventory/EquipmentContainer" instance=ExtResource("3_dacoc")]
 custom_minimum_size = Vector2(0, 0)
+layout_mode = 0
 offset_left = 124.0
 offset_top = 33.0
 offset_right = 156.0

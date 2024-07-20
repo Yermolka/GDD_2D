@@ -70,8 +70,26 @@ func handle_keybind_btn_pressed(btn: KeybindButton) -> void:
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("escape"):
+		var closed_ui: bool = false
+		for c: Node in get_parent().get_children():
+			if c is DialogueBox and c.visible:
+				break
+
+			if c.get_script() == null or c is InGameBar:
+				continue
+
+			if c == self:
+				continue
+			
+			if c.visible:
+				c.visible = false
+				closed_ui = true
+			
+		if closed_ui:
+			return
+
 		if selected_button == null:
-			_close()
+			_toggle()
 		else:
 			selected_button = null
 	elif event is InputEventKey and event.pressed and selected_button != null:
@@ -129,10 +147,10 @@ func _update_keybind_buttons(event: InputEvent) -> void:
 
 
 func _on_close_button_pressed() -> void:
-	_close()
+	_toggle()
 
 
-func _close() -> void:
+func _toggle() -> void:
 	visible = not visible
 	get_tree().paused = visible
 	if visible:
