@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://ctggnhnik5da8"]
+
+[node name="StatTooltipContainer" type="HBoxContainer"]
+offset_top = 4.0
+offset_right = 150.0
+offset_bottom = 4.0
+alignment = 2
+
+[node name="StatName" type="Label" parent="."]
+layout_mode = 2
+text = "Strength:"
+
+[node name="StatValue" type="Label" parent="."]
+layout_mode = 2
+text = "10"
+horizontal_alignment = 3

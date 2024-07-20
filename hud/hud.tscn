@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b54ngq6in8rn8"]
+[gd_scene load_steps=31 format=3 uid="uid://b54ngq6in8rn8"]
 
 [ext_resource type="Script" path="res://hud/hud.gd" id="1_d5fuj"]
 [ext_resource type="Script" path="res://hud/inventory_hud.gd" id="2_idcnv"]
@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://dbeqf2nwev04j" path="res://hud/images/btn_close_highlight.png" id="6_aw2dw"]
 [ext_resource type="Script" path="res://addons/dialogue_nodes/objects/bbcodeWait.gd" id="6_nwfki"]
 [ext_resource type="Script" path="res://addons/dialogue_nodes/objects/bbcodeGhost.gd" id="7_ppcym"]
+[ext_resource type="Texture2D" uid="uid://dwh3tu1cd5rwn" path="res://hud/inventory/inventory_placeholder.jpg" id="7_qj32a"]
+[ext_resource type="PackedScene" uid="uid://bll0lr7dq8kn8" path="res://hud/inventory_slot.tscn" id="8_4umhw"]
 [ext_resource type="Script" path="res://addons/dialogue_nodes/objects/bbcodeMatrix.gd" id="8_o4wgr"]
 [ext_resource type="PackedScene" uid="uid://dkuujqavu6c60" path="res://hud/skill_tree.tscn" id="9_x0b8p"]
 [ext_resource type="Texture2D" uid="uid://cnwnesu83umsh" path="res://hud/images/btn_character.png" id="10_vkxdc"]
@@ -47,15 +49,21 @@ script = ExtResource("1_d5fuj")
 
 [node name="Inventory" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.597
+anchor_top = 0.202
+anchor_right = 0.94
+anchor_bottom = 0.824
+offset_left = 0.255981
+offset_top = 0.103989
+offset_right = 0.119873
+offset_bottom = 0.0479736
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("2_idcnv")
 
 [node name="Inventory" type="Panel" parent="Inventory"]
+visible = false
 layout_mode = 0
 offset_left = 816.0
 offset_top = 213.0
@@ -88,6 +96,7 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="CharScreen" type="Panel" parent="Inventory"]
+visible = false
 layout_mode = 0
 offset_left = 82.0
 offset_top = 113.0
@@ -137,6 +146,160 @@ texture_hover = ExtResource("6_aw2dw")
 ignore_texture_size = true
 stretch_mode = 0
 
+[node name="Background" type="TextureRect" parent="Inventory"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_qj32a")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="InventoryContainer" type="GridContainer" parent="Inventory"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.284
+anchor_top = 0.546
+anchor_right = 0.689
+anchor_bottom = 0.945
+offset_left = -0.18
+offset_top = -0.0379944
+offset_right = -0.154999
+offset_bottom = 0.164978
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 5
+
+[node name="InventorySlot" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot2" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot3" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot4" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot5" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot6" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot7" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot8" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot9" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot10" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot11" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot12" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot13" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot14" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot15" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot16" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot17" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot18" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot19" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot20" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot21" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot22" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot23" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot24" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="InventorySlot25" parent="Inventory/InventoryContainer" instance=ExtResource("8_4umhw")]
+layout_mode = 2
+
+[node name="EquipmentContainer" type="Control" parent="Inventory"]
+layout_mode = 1
+anchor_left = 0.289
+anchor_top = 0.067
+anchor_right = 0.686
+anchor_bottom = 0.385
+offset_left = -0.154999
+offset_top = -0.00100136
+offset_right = 0.0299683
+offset_bottom = -0.155014
+
+[node name="Helm" parent="Inventory/EquipmentContainer" instance=ExtResource("3_dacoc")]
+custom_minimum_size = Vector2(0, 0)
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 33.0
+offset_bottom = 33.0
+
+[node name="Chest" parent="Inventory/EquipmentContainer" instance=ExtResource("3_dacoc")]
+custom_minimum_size = Vector2(0, 0)
+offset_left = 1.0
+offset_top = 33.0
+offset_right = 33.0
+offset_bottom = 65.0
+
+[node name="Legs" parent="Inventory/EquipmentContainer" instance=ExtResource("3_dacoc")]
+custom_minimum_size = Vector2(0, 0)
+offset_left = 1.0
+offset_top = 65.0
+offset_right = 33.0
+offset_bottom = 97.0
+
+[node name="Feet" parent="Inventory/EquipmentContainer" instance=ExtResource("3_dacoc")]
+custom_minimum_size = Vector2(0, 0)
+offset_left = 1.0
+offset_top = 97.0
+offset_right = 33.0
+offset_bottom = 129.0
+
+[node name="Weapon" parent="Inventory/EquipmentContainer" instance=ExtResource("3_dacoc")]
+custom_minimum_size = Vector2(0, 0)
+offset_left = 124.0
+offset_top = 1.0
+offset_right = 156.0
+offset_bottom = 33.0
+
+[node name="Scroll" parent="Inventory/EquipmentContainer" instance=ExtResource("3_dacoc")]
+custom_minimum_size = Vector2(0, 0)
+offset_left = 124.0
+offset_top = 33.0
+offset_right = 156.0
+offset_bottom = 65.0
+
 [node name="InGameBar" parent="." instance=ExtResource("4_xiy5y")]
 layout_mode = 1
 offset_left = 0.0
@@ -160,6 +323,7 @@ script = ExtResource("5_x1fam")
 custom_effects = Array[RichTextEffect]([SubResource("RichTextEffect_xikk0"), SubResource("RichTextEffect_6wpih"), SubResource("RichTextEffect_rnr86")])
 
 [node name="SkillTree" parent="." instance=ExtResource("9_x0b8p")]
+visible = false
 layout_mode = 1
 offset_left = -83.32
 offset_top = 4.55199
@@ -217,6 +381,7 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="Settings" parent="." instance=ExtResource("25_flnaa")]
+visible = false
 layout_mode = 1
 
 [connection signal="pressed" from="Inventory/Inventory/CloseButton" to="Inventory" method="_on_close_button_pressed"]
