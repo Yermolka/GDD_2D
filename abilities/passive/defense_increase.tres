@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="PassiveSkill" load_steps=5 format=3 uid="uid://2rsjqqbw56kf"]
+
+[ext_resource type="Script" path="res://abilities/PassiveSkill.gd" id="1_1ankd"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_hku46"]
+
+[sub_resource type="Resource" id="Resource_q2eae"]
+script = ExtResource("1_hku46")
+life_time = 0
+apply_every_second = 1.0
+max_applications = 1
+applies_as = 0
+attribute_name = "defense"
+value_formula = ""
+minimum_value = 5.0
+maximum_value = 5.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_472hp"]
+
+[resource]
+script = ExtResource("1_1ankd")
+ui_icon = SubResource("PlaceholderTexture2D_472hp")
+ui_name = "Defense Increase"
+ui_description = "Increases defense by 5"
+effects = Array[ExtResource("1_hku46")]([SubResource("Resource_q2eae")])
+min_level = 2
+required_passives = Array[String](["Unlock rage"])

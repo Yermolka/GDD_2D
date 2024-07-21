@@ -1,5 +1,7 @@
 class_name Player extends Entity
 
+signal current_xp_changed(value: int, maxValue: int)
+signal level_changed(value: int)
 
 @onready var attribute_map: GameplayAttributeMap = $GameplayAttributeMap
 @onready var inventory: Inventory = $Inventory
@@ -20,8 +22,8 @@ class_name Player extends Entity
 		if xp_map.size() > level:
 			current_xp_changed.emit(current_xp, xp_map[level])
 @export var xp_map: Array
-signal current_xp_changed(value: int, maxValue: int)
-signal level_changed(value: int)
+var unlocked_passives: Array[String] = []
+
 @onready var forward: Vector3 = get_viewport().get_camera_3d().global_transform.basis.z
 @onready var player_screen_pos: Vector2 = get_viewport().get_camera_3d().unproject_position(global_position)
 @onready var mesh: Node3D = $Model
@@ -238,6 +240,9 @@ func _process_input() -> void:
 	if Input.is_action_just_pressed("quick_load"):
 		Globals.load()
 
+	if Input.is_physical_key_pressed(KEY_B):
+		print(unlocked_passives)
+
 
 func _process_movement() -> void:
 	# player_screen_pos = get_viewport().get_camera_3d().unproject_position(global_position - Vector3(0, 1, 0))
@@ -292,6 +297,7 @@ func serialize() -> Dictionary:
 							"buffing_value": attribute_map._attributes_dict[key].buffing_value,
 		}
 
+	# TODO: Also save unlocked skills & upgrades
 	return {
 		"player": {
 			"global_position": global_position,
@@ -305,6 +311,7 @@ func serialize() -> Dictionary:
 			},
 			"ability_container_tags": ability_container.tags,
 			"attribute_map_data": attribute_map_data,
+			"unlocked_passives": unlocked_passives,
 		}
 	}
 
@@ -314,6 +321,7 @@ func deserialize(body: Dictionary) -> void:
 	level = body.level
 	current_xp = body.current_xp
 	xp_map = body.xp_map
+	unlocked_passives = body.unlocked_passives
 
 	var inventory_data: Dictionary = body.inventory_data
 	inventory.max_size = inventory_data.max_size

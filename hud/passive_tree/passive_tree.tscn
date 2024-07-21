@@ -1,0 +1,330 @@
+[gd_scene load_steps=28 format=3 uid="uid://clxev2qpwdhhu"]
+
+[ext_resource type="Script" path="res://hud/passive_tree/passive_tree.gd" id="1_fimo3"]
+[ext_resource type="Script" path="res://hud/passive_tree/unlock_passive_btn.gd" id="1_rce8t"]
+[ext_resource type="Resource" uid="uid://b0hns56hm4ly2" path="res://abilities/passive/mana_resource.tres" id="2_gyipk"]
+[ext_resource type="Texture2D" uid="uid://b5ov6t841geta" path="res://hud/ui_arrow_inactive.png" id="3_tbyra"]
+[ext_resource type="Script" path="res://hud/passive_tree/arrow.gd" id="4_s4o3o"]
+[ext_resource type="Resource" uid="uid://kfdpl04udldy" path="res://abilities/passive/intellect_increase.tres" id="5_7sl5o"]
+[ext_resource type="Resource" uid="uid://12vb0jtrruel" path="res://abilities/passive/mana_regen_increase.tres" id="6_t75hb"]
+[ext_resource type="Resource" uid="uid://40l0me0mhnat" path="res://abilities/passive/concentration_resource.tres" id="7_pm0ij"]
+[ext_resource type="Resource" uid="uid://bsv1fm86a5lma" path="res://abilities/passive/move_speed_increase.tres" id="8_74uji"]
+[ext_resource type="Resource" uid="uid://cx5xey37ofyma" path="res://abilities/passive/crit_chance_increase.tres" id="9_jba7g"]
+[ext_resource type="Resource" uid="uid://1wwnlafa0kkg" path="res://abilities/passive/crit_damage_increase.tres" id="10_o1jkk"]
+[ext_resource type="Resource" uid="uid://b175648ucykpe" path="res://abilities/passive/rage_resource.tres" id="11_uawiu"]
+[ext_resource type="Resource" uid="uid://bpxwdkfuifcgi" path="res://abilities/passive/strength_increase.tres" id="12_j3gm0"]
+[ext_resource type="Resource" uid="uid://2rsjqqbw56kf" path="res://abilities/passive/defense_increase.tres" id="13_f2kux"]
+[ext_resource type="Resource" uid="uid://cfs82vxpq5rxo" path="res://abilities/passive/base_damage_increase.tres" id="14_rj272"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_6p2ol"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y2m0h"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ib7un"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_a4nkd"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y6u7s"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vuxsq"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_80te7"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_bkda0"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_s6acj"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_472hp"]
+
+[sub_resource type="Gradient" id="Gradient_tli3d"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mxoyx"]
+gradient = SubResource("Gradient_tli3d")
+
+[node name="PassiveTree" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fimo3")
+available_points = 20
+
+[node name="Panel" type="Panel" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UnlockMana" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.161
+anchor_top = 0.878
+anchor_right = 0.196
+anchor_bottom = 0.94
+offset_left = 0.527985
+offset_top = 0.0559692
+offset_right = 0.207993
+offset_bottom = -0.120056
+texture_normal = SubResource("PlaceholderTexture2D_6p2ol")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_rce8t")
+passive = ExtResource("2_gyipk")
+
+[node name="TextureRect" type="TextureRect" parent="Panel/UnlockMana"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.05
+anchor_top = -1.15
+anchor_right = -0.05
+anchor_bottom = 0.075
+texture = ExtResource("3_tbyra")
+script = ExtResource("4_s4o3o")
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/UnlockMana"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.225
+anchor_top = -1.2
+anchor_right = 2.225
+offset_right = -1.52588e-05
+offset_bottom = 0.999992
+texture = ExtResource("3_tbyra")
+script = ExtResource("4_s4o3o")
+
+[node name="IntellectIncrease" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.741
+anchor_right = 0.149
+anchor_bottom = 0.802
+offset_left = -0.479996
+offset_top = -0.16803
+offset_right = 0.35199
+offset_bottom = 0.303955
+texture_normal = SubResource("PlaceholderTexture2D_y2m0h")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_rce8t")
+passive = ExtResource("5_7sl5o")
+
+[node name="ManaRegenIncrease" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.218
+anchor_top = 0.738
+anchor_right = 0.253
+anchor_bottom = 0.799
+offset_left = -0.136017
+offset_top = -0.22403
+offset_right = -0.456024
+offset_bottom = 0.247986
+texture_normal = SubResource("PlaceholderTexture2D_ib7un")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_rce8t")
+passive = ExtResource("6_t75hb")
+
+[node name="UnlockConcentration" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.437
+anchor_top = 0.889
+anchor_right = 0.471
+anchor_bottom = 0.951
+offset_left = -0.424011
+offset_top = -0.0720215
+offset_right = 0.407959
+offset_bottom = -0.248047
+texture_normal = SubResource("PlaceholderTexture2D_a4nkd")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_rce8t")
+passive = ExtResource("7_pm0ij")
+
+[node name="TextureRect" type="TextureRect" parent="Panel/UnlockConcentration"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.0
+anchor_top = -1.175
+offset_bottom = 2.0
+texture = ExtResource("3_tbyra")
+script = ExtResource("4_s4o3o")
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/UnlockConcentration"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.075
+anchor_top = -1.1
+anchor_right = 2.075
+anchor_bottom = 0.125
+texture = ExtResource("3_tbyra")
+script = ExtResource("4_s4o3o")
+
+[node name="MoveSpeedIncrease" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.393
+anchor_top = 0.752
+anchor_right = 0.428
+anchor_bottom = 0.813
+offset_left = 0.263977
+offset_top = -0.296021
+offset_right = -0.0560303
+offset_bottom = 0.175964
+texture_normal = SubResource("PlaceholderTexture2D_y6u7s")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_rce8t")
+passive = ExtResource("8_74uji")
+
+[node name="CritChanceIncrease" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.487
+anchor_top = 0.758
+anchor_right = 0.522
+anchor_bottom = 0.819
+offset_left = -0.0240479
+offset_top = -0.184021
+offset_right = -0.343994
+offset_bottom = 0.287964
+texture_normal = SubResource("PlaceholderTexture2D_vuxsq")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_rce8t")
+passive = ExtResource("9_jba7g")
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/CritChanceIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.05
+anchor_top = -1.275
+anchor_right = 1.0
+anchor_bottom = -0.05
+offset_right = -2.00001
+texture = ExtResource("3_tbyra")
+script = ExtResource("4_s4o3o")
+
+[node name="CritDamageIncrease" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.485
+anchor_top = 0.616
+anchor_right = 0.52
+anchor_bottom = 0.677
+offset_left = 0.279968
+offset_top = -0.16803
+offset_right = -0.0400391
+offset_bottom = 0.303955
+texture_normal = SubResource("PlaceholderTexture2D_80te7")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_rce8t")
+passive = ExtResource("10_o1jkk")
+
+[node name="UnlockRage" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.777
+anchor_top = 0.872
+anchor_right = 0.812
+anchor_bottom = 0.934
+offset_left = -0.104004
+offset_top = -0.0560303
+offset_right = -0.424072
+offset_bottom = -0.231995
+texture_normal = SubResource("PlaceholderTexture2D_bkda0")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_rce8t")
+passive = ExtResource("11_uawiu")
+
+[node name="TextureRect" type="TextureRect" parent="Panel/UnlockRage"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.975
+anchor_top = -1.15
+anchor_right = 0.025
+anchor_bottom = 0.075
+texture = ExtResource("3_tbyra")
+script = ExtResource("4_s4o3o")
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/UnlockRage"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.075
+anchor_top = -1.05
+anchor_right = 2.075
+anchor_bottom = 0.175
+texture = ExtResource("3_tbyra")
+script = ExtResource("4_s4o3o")
+
+[node name="StrengthIncrease" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.734
+anchor_top = 0.739
+anchor_right = 0.769
+anchor_bottom = 0.801
+offset_left = 0.431946
+offset_top = 0.127991
+offset_right = 0.111938
+offset_bottom = -0.0480347
+texture_normal = SubResource("PlaceholderTexture2D_s6acj")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_rce8t")
+passive = ExtResource("12_j3gm0")
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/StrengthIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.05
+anchor_top = -1.275
+anchor_right = 1.0
+anchor_bottom = -0.05
+offset_right = -2.00001
+texture = ExtResource("3_tbyra")
+script = ExtResource("4_s4o3o")
+
+[node name="DefenseIncrease" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.82
+anchor_top = 0.739
+anchor_right = 0.855
+anchor_bottom = 0.801
+offset_left = 0.359924
+offset_top = 0.127991
+offset_right = 0.039978
+offset_bottom = -0.0480347
+texture_normal = SubResource("PlaceholderTexture2D_472hp")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_rce8t")
+passive = ExtResource("13_f2kux")
+
+[node name="BaseDamageIncrease" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.734
+anchor_top = 0.594
+anchor_right = 0.769
+anchor_bottom = 0.656
+offset_left = 0.431946
+offset_top = 0.0879822
+offset_right = 0.111938
+offset_bottom = -0.0880127
+texture_normal = SubResource("GradientTexture2D_mxoyx")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_rce8t")
+passive = ExtResource("14_rj272")

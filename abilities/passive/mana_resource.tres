@@ -31,3 +31,5 @@ ui_name = "Unlock mana"
 ui_description = "Gives access to mana resource. Base of 100 with "
 effects = Array[ExtResource("1_xg5se")]([SubResource("Resource_7i0bs")])
 new_resource = SubResource("Resource_jny1g")
+min_level = 0
+required_passives = Array[String]([])

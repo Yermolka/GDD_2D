@@ -1,5 +1,7 @@
 class_name PassiveSkill extends Resource
 
+signal applied_changed()
+
 @export var ui_icon: Texture2D
 @export var ui_name: String
 @export var ui_description: String
@@ -8,6 +10,18 @@ class_name PassiveSkill extends Resource
 @export var effects: Array[AttributeEffect] = []
 @export var new_resource: AttributeResource
 var applied: bool = false
+
+@export_category("Requirements")
+@export var min_level: int = 0
+@export var required_passives: Array[String]
+
+
+func can_activate(player: Player) -> bool:
+	for p: String in required_passives:
+		if p not in player.unlocked_passives:
+			return false
+
+	return player.level >= min_level
 
 
 func activate(player: Player) -> void:
@@ -23,7 +37,11 @@ func activate(player: Player) -> void:
 	g_effect.attributes_affected = effects
 	g_effect.set_stats(player.attribute_map)
 	player.add_child(g_effect)
+
 	applied = true
+	player.unlocked_passives.append(ui_name)
+	applied_changed.emit()
+
 
 func deactivate(player: Player) -> void:
 	if not applied:
@@ -41,4 +59,7 @@ func deactivate(player: Player) -> void:
 		antieffects.attributes_affected.append(antieffect)
 
 	player.add_child(antieffects)
+
 	applied = false
+	player.unlocked_passives.erase(ui_name)
+	applied_changed.emit()

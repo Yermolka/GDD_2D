@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://cultyql87ixvl"]
+[gd_scene load_steps=46 format=3 uid="uid://cultyql87ixvl"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_31dcg"]
 [ext_resource type="Resource" uid="uid://bwe1yh7rpxxnt" path="res://abilities/active/teleport.tres" id="2_7daoa"]
@@ -53,7 +53,7 @@ current_value = 100.0
 script = ExtResource("4_2qw15")
 attribute_name = "movement_speed"
 minimum_value = 0.0
-maximum_value = 100.0
+maximum_value = 1000.0
 current_value = 100.0
 
 [sub_resource type="Resource" id="Resource_o5x7h"]
@@ -66,15 +66,43 @@ current_value = 10.0
 [sub_resource type="Resource" id="Resource_xdma3"]
 script = ExtResource("4_2qw15")
 attribute_name = "defense"
-minimum_value = 10.0
-maximum_value = 10.0
+minimum_value = -1000.0
+maximum_value = 1000.0
 current_value = 10.0
 
 [sub_resource type="Resource" id="Resource_6u6m3"]
 script = ExtResource("4_2qw15")
-attribute_name = "defense"
-minimum_value = -10.0
-maximum_value = 10.0
+attribute_name = "crit_chance"
+minimum_value = 0.0
+maximum_value = 1.0
+current_value = 0.1
+
+[sub_resource type="Resource" id="Resource_e3ie3"]
+script = ExtResource("4_2qw15")
+attribute_name = "crit_multiplier"
+minimum_value = 1.0
+maximum_value = 100.0
+current_value = 2.0
+
+[sub_resource type="Resource" id="Resource_4nwct"]
+script = ExtResource("4_2qw15")
+attribute_name = "intellect"
+minimum_value = 0.0
+maximum_value = 1000.0
+current_value = 10.0
+
+[sub_resource type="Resource" id="Resource_wleqt"]
+script = ExtResource("4_2qw15")
+attribute_name = "agility"
+minimum_value = 0.0
+maximum_value = 1000.0
+current_value = 10.0
+
+[sub_resource type="Resource" id="Resource_inexn"]
+script = ExtResource("4_2qw15")
+attribute_name = "strength"
+minimum_value = 0.0
+maximum_value = 1000.0
 current_value = 10.0
 
 [sub_resource type="Resource" id="Resource_vnchi"]
@@ -115,6 +143,7 @@ axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource("1_31dcg")
 movement_skill = ExtResource("2_7daoa")
+level = 10
 mesh_anim = NodePath("Model/AnimationPlayer")
 
 [node name="Model" parent="." instance=ExtResource("2_ahb14")]
@@ -203,7 +232,7 @@ abilities = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_a
 [node name="GameplayAttributeMap" type="Node" parent="."]
 script = ExtResource("3_4d36o")
 owning_character = NodePath("..")
-attributes = Array[ExtResource("4_2qw15")]([SubResource("Resource_4bvb6"), SubResource("Resource_c0ocp"), SubResource("Resource_o5x7h"), SubResource("Resource_xdma3"), SubResource("Resource_6u6m3")])
+attributes = Array[ExtResource("4_2qw15")]([SubResource("Resource_4bvb6"), SubResource("Resource_c0ocp"), SubResource("Resource_o5x7h"), SubResource("Resource_xdma3"), SubResource("Resource_6u6m3"), SubResource("Resource_e3ie3"), SubResource("Resource_4nwct"), SubResource("Resource_wleqt"), SubResource("Resource_inexn")])
 table = ExtResource("5_5fmbk")
 
 [node name="Inventory" type="Node" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://b54ngq6in8rn8"]
+[gd_scene load_steps=37 format=3 uid="uid://b54ngq6in8rn8"]
 
 [ext_resource type="Script" path="res://hud/hud.gd" id="1_d5fuj"]
 [ext_resource type="Script" path="res://hud/inventory_hud.gd" id="2_idcnv"]
@@ -32,6 +32,7 @@
 [ext_resource type="Texture2D" uid="uid://dfu2cqctwjsck" path="res://hud/ui_hp_middle.png" id="29_0d34k"]
 [ext_resource type="Texture2D" uid="uid://q3j8j1bgalim" path="res://hud/ui_hp_left.png" id="30_3bq2o"]
 [ext_resource type="Texture2D" uid="uid://bo43ud76enyvm" path="res://hud/ui_hp_right.png" id="31_jcnkd"]
+[ext_resource type="PackedScene" uid="uid://clxev2qpwdhhu" path="res://hud/passive_tree/passive_tree.tscn" id="33_wni17"]
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_xikk0"]
 script = ExtResource("6_nwfki")
@@ -462,6 +463,13 @@ offset_top = 1.0
 offset_right = 110.0
 offset_bottom = 14.0
 texture = ExtResource("31_jcnkd")
+
+[node name="PassiveTree" parent="." instance=ExtResource("33_wni17")]
+layout_mode = 1
+offset_left = 248.0
+offset_top = 132.0
+offset_right = -521.0
+offset_bottom = -298.0
 
 [connection signal="pressed" from="Inventory/Inventory/CloseButton" to="Inventory" method="_on_close_button_pressed"]
 [connection signal="pressed" from="Inventory/CharScreen/CloseButton" to="Inventory" method="_on_char_screen_close_button_pressed"]

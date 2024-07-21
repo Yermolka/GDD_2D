@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="PassiveSkill" load_steps=5 format=3 uid="uid://kfdpl04udldy"]
+
+[ext_resource type="Script" path="res://abilities/PassiveSkill.gd" id="1_b88vw"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_hjcb5"]
+
+[sub_resource type="Resource" id="Resource_cha1a"]
+script = ExtResource("1_hjcb5")
+life_time = 0
+apply_every_second = 1.0
+max_applications = 1
+applies_as = 0
+attribute_name = "intellect"
+value_formula = ""
+minimum_value = 5.0
+maximum_value = 5.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y2m0h"]
+
+[resource]
+script = ExtResource("1_b88vw")
+ui_icon = SubResource("PlaceholderTexture2D_y2m0h")
+ui_name = "Intellect Increase"
+ui_description = "Increases intellect by 5"
+effects = Array[ExtResource("1_hjcb5")]([SubResource("Resource_cha1a")])
+min_level = 2
+required_passives = Array[String](["Unlock mana"])

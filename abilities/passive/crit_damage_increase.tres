@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="PassiveSkill" load_steps=5 format=3 uid="uid://1wwnlafa0kkg"]
+
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_fsaxn"]
+[ext_resource type="Script" path="res://abilities/PassiveSkill.gd" id="1_sedjm"]
+
+[sub_resource type="Resource" id="Resource_re8na"]
+script = ExtResource("1_fsaxn")
+life_time = 0
+apply_every_second = 1.0
+max_applications = 1
+applies_as = 0
+attribute_name = "crit_multiplier"
+value_formula = ""
+minimum_value = 1.0
+maximum_value = 1.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_80te7"]
+
+[resource]
+script = ExtResource("1_sedjm")
+ui_icon = SubResource("PlaceholderTexture2D_80te7")
+ui_name = "Crit damage Increase"
+ui_description = "Increase crit multiplier by another 100%"
+effects = Array[ExtResource("1_fsaxn")]([SubResource("Resource_re8na")])
+min_level = 2
+required_passives = Array[String](["Crit chance Increase"])

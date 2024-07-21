@@ -7,7 +7,7 @@ var player: Player
 @onready var in_game_bar: InGameBar = $InGameBar
 @onready var dialogue_box: DialogueBox = $DialogueBox
 @onready var skill_tree: SkillTree = $SkillTree
-
+@onready var passive_tree: PassiveTree = $PassiveTree
 
 func _ready() -> void:
 	await get_tree().physics_frame
@@ -31,6 +31,8 @@ func setup() -> void:
 	skill_tree.setup_ability_container(player.ability_container)
 	skill_tree.setup_equipment(player.equipment)
 
+	passive_tree.setup(player)
+
 @onready var test_res: PassiveSkill = load("res://abilities/passive/mana_resource.tres") as PassiveSkill
 		
 func _input(_event: InputEvent) -> void:
@@ -43,12 +45,8 @@ func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("toggle_ability_tree"):
 		skill_tree.visible = not skill_tree.visible
 
-	if Input.is_physical_key_pressed(KEY_B):
-		if not test_res.applied:
-			test_res.activate(player)
-			player.ability_container.grant_all_abilities()
-		else:
-			test_res.deactivate(player)
+	if Input.is_action_just_pressed("toggle_passive_tree"):
+		passive_tree.visible = not passive_tree.visible
 
 
 func _on_skills_btn_pressed() -> void:
