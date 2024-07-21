@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="PassiveSkill" load_steps=5 format=3 uid="uid://b175648ucykpe"]
+
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute.gd" id="1_280fd"]
+[ext_resource type="Script" path="res://abilities/PassiveSkill.gd" id="1_x7le7"]
+
+[sub_resource type="Resource" id="Resource_ycvgq"]
+script = ExtResource("1_280fd")
+attribute_name = "rage"
+minimum_value = 0.0
+maximum_value = 100.0
+current_value = 0.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_bkda0"]
+
+[resource]
+script = ExtResource("1_x7le7")
+ui_icon = SubResource("PlaceholderTexture2D_bkda0")
+ui_name = "Unlock rage"
+ui_description = "Unlockes rage with 100 base units"
+effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd")]([])
+new_resource = SubResource("Resource_ycvgq")
+min_level = 0
+required_passives = Array[String]([])

@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="PassiveSkill" load_steps=7 format=3 uid="uid://b0hns56hm4ly2"]
+
+[ext_resource type="Script" path="res://abilities/PassiveSkill.gd" id="1_wober"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_xg5se"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute.gd" id="2_7arac"]
+
+[sub_resource type="Resource" id="Resource_7i0bs"]
+script = ExtResource("1_xg5se")
+life_time = 1
+apply_every_second = 1.0
+max_applications = 0
+applies_as = 0
+attribute_name = "mana"
+value_formula = ""
+minimum_value = 10.0
+maximum_value = 10.0
+
+[sub_resource type="Resource" id="Resource_jny1g"]
+script = ExtResource("2_7arac")
+attribute_name = "mana"
+minimum_value = 0.0
+maximum_value = 100.0
+current_value = 100.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_6p2ol"]
+
+[resource]
+script = ExtResource("1_wober")
+ui_icon = SubResource("PlaceholderTexture2D_6p2ol")
+ui_name = "Unlock mana"
+ui_description = "Gives access to mana resource. Base of 100 with "
+effects = Array[ExtResource("1_xg5se")]([SubResource("Resource_7i0bs")])
+new_resource = SubResource("Resource_jny1g")
+min_level = 0
+required_passives = Array[String]([])

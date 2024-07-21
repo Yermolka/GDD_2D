@@ -4,6 +4,8 @@ class_name NonTargetedSkill extends ActiveSkill
 func activate(event: ActivationEvent) -> void:
 	var caster: Entity = event.character as Entity
 	await super.activate(event)
+	if cast_time > 0.0 and event.ability_container.has_tag("moving"):
+		return
 
 	## Instant target
 	var main_effect: GameplayEffect = GameplayEffect.new()
@@ -28,10 +30,10 @@ func activate(event: ActivationEvent) -> void:
 		scene.add_child(main_chance_effect)
 		scene.add_child(main_timed_effect)
 		# scene.position = caster.global_position
-		if grant_tags.has("type.melee"):
-			caster.add_child(scene)
-		else:
-			caster.get_tree().root.add_child(scene)
+		# if grant_tags.has("type.melee"):
+		caster.add_child(scene)
+		# else:
+		# 	caster.get_tree().root.add_child(scene)
 		return
 
 func can_activate(event: ActivationEvent) -> bool:

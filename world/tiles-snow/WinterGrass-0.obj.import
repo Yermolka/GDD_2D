@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b5n6f7g24qlnr"
+path="res://.godot/imported/WinterGrass-0.obj-1b00ac7fef265d954adbc9526eae4a05.mesh"
+
+[deps]
+
+files=["res://.godot/imported/WinterGrass-0.obj-1b00ac7fef265d954adbc9526eae4a05.mesh"]
+
+source_file="res://world/tiles-snow/WinterGrass-0.obj"
+dest_files=["res://.godot/imported/WinterGrass-0.obj-1b00ac7fef265d954adbc9526eae4a05.mesh", "res://.godot/imported/WinterGrass-0.obj-1b00ac7fef265d954adbc9526eae4a05.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

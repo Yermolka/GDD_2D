@@ -7,12 +7,14 @@ class_name Enemy extends Entity
 @export var ui_name: String = "enemy"
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 const SPEED: float = 100.0
+@export var abilities: Array[Ability]
 
 @export_group("animation")
 @export var body_top: Node3D
 @export var body_top_anim: AnimationPlayer
 @export var body_bot: Node3D
 @export var body_bot_anim: AnimationPlayer
+
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -29,7 +31,10 @@ func _ready() -> void:
 			print(attr.attribute_name, ": ", attr.current_buffed_value)
 	)
 
-	print("Enemy: ", name, " was granted ", ability_container.grant_all_abilities(), " abilities")
+
+	ability_container.abilities = abilities.duplicate(true)
+	ability_container.grant_all_abilities()
+
 
 func _physics_process(delta: float) -> void:
 	var old_rotation: Vector3 = global_rotation

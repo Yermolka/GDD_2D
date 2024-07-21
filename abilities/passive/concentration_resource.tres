@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="PassiveSkill" load_steps=5 format=3 uid="uid://40l0me0mhnat"]
+
+[ext_resource type="Script" path="res://abilities/PassiveSkill.gd" id="1_dqnob"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute.gd" id="1_vcmty"]
+
+[sub_resource type="Resource" id="Resource_qxsge"]
+script = ExtResource("1_vcmty")
+attribute_name = "concentration"
+minimum_value = 0.0
+maximum_value = 100.0
+current_value = 0.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_a4nkd"]
+
+[resource]
+script = ExtResource("1_dqnob")
+ui_icon = SubResource("PlaceholderTexture2D_a4nkd")
+ui_name = "Unlock concentration"
+ui_description = "Gives access to concentration resource with base of 100 max units"
+effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd")]([])
+new_resource = SubResource("Resource_qxsge")
+min_level = 0
+required_passives = Array[String]([])

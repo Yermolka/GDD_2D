@@ -18,6 +18,5 @@ func _physics_process(_delta: float) -> void:
 
 
 func should_apply_effect(node: Node3D) -> bool:
-	print("apply ", node.name)
 	return node.is_in_group(target_group)
 

@@ -21,6 +21,7 @@ enum LifeCycle {
 
 const GCD_TIME: float = 1.0
 var timer: Timer = Timer.new()
+signal gcd_started(time: float)
 
 ## Emitted when an ability is activated manually or automatically
 signal ability_activated(ability: Ability, activation_event: ActivationEvent)
@@ -228,6 +229,7 @@ func _ready() -> void:
 
 func start_gcd() -> void:
 	timer.start()
+	gcd_started.emit(timer.wait_time)
 
 ## Activates a single [Ability] calling [method Ability.try_activate].
 func activate_one(ability: Ability) -> void:

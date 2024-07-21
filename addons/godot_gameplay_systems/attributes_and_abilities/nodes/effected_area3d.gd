@@ -19,7 +19,7 @@ var effects: Array[GameplayEffect] = []:
 		var _effects: Array[GameplayEffect] = []
 		
 		for child in get_children():
-			if child is GameplayEffect:
+			if child is GameplayEffect or child is TimedGameplayEffect:
 				_effects.append(child)
 		
 		return _effects
@@ -27,7 +27,10 @@ var effects: Array[GameplayEffect] = []:
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
-		area_entered.connect(func (body: Area3D):
+		area_entered.connect(func (body: Node3D):
+			if body is HurtBox:
+				body = body.owner
+
 			if should_apply_effect(body):
 				for effect in effects:
 					if remove_effects_on_apply:
@@ -41,6 +44,9 @@ func _ready() -> void:
 		)
 		
 		body_entered.connect(func (body: Node3D):
+			if body is HurtBox:
+				body = body.owner
+			
 			if should_apply_effect(body):
 				for effect in effects:
 					if remove_effects_on_apply:

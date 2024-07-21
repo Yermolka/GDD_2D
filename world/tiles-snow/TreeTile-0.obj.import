@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bi5b4rhtrh4fe"
+path="res://.godot/imported/TreeTile-0.obj-2b2b037f84528ebf400a1648d7072269.mesh"
+
+[deps]
+
+files=["res://.godot/imported/TreeTile-0.obj-2b2b037f84528ebf400a1648d7072269.mesh"]
+
+source_file="res://world/tiles-snow/TreeTile-0.obj"
+dest_files=["res://.godot/imported/TreeTile-0.obj-2b2b037f84528ebf400a1648d7072269.mesh", "res://.godot/imported/TreeTile-0.obj-2b2b037f84528ebf400a1648d7072269.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

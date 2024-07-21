@@ -43,13 +43,10 @@ func _ready() -> void:
 	texture_map["none"] = null
 
 	if quest:
-		if quest.name == "Quest line":
-			quest.global_requirements = {"test_quest_done": true}
 		quest = quest.instantiate()
 
 	EventBus.dialogueSignal.connect(
 		func(value: String) -> void:
-			# print(value)
 			if value == "quests." + quest.name + ".accepted":
 				Questify.start_quest(quest)
 			elif value == "quests." + quest.name + ".completed":
@@ -70,7 +67,6 @@ func _ready() -> void:
 		func(q: QuestResource) -> void:
 			if q.name == quest.name:
 				current_texture_name = "not_done"
-				print(current_texture_name)
 	)
 
 	await get_tree().process_frame
@@ -79,7 +75,6 @@ func _ready() -> void:
 		Questify.register_quest(quest)
 
 		if quest.available:
-			print(quest.name)
 			current_texture_name = "excl"
 		elif not quest.available and not quest.started and not quest.completed and not quest.turned_in:
 			current_texture_name = "excl_gray"

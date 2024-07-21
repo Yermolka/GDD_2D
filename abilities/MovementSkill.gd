@@ -44,7 +44,10 @@ func _dash(caster: Entity, dir: Vector3) -> void:
 
 		delta = caster.get_process_delta_time()
 		prev_time -= delta
-		caster.global_position += dir * dash_speed * delta
+		caster.velocity = dir * dash_speed
+		caster.velocity.y = 0
+		print(caster.velocity)
+		caster.move_and_slide()
 
 		#TODO: change to move_and_slide()
 

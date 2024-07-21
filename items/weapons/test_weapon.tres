@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="Weapon" load_steps=7 format=3 uid="uid://dqy2c0g5wqihv"]
+[gd_resource type="Resource" script_class="Weapon" load_steps=6 format=3 uid="uid://dqy2c0g5wqihv"]
 
 [ext_resource type="Script" path="res://items/weapon.gd" id="1_bbfx7"]
-[ext_resource type="Resource" uid="uid://dtr7xlpvxtjct" path="res://abilities/active/melee_non_target.tres" id="2_fooi7"]
+[ext_resource type="PackedScene" uid="uid://bhxlh5s414cs2" path="res://hud/skill_trees/test_mana_weapon/test_mana_weapon_tree.tscn" id="2_y3487"]
 [ext_resource type="Texture2D" uid="uid://b5wgoe1rpbf31" path="res://addons/dialogue_nodes/icons/CharacterList.svg" id="3_6n4kn"]
-[ext_resource type="Resource" uid="uid://blxg4t7jutslw" path="res://abilities/ability_tree/skill_tree1.tres" id="3_al4a0"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="4_2qh25"]
 
 [sub_resource type="Resource" id="Resource_xgee3"]
@@ -19,15 +18,15 @@ maximum_value = 50.0
 
 [resource]
 script = ExtResource("1_bbfx7")
-skill_tree = ExtResource("3_al4a0")
-skill = ExtResource("2_fooi7")
-skill_points = 0
+skill_tree = ExtResource("2_y3487")
+skill_points = 10
 level = 1
 current_xp = 0
 xp_map = Array[int]([0, 10])
 stats = Array[ExtResource("4_2qh25")]([SubResource("Resource_xgee3")])
 required_level = 0
 ui_icon = ExtResource("3_6n4kn")
+desription = ""
 name = &"Test Weapon"
 can_stack = false
 decrease_stack_on_use = false

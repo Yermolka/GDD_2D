@@ -20,6 +20,7 @@ script = ExtResource("1_t0ofd")
 effects = Array[ExtResource("1_6vwuf")]([SubResource("Resource_clmhq")])
 duration = 0.0
 ui_icon = ExtResource("3_e48gc")
+desription = "Restores 10-30 HP"
 name = &"Damage Potion"
 can_stack = true
 decrease_stack_on_use = true

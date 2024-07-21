@@ -1,8 +1,7 @@
 class_name Weapon extends EquipmentBase
 
 @export_category("Weapon")
-@export var skill_tree: SkillTreeData = null
-@export var skill: ActiveSkill = null
+@export var skill_tree: PackedScene
 @export var skill_points: int = 0:
 	get:
 		return skill_points
@@ -35,21 +34,21 @@ func _equip(eq: Equipment, slot: EquipmentSlot) -> void:
 	if not player:
 		return
 
-	player.ability_container.grant(skill)
+	# player.ability_container.grant(skill)
 
 func _unequip(eq: Equipment, slot: EquipmentSlot) -> void:
 	var player: Player = eq.owner as Player
 	if not player:
 		return
 
-	player.ability_container.revoke(skill)
+	# player.ability_container.revoke(skill)
 
 func _can_equip(_equipment: Equipment) -> bool:
-	if skill != null:
-		var player: Player = _equipment.owner as Player
-		for tag: String in skill.grant_tags_required:
-			if not player.ability_container.has_tag(tag):
-				return false
+	# if skill != null:
+	# 	var player: Player = _equipment.owner as Player
+	# 	for tag: String in skill.grant_tags_required:
+	# 		if not player.ability_container.has_tag(tag):
+	# 			return false
 
 	return super._can_equip(_equipment)
 

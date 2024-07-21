@@ -1,10 +1,13 @@
 class_name Player extends Entity
 
+signal current_xp_changed(value: int, maxValue: int)
+signal level_changed(value: int)
 
 @onready var attribute_map: GameplayAttributeMap = $GameplayAttributeMap
 @onready var inventory: Inventory = $Inventory
 @onready var equipment: Equipment = $Equipment
 @onready var ability_container: AbilityContainer = $AbilityContainer
+@export var movement_skill: MovementSkill
 
 @export var level: int = 1
 @export var current_xp: int = 0:
@@ -19,8 +22,18 @@ class_name Player extends Entity
 		if xp_map.size() > level:
 			current_xp_changed.emit(current_xp, xp_map[level])
 @export var xp_map: Array
-signal current_xp_changed(value: int, maxValue: int)
-signal level_changed(value: int)
+var unlocked_passives: Array[String] = []
+
+@onready var forward: Vector3 = get_viewport().get_camera_3d().global_transform.basis.z
+@onready var player_screen_pos: Vector2 = get_viewport().get_camera_3d().unproject_position(global_position)
+@onready var mesh: Node3D = $Model
+
+@export_group("Animation")
+@export var mesh_anim: AnimationPlayer
+@export var body_top: Node3D
+@export var body_bot: Node3D
+@onready var blackboard: PlayerBlackboard = $PlayerBlackboard
+
 
 const SPEED: float = 5.0
 var movement_speed: float:
@@ -29,17 +42,18 @@ var movement_speed: float:
 	set(value):
 		attribute_map.get_attribute_by_name("movement_speed").current_value = value
 
+
 ## For loading only
 var inventory_items: Array:
 	get:
 		return inventory.items.map(
 		func (x: ItemBase) -> Dictionary:
-			print(x.resource_path)
 			return {
 				"resource_path": x.get_resource_path(),
 				"quantity": x.quantity_current
 			}
 		)
+
 
 var equipped_items: Array:
 	get:
@@ -51,11 +65,13 @@ var equipped_items: Array:
 			}
 	)
 
+
 var stats: Dictionary:
 	get:
 		return attribute_map._attributes_dict
 	set(value):
 		attribute_map._attributes_dict = stats
+
 
 func _setup_attr_map() -> void:
 	attribute_map.attribute_changed.connect(
@@ -74,6 +90,7 @@ func _setup_attr_map() -> void:
 		func (attr: AttributeSpec) -> void:
 			ability_container.remove_tag("resources." + attr.attribute_name)
 	)
+
 
 func _setup_inventory() -> void:
 	inventory.item_added.connect(
@@ -99,6 +116,7 @@ func _setup_inventory() -> void:
 
 	call_deferred("_setup_equipped_items")
 
+
 func _setup_equipped_items() -> void:
 	for eqb: EquipmentBase in equipment.equipped_items:
 		if eqb is Weapon:
@@ -110,6 +128,7 @@ func _setup_equipped_items() -> void:
 		add_child(eqb.effect)
 
 	Questify.update_quests()
+
 
 func _setup_quests() -> void:
 	Questify.condition_query_requested.connect(_quest_update)
@@ -147,6 +166,28 @@ func _setup_quests() -> void:
 					inventory.remove_items_by(func (x: Item) -> bool: return x.name == cond.key)
 	)
 
+
+func _setup_ability_container() -> void:
+	ability_container.abilities.append(movement_skill)
+	print(ability_container.grant_all_abilities())
+
+	ability_container.ability_activated.connect(handle_ability_activated)
+	ability_container.ability_ended.connect(handle_ability_ended)
+
+
+func handle_ability_ended(ability: ActiveSkill, activation_event: ActivationEvent) -> void:
+	blackboard.set_value("attacking", false)
+
+
+func handle_ability_activated(ability: ActiveSkill, activation_event: ActivationEvent) -> void:
+	if ability.cast_time > 0.0:
+		blackboard.set_value("casting", true)
+		await ability.cast_ended
+		blackboard.set_value("casting", false)
+	else:
+		blackboard.set_value("attacking", true)
+
+
 func _ready() -> void:
 	add_to_group("player")
 	add_to_group("persist")
@@ -154,8 +195,12 @@ func _ready() -> void:
 	_setup_attr_map()
 	_setup_inventory()
 	_setup_quests()
+	_setup_ability_container()
 
-	print("Player: granted ", ability_container.grant_all_abilities(), " abilities")
+	await get_tree().physics_frame
+
+	forward = get_viewport().get_camera_3d().global_transform.basis.z
+	
 
 func _quest_update(type: String, key: String, value: Variant, requester: QuestCondition) -> void:
 	if type != "has_item":
@@ -171,6 +216,7 @@ func _quest_update(type: String, key: String, value: Variant, requester: QuestCo
 
 	if count >= value:
 		requester.completed = true
+
 
 func _physics_process(_delta: float) -> void:
 	_process_movement()
@@ -194,24 +240,33 @@ func _process_input() -> void:
 	if Input.is_action_just_pressed("quick_load"):
 		Globals.load()
 
+	if Input.is_physical_key_pressed(KEY_B):
+		print(unlocked_passives)
+
 
 func _process_movement() -> void:
+	# player_screen_pos = get_viewport().get_camera_3d().unproject_position(global_position - Vector3(0, 1, 0))
+	# var mouse_relative: Vector2 = (get_viewport().get_mouse_position() - player_screen_pos)
+	# global_rotation.y = get_viewport().get_camera_3d().global_rotation.y + mouse_relative.angle_to(Vector2(0, -1))
+
 	velocity = Vector3.ZERO
 	if not is_on_floor():
 		velocity.y -= 9.8
 
 	if ability_container.has_tag("movement.dashing"):
-		move_and_slide()
+		blackboard.set_value("moving", true)
 		return
 
-	var horizontal: float = Input.get_axis("move_left", "move_right")
-	var vertical: float = Input.get_axis("move_up", "move_down")
-	var direction: Vector3 = Vector3(horizontal, 0, vertical).normalized()
+	var horizontal: Vector3 = (Input.get_axis("move_left", "move_right") * forward).rotated(Vector3.UP, PI / 2)
+	var vertical: Vector3 = Input.get_axis("move_up", "move_down") * forward
+	var direction: Vector3 = (horizontal + vertical).normalized()
 
 	if direction:
+		blackboard.set_value("moving", true)
 		velocity += direction * movement_speed
 		ability_container.add_tag("moving")
 	else:
+		blackboard.set_value("moving", false)
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 		ability_container.remove_tag("moving")
@@ -242,6 +297,7 @@ func serialize() -> Dictionary:
 							"buffing_value": attribute_map._attributes_dict[key].buffing_value,
 		}
 
+	# TODO: Also save unlocked skills & upgrades
 	return {
 		"player": {
 			"global_position": global_position,
@@ -255,6 +311,7 @@ func serialize() -> Dictionary:
 			},
 			"ability_container_tags": ability_container.tags,
 			"attribute_map_data": attribute_map_data,
+			"unlocked_passives": unlocked_passives,
 		}
 	}
 
@@ -264,6 +321,7 @@ func deserialize(body: Dictionary) -> void:
 	level = body.level
 	current_xp = body.current_xp
 	xp_map = body.xp_map
+	unlocked_passives = body.unlocked_passives
 
 	var inventory_data: Dictionary = body.inventory_data
 	inventory.max_size = inventory_data.max_size

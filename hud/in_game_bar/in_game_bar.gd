@@ -6,6 +6,7 @@ class_name InGameBar extends Control
 @onready var skill_1: SelectedSkillButton = $SelectedSkills/Skill0
 @onready var skill_2: SelectedSkillButton = $SelectedSkills/Skill1
 @onready var skill_3: SelectedSkillButton = $SelectedSkills/Skill2
+@onready var skill_movement: SelectedSkillButton = $SelectedSkills/Skill3
 @onready var cast_bar: ProgressBar = $CastBar
 
 func _set_progress_bar(bar: ProgressBar, attribute_spec: AttributeSpec) -> void:
@@ -44,14 +45,16 @@ func handle_cast_ended(_ability: ActiveSkill, _success: bool) -> void:
 
 
 func handle_ability_granted(_skill: ActiveSkill) -> void:
+	if _skill.grant_tags.has("type.movement"):
+		skill_movement.ability = _skill
+		return
+	
 	if skill_1.ability == null:
 		skill_1.ability = _skill
 	elif skill_2.ability == null:
 		skill_2.ability = _skill
 	elif skill_3.ability == null:
 		skill_3.ability = _skill
-	else:
-		printerr("Adding too many abilities!")
 
 func handle_ability_revoked(_skill: ActiveSkill) -> void:
 	if skill_1.ability == _skill:
@@ -60,23 +63,26 @@ func handle_ability_revoked(_skill: ActiveSkill) -> void:
 		skill_2.ability = null
 	elif skill_3.ability == _skill:
 		skill_3.ability = null
+	elif skill_movement.ability == _skill:
+		skill_movement.ability = null
 	else:
 		printerr("Trying to revoke non existent ability!")
 
 func handle_cooldown_started(ability: ActiveSkill) -> void:
 	if skill_1.ability == ability:
-		skill_1.start_cooldown()
+		skill_1.start_cooldown(ability.cooldown_duration)
 	elif skill_2.ability == ability:
-		skill_2.start_cooldown()
+		skill_2.start_cooldown(ability.cooldown_duration)
 	elif skill_3.ability == ability:
-		skill_3.start_cooldown()
+		skill_3.start_cooldown(ability.cooldown_duration)
+	elif skill_movement.ability == ability:
+		skill_movement.start_cooldown(ability.cooldown_duration)
 
 func handle_cooldown_ended(ability: ActiveSkill) -> void:
 	pass
 
 
 func setup_ability_container(ability_container: AbilityContainer) -> void:
-	print(ability_container)
 	for child: SelectedSkillButton in $SelectedSkills.get_children():
 		child.ability_container = ability_container
 
@@ -90,14 +96,15 @@ func setup_ability_container(ability_container: AbilityContainer) -> void:
 
 
 	# TODO: load player's selected abilities
-	if ability_container.granted_abilities.size() > 0:
-		skill_1.ability = ability_container.granted_abilities[0]
-	
-	if ability_container.granted_abilities.size() > 1:
-		skill_2.ability = ability_container.granted_abilities[1]
-	
-	if ability_container.granted_abilities.size() > 2:
-		skill_3.ability = ability_container.granted_abilities[2]
+	for a: Ability in ability_container.granted_abilities:
+		if a.grant_tags.has("type.movement"):
+			skill_movement.ability = a
+		elif skill_1.ability == null:
+			skill_1.ability = a
+		elif skill_2.ability == null:
+			skill_2.ability = a
+		elif skill_3.ability == null:
+			skill_3.ability = a
 
 
 func setup_gameplay_attribute_map(gameplay_attribute_map: GameplayAttributeMap) -> void:

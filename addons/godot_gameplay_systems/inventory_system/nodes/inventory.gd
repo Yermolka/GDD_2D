@@ -183,7 +183,7 @@ func can_activate(item: Item, activation_type: int = 0) -> bool:
 func can_add(item: Item) -> bool:
 	if items.size() >= max_size:
 		return false
-	
+
 	if item.tags_required_to_add.size() == 0:
 		return true
 

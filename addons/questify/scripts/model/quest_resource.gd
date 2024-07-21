@@ -23,8 +23,9 @@ var started: bool:
 var available: bool = false
 @export var required_level: int = 0
 @export var remove_items_on_complete: bool = true
+
 ## Global requirements are what key:value should be in Globals to become available
-@export var global_requirements: Dictionary = {} 
+@export var global_requirements: Dictionary = {}
 @export var global_vars_on_turn_in: Dictionary = {}
 @export var reward_xp: int = 0
 @export var reward_currency: int = 0
@@ -142,7 +143,15 @@ func serialize() -> Dictionary:
 		completed = completed,
 		turned_in = turned_in,
 		available = available,
-		nodes = nodes.map(func(node: QuestNode): return node.serialize())
+		nodes = nodes.map(func(node: QuestNode): return node.serialize()),
+		required_level = required_level,
+		remove_items_on_complete = remove_items_on_complete,
+		global_requirements = global_requirements,
+		global_vars_on_turn_in = global_vars_on_turn_in,
+		reward_xp = reward_xp,
+		reward_currency = reward_currency,
+		reward_choice_items = reward_choice_items,
+		reward_guaranteed_items = reward_guaranteed_items
 	}
 
 
@@ -154,6 +163,14 @@ func deserialize(data: Dictionary) -> void:
 	available = data.available
 	completed = data.completed
 	turned_in = data.turned_in
+	required_level = data.required_level
+	remove_items_on_complete = data.remove_items_on_complete
+	global_requirements = data.global_requirements
+	global_vars_on_turn_in = data.global_vars_on_turn_in
+	reward_xp = data.reward_xp
+	reward_currency = data.reward_currency
+	reward_choice_items = data.reward_choice_items
+	reward_guaranteed_items = data.reward_guaranteed_items
 	var node_map := {}
 	for node in nodes:
 		node_map[node.id] = node
@@ -174,3 +191,14 @@ func _initialize() -> void:
 func _notify_active_objectives() -> void:
 	for objective in get_active_objectives():
 		Questify.quest_objective_added.emit(self, objective)
+
+
+func load_vars(res: QuestResource) -> void:
+	required_level = res.required_level
+	remove_items_on_complete = res.remove_items_on_complete
+	global_requirements = res.global_requirements
+	global_vars_on_turn_in = res.global_vars_on_turn_in
+	reward_xp = res.reward_xp
+	reward_currency = res.reward_currency
+	reward_choice_items = res.reward_choice_items
+	reward_guaranteed_items = res.reward_guaranteed_items

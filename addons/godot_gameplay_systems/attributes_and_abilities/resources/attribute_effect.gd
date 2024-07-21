@@ -57,7 +57,7 @@ enum {
 ## The minimum value.
 ## [br]Can be negative
 const INPUT_STATS: PackedStringArray = ["INT", "AGI", "STR", "DMG"]
-const INPUT_STATS_FULL_NAMES: PackedStringArray = ["intelligence", "agiligy", "strength", "base_damage"]
+const INPUT_STATS_FULL_NAMES: PackedStringArray = ["intellect", "agility", "strength", "base_damage"]
 var stats: GameplayAttributeMap = null
 
 @export var value_formula: String = "":

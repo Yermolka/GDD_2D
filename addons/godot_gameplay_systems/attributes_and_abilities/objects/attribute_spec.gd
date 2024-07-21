@@ -1,7 +1,7 @@
 class_name AttributeSpec extends RefCounted
 
 ## Represents an attribute as a class
-	
+
 ## Emitted when the instance has changed one of it's values
 signal changed(current: AttributeSpec)
 ## Emitted when the instance has changed it's minimum value
@@ -9,7 +9,7 @@ signal minimum_value_changed(from: float, to: float)
 ## Emitted when the instance has changed it's maximum value
 signal maximum_value_changed(from: float, to: float)
 
-## used internally to avoid the initial signals propagation 
+## used internally to avoid the initial signals propagation
 var __setup := false
 ## It's the attribute name
 var attribute_name := ""
@@ -27,7 +27,7 @@ var current_value := 0.0:
 
 		if previous_value == value:
 			return
-		
+
 		if maximum_value > minimum_value:
 			current_value = clampf(value, minimum_value, maximum_value)
 		elif maximum_value == minimum_value and maximum_value == 0.0:
@@ -46,17 +46,17 @@ var maximum_value := 0.0:
 	set(value):
 		var previous_value = maximum_value
 		maximum_value = value
-		
+
 		if not __setup:
 			maximum_value_changed.emit(previous_value, value)
-## It's the maximum attribute's value. 
+## It's the maximum attribute's value.
 var minimum_value := 0.0:
-	get: 
+	get:
 		return minimum_value
 	set(value):
 		var previous_value = minimum_value
 		minimum_value = value
-		
+
 		if not __setup:
 			minimum_value_changed.emit(previous_value, value)
 ## The calculated attribute value with the [member AttributeSpec.buffing_value].
@@ -67,7 +67,7 @@ var current_buffed_value: float = 0.0:
 
 func apply_attribute_effect(attribute_effect: AttributeEffect) -> void:
 	var value = attribute_effect.get_current_value()
-	
+
 	if attribute_effect.applies_as == 1:
 		buffing_value += value
 	elif attribute_effect.applies_as == 2:
@@ -77,7 +77,7 @@ func apply_attribute_effect(attribute_effect: AttributeEffect) -> void:
 	else:
 		if buffing_value > 0.0 and value < 0.0:
 			var diff = buffing_value + value
-			
+
 			buffing_value = clampf(diff, 0, buffing_value)
 			current_value += diff
 		else:

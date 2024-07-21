@@ -1,8 +1,9 @@
-[gd_scene load_steps=35 format=3 uid="uid://cnmhjtbhyjhph"]
+[gd_scene load_steps=43 format=3 uid="uid://cnmhjtbhyjhph"]
 
 [ext_resource type="Script" path="res://enemies/bosses/skeleton_boss.gd" id="1_ducpo"]
 [ext_resource type="PackedScene" uid="uid://c21ku2lw4u3l1" path="res://enemies/models/skeleton/Skelet top.gltf" id="1_na6vp"]
 [ext_resource type="PackedScene" uid="uid://cyeikx8hhonnc" path="res://enemies/models/skeleton/Skelet bot.gltf" id="2_et1er"]
+[ext_resource type="Script" path="res://common/hurtbox/hurt_box.gd" id="3_jmr3q"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/drop.gd" id="4_a8n68"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="5_olbb2"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute.gd" id="6_y2p62"]
@@ -21,6 +22,7 @@
 [ext_resource type="Script" path="res://addons/beehave/nodes/leaves/blackboard_compare.gd" id="16_ow2j2"]
 [ext_resource type="Script" path="res://enemies/ai_scripts/bh_check_cd.gd" id="18_ngcww"]
 [ext_resource type="Script" path="res://enemies/ai_scripts/bh_target_player.gd" id="19_iuew3"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_global_signal.gd" id="19_ixwmx"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/succeeder.gd" id="20_u2ply"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector_reactive.gd" id="21_2ehie"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/time_limiter.gd" id="21_acygu"]
@@ -31,6 +33,24 @@
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_t4emm"]
 height = 4.23536
 radius = 0.740708
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vttju"]
+size = Vector3(4.97815, 5.9418, 4.92035)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_036yl"]
+size = Vector3(1, 5.98654, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ojxhp"]
+size = Vector3(1, 5.9425, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yp62y"]
+size = Vector3(5.3526, 8.9874, 6.35553)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5u2xj"]
+size = Vector3(1, 6.98639, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i1ukd"]
+size = Vector3(1, 6.93604, 1)
 
 [sub_resource type="Resource" id="Resource_onvgr"]
 script = ExtResource("6_y2p62")
@@ -94,8 +114,62 @@ transform = Transform3D(-0.2, 0, -1.74846e-08, 0, 0.2, 0, 1.74846e-08, 0, -0.2, 
 
 [node name="Skelet top" parent="Body" instance=ExtResource("1_na6vp")]
 
+[node name="HurtBox" type="Area3D" parent="Body/Skelet top/World-Global/Telo-Global/Golodvs-Global" index="1"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_jmr3q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body/Skelet top/World-Global/Telo-Global/Golodvs-Global/HurtBox"]
+transform = Transform3D(1, 0, -4.06576e-20, 0, 1, 0, 4.06576e-20, 0, 1, 0.496033, 2.98009, 0.464508)
+shape = SubResource("BoxShape3D_vttju")
+
+[node name="HurtBox" type="Area3D" parent="Body/Skelet top/World-Global/Telo-Global/Ruka1-Global" index="1"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_jmr3q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body/Skelet top/World-Global/Telo-Global/Ruka1-Global/HurtBox"]
+transform = Transform3D(1, 8.9407e-08, 7.89369e-13, -8.9407e-08, 1, 4.40536e-13, 1.69249e-14, 0, 1, 0.511997, 2.99841, 2.81392e-08)
+shape = SubResource("BoxShape3D_036yl")
+
+[node name="HurtBox" type="Area3D" parent="Body/Skelet top/World-Global/Telo-Global/Ruka2-Global" index="1"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_jmr3q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body/Skelet top/World-Global/Telo-Global/Ruka2-Global/HurtBox"]
+transform = Transform3D(1, 2.98023e-08, 2.26187e-26, -2.98023e-08, 1, -2.03288e-20, -2.32245e-26, 2.03288e-20, 1, -0.487129, -3.02673, 0.0118458)
+shape = SubResource("BoxShape3D_ojxhp")
+
+[node name="HurtBox" type="Area3D" parent="Body/Skelet top/World-Global/Telo-Global" index="4"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_jmr3q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body/Skelet top/World-Global/Telo-Global/HurtBox"]
+transform = Transform3D(1, 0, -4.06576e-20, 0, 1, 0, 4.06576e-20, 0, 1, 0.491791, 4.43937, -0.0507507)
+shape = SubResource("BoxShape3D_yp62y")
+
 [node name="Skelet bot" parent="Body" instance=ExtResource("2_et1er")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.41079, 0)
+
+[node name="HurtBox" type="Area3D" parent="Body/Skelet bot/World-Global/Noga1-Global" index="1"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_jmr3q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body/Skelet bot/World-Global/Noga1-Global/HurtBox"]
+transform = Transform3D(1, -2.71051e-20, 2.71051e-20, 9.89334e-19, 0.999997, 2.98023e-08, -6.50521e-19, -2.98023e-08, 0.999997, -0.525397, -3.48819, 0)
+shape = SubResource("BoxShape3D_5u2xj")
+
+[node name="HurtBox" type="Area3D" parent="Body/Skelet bot/World-Global/Noga2-Global" index="1"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_jmr3q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body/Skelet bot/World-Global/Noga2-Global/HurtBox"]
+transform = Transform3D(1, 9.21582e-19, -3.0358e-18, -9.21582e-19, 1, -2.98023e-08, 3.0358e-18, 2.98023e-08, 1, 0.502862, -3.47339, 0)
+shape = SubResource("BoxShape3D_i1ukd")
 
 [node name="Drop" type="Node" parent="."]
 script = ExtResource("4_a8n68")
@@ -136,6 +210,10 @@ anim_name = &"Idle"
 
 [node name="Phase1" type="Node" parent="BeehaveTree/Root"]
 script = ExtResource("15_tfrv2")
+
+[node name="GlobalSignal" type="Node" parent="BeehaveTree/Root/Phase1"]
+script = ExtResource("19_ixwmx")
+signal_name = "boss_fight_started"
 
 [node name="BlackboardCompareCondition" type="Node" parent="BeehaveTree/Root/Phase1"]
 script = ExtResource("16_ow2j2")
@@ -183,7 +261,6 @@ script = ExtResource("21_2ehie")
 script = ExtResource("14_1c286")
 anim_name = &"Idle"
 interrupt_current = false
-loop = true
 
 [node name="Walk" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack"]
 script = ExtResource("15_tfrv2")
@@ -192,14 +269,12 @@ script = ExtResource("15_tfrv2")
 script = ExtResource("14_1c286")
 which = 1
 anim_name = &"walk"
-loop = true
 
 [node name="PlayAnimation2" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Walk"]
 script = ExtResource("14_1c286")
 which = 0
 anim_name = &"walk"
 interrupt_current = false
-loop = true
 
 [node name="TargetPlayer" type="Node" parent="BeehaveTree/Root/Phase1/WalkOrAttack/Walk"]
 script = ExtResource("19_iuew3")
@@ -288,7 +363,6 @@ script = ExtResource("21_2ehie")
 script = ExtResource("14_1c286")
 anim_name = &"Idle"
 interrupt_current = false
-loop = true
 
 [node name="Walk" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack"]
 script = ExtResource("15_tfrv2")
@@ -297,14 +371,12 @@ script = ExtResource("15_tfrv2")
 script = ExtResource("14_1c286")
 which = 1
 anim_name = &"walk"
-loop = true
 
 [node name="PlayAnimation2" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Walk"]
 script = ExtResource("14_1c286")
 which = 0
 anim_name = &"walk"
 interrupt_current = false
-loop = true
 
 [node name="TargetPlayer" type="Node" parent="BeehaveTree/Root/Phase2/WalkOrAttack/Walk"]
 script = ExtResource("19_iuew3")

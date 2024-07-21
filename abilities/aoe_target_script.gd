@@ -37,6 +37,4 @@ func _input(event: InputEvent) -> void:
 		raycast.force_raycast_update()
 
 		if raycast.is_colliding():
-			print(camera_pos, mouse_pos)
 			global_position = raycast.get_collision_point() + Vector3(0, 0.01, 0)
-			print(raycast.get_collider().name)

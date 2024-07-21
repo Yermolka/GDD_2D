@@ -108,11 +108,6 @@ func _setup_attributes() -> void:
 	_attributes_dict = {}
 
 	for attribute in attributes:
-		var previous = get_attribute_by_name(attribute.attribute_name)
-
-		if previous:
-			previous.free()
-
 		var spec = AttributeSpec.from_attribute(attribute)
 
 		spec.changed.connect(func (attribute):
@@ -143,11 +138,6 @@ func _update_attribute(index: int, key: String, value: float) -> void:
 
 
 func add_attribute(attribute: AttributeSpec) -> void:
-	var previous = get_attribute_by_name(attribute.attribute_name)
-	
-	if previous:
-		previous.free()
-
 	attribute.changed.connect(func (attribute):
 		attribute_changed.emit(attribute)
 	)
@@ -158,7 +148,7 @@ func add_attribute(attribute: AttributeSpec) -> void:
 func remove_attribute(attribute_name: String) -> void:
 	var attr = get_attribute_by_name(attribute_name)
 
-	if attr:	
+	if attr:
 		_attributes_dict.erase(attribute_name)
 		attribute_removed.emit(attr)
 
@@ -209,6 +199,25 @@ func apply_timed_effect(effect: TimedGameplayEffect) -> void:
 
 	timed_effect_applied.emit(_effect)
 
+func consider_defense(effect: AttributeEffect) -> AttributeEffect:
+	if effect.attribute_name != "health" or effect.get_current_value() >= 0.0 or effect.applies_as != 0:
+		return effect
+
+	var defense: AttributeSpec = _attributes_dict.get("defense", null)
+	if not defense:
+		return effect
+
+	var res: AttributeEffect = effect.duplicate(true)
+	res.stats = effect.stats
+
+	if not res.value_formula.is_empty():
+		res.value_formula = "(" + res.value_formula + ")+(" + str(defense.current_buffed_value) + ")"
+	else:
+		res.minimum_value = min(res.minimum_value + defense.current_buffed_value, 0.0)
+		res.maximum_value = min(res.maximum_value + defense.current_buffed_value, 0.0)
+
+	return res
+
 ## Applies an effect on current GameplayAttributeMap
 func apply_effect(effect: GameplayEffect) -> void:
 	var _effect = effect.duplicate()
@@ -231,7 +240,9 @@ func apply_effect(effect: GameplayEffect) -> void:
 			if not attribute_affected.should_apply(_effect, self):
 				continue
 
-			_attributes_dict[attribute_affected.attribute_name].apply_attribute_effect(attribute_affected)
+			var considered: AttributeEffect = consider_defense(attribute_affected)
+			print(considered.attribute_name, " ", considered.get_current_value(), " ", considered.value_formula)
+			_attributes_dict[attribute_affected.attribute_name].apply_attribute_effect(considered)
 
 			attribute_effect_applied.emit(attribute_affected, spec)
 		elif attribute_affected.life_time == AttributeEffect.LIFETIME_TIME_BASED:
@@ -244,7 +255,9 @@ func apply_effect(effect: GameplayEffect) -> void:
 			timer.wait_time = attribute_affected.apply_every_second
 
 			timer.timeout.connect(func ():
-				var spec = _attributes_dict[attribute_affected.attribute_name]
+				var spec = _attributes_dict.get(attribute_affected.attribute_name, null)
+				if not spec:
+					return
 
 				if not attribute_affected.should_apply(_effect, self):
 					return

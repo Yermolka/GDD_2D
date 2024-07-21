@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="PassiveSkill" load_steps=5 format=3 uid="uid://12vb0jtrruel"]
+
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_sd3ca"]
+[ext_resource type="Script" path="res://abilities/PassiveSkill.gd" id="1_wacp2"]
+
+[sub_resource type="Resource" id="Resource_y3bua"]
+script = ExtResource("1_sd3ca")
+life_time = 1
+apply_every_second = 1.0
+max_applications = 0
+applies_as = 0
+attribute_name = "mana"
+value_formula = ""
+minimum_value = 5.0
+maximum_value = 5.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ib7un"]
+
+[resource]
+script = ExtResource("1_wacp2")
+ui_icon = SubResource("PlaceholderTexture2D_ib7un")
+ui_name = "Mana Regen Increase"
+ui_description = "Increase mana regen by 5 per second"
+effects = Array[ExtResource("1_sd3ca")]([SubResource("Resource_y3bua")])
+min_level = 2
+required_passives = Array[String](["Unlock mana"])

@@ -16,6 +16,7 @@ const QuestStartNodeScene = preload("../scenes/nodes/quest_start_node.tscn")
 var selected_nodes: Array[QuestGraphNode] = []
 var copied_nodes: Array[QuestGraphNode] = []
 
+var loaded_resource: QuestResource = null
 
 func add_node(new_node: QuestGraphNode, position_offset: Vector2) -> void:
 	if new_node.id.is_empty():
@@ -45,6 +46,7 @@ func save(path: String) -> int:
 func load(path: String) -> QuestResource:
 	var resource := ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE) as QuestResource
 	load_resource(resource)
+	loaded_resource = resource
 	return resource
 	
 	
@@ -76,6 +78,8 @@ func _serialize_resource() -> QuestResource:
 	var edges: Array[QuestEdge] = []
 	resource.nodes.assign(_get_nodes(connections, edges))
 	resource.edges = edges
+
+	resource.load_vars(loaded_resource)
 	return resource
 	
 	

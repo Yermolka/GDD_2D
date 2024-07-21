@@ -9,7 +9,7 @@ var quest_description: String
 @export var name_text_edit: LineEdit
 @export var description_text_edit: TextEdit
 @export var metadata_editor: MetadataEditor
-
+@export var required_level: LineEdit
 
 func _get_model() -> QuestNode:
 	return QuestStart.new()

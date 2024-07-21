@@ -3,7 +3,7 @@ class_name PlayAnimation extends ActionLeaf
 @export_enum("Top", "Bottom", "Both") var which: int = 2
 @export var anim_name: StringName
 @export var interrupt_current: bool = true
-@export var loop: bool = false
+@export var loop: Animation.LoopMode = Animation.LOOP_NONE
 
 func tick(actor: Node, blackboard: Blackboard) -> int:
 	actor = actor as Enemy

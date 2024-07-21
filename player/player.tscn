@@ -1,19 +1,43 @@
-[gd_scene load_steps=26 format=3 uid="uid://cultyql87ixvl"]
+[gd_scene load_steps=45 format=3 uid="uid://cultyql87ixvl"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_31dcg"]
+[ext_resource type="Resource" uid="uid://bwe1yh7rpxxnt" path="res://abilities/active/teleport.tres" id="2_7daoa"]
+[ext_resource type="PackedScene" uid="uid://kqkq27m2y66u" path="res://player/model/Char.gltf" id="2_ahb14"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/ability_container.gd" id="2_kt3nr"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="3_4d36o"]
+[ext_resource type="Script" path="res://common/hurtbox/hurt_box.gd" id="3_xt1qf"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute.gd" id="4_2qw15"]
 [ext_resource type="Resource" uid="uid://xltm11epb5ep" path="res://stats/player_attributes.tres" id="5_5fmbk"]
+[ext_resource type="Resource" uid="uid://t7wmj13oigdl" path="res://abilities/active/fireball.tres" id="5_rdyt2"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/inventory.gd" id="7_fdlqo"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/equipment.gd" id="8_ngsfb"]
-[ext_resource type="PackedScene" uid="uid://c3knc8japncl7" path="res://common/selectable/selectable.tscn" id="10_4pxso"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/resources/equipment_slot.gd" id="10_a4fio"]
 [ext_resource type="Resource" uid="uid://dqy2c0g5wqihv" path="res://items/weapons/test_weapon.tres" id="11_qsa7m"]
 [ext_resource type="PackedScene" uid="uid://cxh5dyttaogko" path="res://addons/godot_gameplay_systems/attributes_and_abilities/debug/abilities_debugger.tscn" id="12_2smb5"]
 [ext_resource type="PackedScene" uid="uid://b54ngq6in8rn8" path="res://hud/hud.tscn" id="12_x425h"]
+[ext_resource type="Script" path="res://player/bh_player_blackboard.gd" id="15_2a1oi"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="16_1cydk"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector_reactive.gd" id="17_gjcfs"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence_reactive.gd" id="18_r5gn3"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/blackboard_compare.gd" id="19_syi6t"]
+[ext_resource type="Script" path="res://player/bh_play_player_animation.gd" id="20_17bhg"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/delayer.gd" id="21_xi0g0"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/blackboard_set.gd" id="22_qy5me"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_r0fkn"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_wwpa3"]
+size = Vector3(5.80646, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f1bgi"]
+size = Vector3(6.19604, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qd3n3"]
+size = Vector3(5.9841, 5.85211, 5.92706)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vabiw"]
+size = Vector3(1.8457, 6.77097, 2.02234)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_drnju"]
+size = Vector3(6.15138, 6.41867, 4.92143)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8qjtp"]
 
@@ -26,23 +50,58 @@ current_value = 100.0
 
 [sub_resource type="Resource" id="Resource_c0ocp"]
 script = ExtResource("4_2qw15")
-attribute_name = "mana"
+attribute_name = "movement_speed"
 minimum_value = 0.0
-maximum_value = 100.0
+maximum_value = 1000.0
 current_value = 100.0
 
 [sub_resource type="Resource" id="Resource_o5x7h"]
 script = ExtResource("4_2qw15")
-attribute_name = "movement_speed"
+attribute_name = "base_damage"
 minimum_value = 0.0
 maximum_value = 500.0
-current_value = 100.0
+current_value = 10.0
 
 [sub_resource type="Resource" id="Resource_xdma3"]
 script = ExtResource("4_2qw15")
-attribute_name = "base_damage"
-minimum_value = 10.0
-maximum_value = 10.0
+attribute_name = "defense"
+minimum_value = -1000.0
+maximum_value = 1000.0
+current_value = 10.0
+
+[sub_resource type="Resource" id="Resource_6u6m3"]
+script = ExtResource("4_2qw15")
+attribute_name = "crit_chance"
+minimum_value = 0.0
+maximum_value = 1.0
+current_value = 0.1
+
+[sub_resource type="Resource" id="Resource_e3ie3"]
+script = ExtResource("4_2qw15")
+attribute_name = "crit_multiplier"
+minimum_value = 1.0
+maximum_value = 100.0
+current_value = 2.0
+
+[sub_resource type="Resource" id="Resource_4nwct"]
+script = ExtResource("4_2qw15")
+attribute_name = "intellect"
+minimum_value = 0.0
+maximum_value = 1000.0
+current_value = 10.0
+
+[sub_resource type="Resource" id="Resource_wleqt"]
+script = ExtResource("4_2qw15")
+attribute_name = "agility"
+minimum_value = 0.0
+maximum_value = 1000.0
+current_value = 10.0
+
+[sub_resource type="Resource" id="Resource_inexn"]
+script = ExtResource("4_2qw15")
+attribute_name = "strength"
+minimum_value = 0.0
+maximum_value = 1000.0
 current_value = 10.0
 
 [sub_resource type="Resource" id="Resource_vnchi"]
@@ -69,21 +128,96 @@ accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_s
 script = ExtResource("10_a4fio")
 name = "weapon"
 accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([])
-equipped = ExtResource("11_qsa7m")
 
 [sub_resource type="Resource" id="Resource_373ht"]
 script = ExtResource("10_a4fio")
 name = "scroll"
 accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([])
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3nhmo"]
-
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("mesh_anim")]
+collision_layer = 257
 collision_mask = 22
+axis_lock_angular_x = true
+axis_lock_angular_z = true
 script = ExtResource("1_31dcg")
+movement_skill = ExtResource("2_7daoa")
+level = 10
+mesh_anim = NodePath("Model/AnimationPlayer")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_r0fkn")
+[node name="Model" parent="." instance=ExtResource("2_ahb14")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.184872, -1.03503, 0.383333)
+
+[node name="Body-Global" parent="Model/World-Global" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.18464e-06, 0, 1.18464e-06, 1, -2, 6, 4)
+
+[node name="Arm1-Global" parent="Model/World-Global/Body-Global" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 3, 4, 1)
+
+[node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global/Arm1-Global" index="1"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_xt1qf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/World-Global/Body-Global/Arm1-Global/HurtBox"]
+transform = Transform3D(1, -2.59244e-13, -3.41061e-13, -2.98026e-08, 1, -1.13687e-13, 0, 4.26326e-14, 1, 1.99318, 0.485121, -0.549096)
+shape = SubResource("BoxShape3D_wwpa3")
+
+[node name="Arm2-Global" parent="Model/World-Global/Body-Global" index="2"]
+transform = Transform3D(1, -1.19209e-07, 0, 1.19209e-07, 1, 0, 0, 0, 1, -3, 4, 0)
+
+[node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global/Arm2-Global" index="1"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_xt1qf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/World-Global/Body-Global/Arm2-Global/HurtBox"]
+transform = Transform3D(1, 1.1921e-07, 1.13687e-13, -1.19209e-07, 1, -1.7053e-13, 1.75078e-11, 1.09992e-11, 1, -1.91313, 0.503566, 0.526521)
+shape = SubResource("BoxShape3D_f1bgi")
+
+[node name="Head-Global" parent="Model/World-Global/Body-Global" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+
+[node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global/Head-Global" index="1"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_xt1qf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/World-Global/Body-Global/Head-Global/HurtBox"]
+transform = Transform3D(1, 2.61564e-18, 0, 2.75116e-18, 1, -6.59384e-11, 0, 6.59384e-11, 1, -0.000411794, 3.61801, -0.00393681)
+shape = SubResource("BoxShape3D_qd3n3")
+
+[node name="Leg1-Global" parent="Model/World-Global/Body-Global" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -1)
+
+[node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global/Leg1-Global" index="1"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_xt1qf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/World-Global/Body-Global/Leg1-Global/HurtBox"]
+transform = Transform3D(1, 2.08031e-18, 0, 2.20229e-18, 1, -5.28644e-11, 0, 5.28644e-11, 1, 0.932898, -0.512555, 0.98046)
+shape = SubResource("BoxShape3D_vabiw")
+
+[node name="Leg2-Global" parent="Model/World-Global/Body-Global" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -1)
+
+[node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global/Leg2-Global" index="1"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_xt1qf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/World-Global/Body-Global/Leg2-Global/HurtBox"]
+transform = Transform3D(1, 2.10064e-18, 0, 2.21584e-18, 1, -5.32054e-11, 0, 5.32054e-11, 1, -1.05996, -0.512555, 0.98046)
+shape = SubResource("BoxShape3D_vabiw")
+
+[node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global" index="6"]
+collision_layer = 512
+collision_mask = 192
+script = ExtResource("3_xt1qf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/World-Global/Body-Global/HurtBox"]
+transform = Transform3D(1, 3.53043e-18, 0, 3.72694e-18, 1, -8.93579e-11, 0, 8.93579e-11, 1, 0.0669482, 3.33993, 0.169685)
+shape = SubResource("BoxShape3D_drnju")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_8qjtp")
@@ -91,17 +225,20 @@ shape = SubResource("CapsuleShape3D_8qjtp")
 [node name="AbilityContainer" type="Node" parent="."]
 script = ExtResource("2_kt3nr")
 gameplay_attribute_map_path = NodePath("../GameplayAttributeMap")
+abilities = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/ability.gd")]([ExtResource("5_rdyt2")])
 
 [node name="GameplayAttributeMap" type="Node" parent="."]
 script = ExtResource("3_4d36o")
 owning_character = NodePath("..")
-attributes = Array[ExtResource("4_2qw15")]([SubResource("Resource_4bvb6"), SubResource("Resource_c0ocp"), SubResource("Resource_o5x7h"), SubResource("Resource_xdma3")])
+attributes = Array[ExtResource("4_2qw15")]([SubResource("Resource_4bvb6"), SubResource("Resource_c0ocp"), SubResource("Resource_o5x7h"), SubResource("Resource_xdma3"), SubResource("Resource_6u6m3"), SubResource("Resource_e3ie3"), SubResource("Resource_4nwct"), SubResource("Resource_wleqt"), SubResource("Resource_inexn")])
 table = ExtResource("5_5fmbk")
 
 [node name="Inventory" type="Node" parent="."]
 script = ExtResource("7_fdlqo")
 owner_path = NodePath("..")
 equipment_path = NodePath("../Equipment")
+max_size = 25
+items = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([ExtResource("11_qsa7m")])
 
 [node name="Equipment" type="Node" parent="."]
 script = ExtResource("8_ngsfb")
@@ -109,16 +246,14 @@ owner_path = NodePath("..")
 inventory_path = NodePath("../Inventory")
 slots = Array[ExtResource("10_a4fio")]([SubResource("Resource_vnchi"), SubResource("Resource_bdtrf"), SubResource("Resource_hr8py"), SubResource("Resource_6kkog"), SubResource("Resource_hqypi"), SubResource("Resource_373ht")])
 
-[node name="Selectable" parent="." instance=ExtResource("10_4pxso")]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Selectable"]
-shape = SubResource("CapsuleShape3D_3nhmo")
-
 [node name="AbilitiesDebugger" parent="." instance=ExtResource("12_2smb5")]
+visible = false
 ability_container_path = NodePath("../AbilityContainer")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.754916, 0.655822, 0, -0.655822, 0.754916, 0, 3.00282, 3.39728)
+transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 2.8, 6, 5.15)
+projection = 1
+size = 15.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -127,3 +262,84 @@ offset_left = 2.0
 offset_right = 2.0
 player_path = NodePath("../..")
 metadata/_edit_use_anchors_ = true
+
+[node name="PlayerBlackboard" type="Node" parent="."]
+script = ExtResource("15_2a1oi")
+
+[node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("16_1cydk")
+actor_node_path = NodePath("..")
+blackboard = NodePath("../PlayerBlackboard")
+actor = NodePath("..")
+
+[node name="SelectorReactiveComposite" type="Node" parent="BeehaveTree"]
+script = ExtResource("17_gjcfs")
+
+[node name="Idle" type="Node" parent="BeehaveTree/SelectorReactiveComposite"]
+script = ExtResource("18_r5gn3")
+
+[node name="BlackboardCompareCondition" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Idle"]
+script = ExtResource("19_syi6t")
+left_operand = "get_value(\"moving\")"
+right_operand = "false"
+
+[node name="BlackboardCompareCondition2" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Idle"]
+script = ExtResource("19_syi6t")
+left_operand = "get_value(\"attacking\")"
+right_operand = "false"
+
+[node name="BlackboardCompareCondition3" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Idle"]
+script = ExtResource("19_syi6t")
+left_operand = "get_value(\"casting\")"
+right_operand = "false"
+
+[node name="PlayPlayerAnimation" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Idle"]
+script = ExtResource("20_17bhg")
+anim_name = "Idle"
+loop = 1
+
+[node name="Walk" type="Node" parent="BeehaveTree/SelectorReactiveComposite"]
+script = ExtResource("18_r5gn3")
+
+[node name="BlackboardCompareCondition" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Walk"]
+script = ExtResource("19_syi6t")
+left_operand = "get_value(\"moving\")"
+right_operand = "true"
+
+[node name="BlackboardCompareCondition2" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Walk"]
+script = ExtResource("19_syi6t")
+left_operand = "get_value(\"attacking\")"
+right_operand = "false"
+
+[node name="BlackboardCompareCondition3" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Walk"]
+script = ExtResource("19_syi6t")
+left_operand = "get_value(\"casting\")"
+right_operand = "false"
+
+[node name="PlayPlayerAnimation" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Walk"]
+script = ExtResource("20_17bhg")
+anim_name = "Run"
+loop = 1
+
+[node name="Attack" type="Node" parent="BeehaveTree/SelectorReactiveComposite"]
+script = ExtResource("18_r5gn3")
+
+[node name="BlackboardCompareCondition2" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack"]
+script = ExtResource("19_syi6t")
+left_operand = "get_value(\"attacking\")"
+right_operand = "true"
+
+[node name="PlayPlayerAnimation" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack"]
+script = ExtResource("20_17bhg")
+anim_name = "T-Pose"
+
+[node name="DelayDecorator" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack"]
+script = ExtResource("21_xi0g0")
+wait_time = 0.2
+
+[node name="BlackboardSetAction" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack/DelayDecorator"]
+script = ExtResource("22_qy5me")
+key = "\"attacking\""
+value = "false"
+
+[editable path="Model"]
