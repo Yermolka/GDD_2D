@@ -247,6 +247,7 @@ inventory_path = NodePath("../Inventory")
 slots = Array[ExtResource("10_a4fio")]([SubResource("Resource_vnchi"), SubResource("Resource_bdtrf"), SubResource("Resource_hr8py"), SubResource("Resource_6kkog"), SubResource("Resource_hqypi"), SubResource("Resource_373ht")])
 
 [node name="AbilitiesDebugger" parent="." instance=ExtResource("12_2smb5")]
+visible = false
 ability_container_path = NodePath("../AbilityContainer")
 
 [node name="Camera3D" type="Camera3D" parent="."]

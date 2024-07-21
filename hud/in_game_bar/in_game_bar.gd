@@ -70,13 +70,13 @@ func handle_ability_revoked(_skill: ActiveSkill) -> void:
 
 func handle_cooldown_started(ability: ActiveSkill) -> void:
 	if skill_1.ability == ability:
-		skill_1.start_cooldown()
+		skill_1.start_cooldown(ability.cooldown_duration)
 	elif skill_2.ability == ability:
-		skill_2.start_cooldown()
+		skill_2.start_cooldown(ability.cooldown_duration)
 	elif skill_3.ability == ability:
-		skill_3.start_cooldown()
+		skill_3.start_cooldown(ability.cooldown_duration)
 	elif skill_movement.ability == ability:
-		skill_movement.start_cooldown()
+		skill_movement.start_cooldown(ability.cooldown_duration)
 
 func handle_cooldown_ended(ability: ActiveSkill) -> void:
 	pass
