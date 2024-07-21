@@ -1,0 +1,77 @@
+[gd_resource type="Resource" script_class="NonTargetedSkill" load_steps=8 format=3 uid="uid://78pencbf35wj"]
+
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_lsrxw"]
+[ext_resource type="Script" path="res://abilities/NonTargetedActiveSkill.gd" id="1_wknwl"]
+[ext_resource type="PackedScene" uid="uid://daryvs1woadw6" path="res://abilities/scenes/shadowbolt/shadowbolt.tscn" id="2_ss4yc"]
+[ext_resource type="Texture2D" uid="uid://dw7rom0hiff6c" path="res://addons/beehave/icons/blackboard.svg" id="4_o0vjl"]
+
+[sub_resource type="Resource" id="Resource_5r0e3"]
+script = ExtResource("1_lsrxw")
+life_time = 0
+apply_every_second = 1.0
+max_applications = 1
+applies_as = 0
+attribute_name = "mana"
+value_formula = ""
+minimum_value = 30.0
+maximum_value = 30.0
+
+[sub_resource type="Resource" id="Resource_oec2k"]
+script = ExtResource("1_lsrxw")
+life_time = 1
+apply_every_second = 0.2
+max_applications = 20
+applies_as = 0
+attribute_name = "health"
+value_formula = "-INT*0.5"
+minimum_value = 0.0
+maximum_value = 0.0
+
+[sub_resource type="Resource" id="Resource_jmbxq"]
+script = ExtResource("1_lsrxw")
+life_time = 0
+apply_every_second = 1.0
+max_applications = 1
+applies_as = 1
+attribute_name = "movement_speed"
+value_formula = ""
+minimum_value = -50.0
+maximum_value = -50.0
+
+[resource]
+script = ExtResource("1_wknwl")
+projectile_scene = ExtResource("2_ss4yc")
+projectile_speed = 1000.0
+resource_costs = {}
+min_range = 0.0
+max_range = 0.0
+cast_time = 1.0
+instant_effects = Array[ExtResource("1_lsrxw")]([SubResource("Resource_oec2k")])
+instant_timed_effects = Array[ExtResource("1_lsrxw")]([SubResource("Resource_jmbxq")])
+timed_effects_duration = 4.0
+chance_effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])
+generator_effects = Array[ExtResource("1_lsrxw")]([SubResource("Resource_5r0e3")])
+instant_self_effects = Array[ExtResource("1_lsrxw")]([])
+instant_self_timed_effects = Array[ExtResource("1_lsrxw")]([])
+instant_self_timed_effects_duration = 1.0
+self_chance_effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])
+ui_icon = ExtResource("4_o0vjl")
+ui_name = "Shadowbolt"
+cooldown_duration = 5.0
+cooldown_continuos = false
+grant_automatic = true
+grant_tags = Array[String](["ability.shadowbolt"])
+grant_tags_required = Array[String](["ability.fireball"])
+tags_activation = Array[String](["gcd"])
+tags_activation_required = Array[String]([])
+tags_block = Array[String](["gcd", "casting", "moving"])
+tags_cancellation_required = Array[String]([])
+tags_cooldown_start = Array[String]([])
+tags_cooldown_end = Array[String]([])
+tags_end_blocking = Array[String]([])
+tags_to_remove_on_activation = Array[String]([])
+tags_to_remove_on_block = Array[String]([])
+tags_to_remove_on_cancellation = Array[String]([])
+tags_to_remove_on_cooldown_start = Array[String]([])
+tags_to_remove_on_cooldown_end = Array[String]([])
+tags_to_remove_on_end = Array[String]([])

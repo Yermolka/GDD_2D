@@ -1,0 +1,84 @@
+[gd_scene load_steps=9 format=3 uid="uid://bhxlh5s414cs2"]
+
+[ext_resource type="Script" path="res://hud/skill_trees/test_mana_weapon/test_mana_weapon_tree.gd" id="1_rtn27"]
+[ext_resource type="Texture2D" uid="uid://btrq8e0kyxthg" path="res://addons/beehave/icons/action.svg" id="2_44wo5"]
+[ext_resource type="Script" path="res://hud/skill_trees/unlock_skill_button.gd" id="3_jjls3"]
+[ext_resource type="Resource" uid="uid://t7wmj13oigdl" path="res://abilities/active/fireball.tres" id="4_nbdpj"]
+[ext_resource type="Texture2D" uid="uid://qpdd6ue7x82h" path="res://addons/beehave/icons/category_bt.svg" id="5_4v1lc"]
+[ext_resource type="Resource" uid="uid://dyaqw674q3taj" path="res://abilities/active/arcane_explosion.tres" id="6_xt0ng"]
+[ext_resource type="Texture2D" uid="uid://dw7rom0hiff6c" path="res://addons/beehave/icons/blackboard.svg" id="7_my5dj"]
+[ext_resource type="Resource" uid="uid://78pencbf35wj" path="res://abilities/active/shadowbolt.tres" id="8_nm2bk"]
+
+[node name="TestManaWeaponTree" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_rtn27")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 397.0
+offset_top = 232.0
+offset_right = -538.0
+offset_bottom = -210.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="UnlockFireball" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.304
+anchor_top = 0.767
+anchor_right = 0.456
+anchor_bottom = 0.927
+offset_left = 0.0319977
+offset_top = -0.0019989
+offset_right = 0.0479965
+offset_bottom = 0.0379944
+texture_normal = ExtResource("2_44wo5")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("3_jjls3")
+skill = ExtResource("4_nbdpj")
+
+[node name="UnlockArcaneExplosion" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.516
+anchor_top = 0.772
+anchor_right = 0.659
+anchor_bottom = 0.922
+offset_left = 0.0279922
+offset_top = -0.0319977
+offset_right = -0.00300598
+offset_bottom = 0.0679932
+texture_normal = ExtResource("5_4v1lc")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("3_jjls3")
+skill = ExtResource("6_xt0ng")
+
+[node name="UnlockShadowbolt" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.516
+anchor_top = 0.772
+anchor_right = 0.659
+anchor_bottom = 0.922
+offset_left = -37.972
+offset_top = -39.032
+offset_right = -38.003
+offset_bottom = -38.932
+texture_normal = ExtResource("7_my5dj")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("3_jjls3")
+skill = ExtResource("8_nm2bk")

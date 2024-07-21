@@ -20,7 +20,6 @@ signal unlock_passive_btn_pressed(btn: UnlockPassiveButton)
 func _ready() -> void:
 	pressed.connect(
 		func () -> void:
-			print(passive.ui_name)
 			unlock_passive_btn_pressed.emit(self)
 	)
 	passive.applied_changed.connect(_update_arrows)
