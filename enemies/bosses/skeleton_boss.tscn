@@ -94,12 +94,13 @@ minimum_value = 200.0
 maximum_value = 200.0
 current_value = 200.0
 
-[node name="SkeletonBoss" type="CharacterBody3D" node_paths=PackedStringArray("body_top", "body_top_anim", "body_bot", "body_bot_anim")]
+[node name="SkeletonBoss" type="CharacterBody3D" node_paths=PackedStringArray("blackboard", "body_top", "body_top_anim", "body_bot", "body_bot_anim")]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_ducpo")
 xp_reward = 500
 ui_name = "Skeleton Lord"
+blackboard = NodePath("SkeletonBossBlackboard")
 body_top = NodePath("Body/Skelet top")
 body_top_anim = NodePath("Body/Skelet top/AnimationPlayer")
 body_bot = NodePath("Body/Skelet bot")

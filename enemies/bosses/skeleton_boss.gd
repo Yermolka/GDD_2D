@@ -2,7 +2,6 @@ class_name SkeletonBoss extends Enemy
 
 ## Thresholds in remaining hp
 var phase_health: Array[int] = [500, 400, 150]
-@onready var blackboard: SkeletonBossBlackboard = $SkeletonBossBlackboard
 
 func _ready() -> void:
 	super._ready()
@@ -15,7 +14,7 @@ func _ready() -> void:
 				elif attr.current_buffed_value <= phase_health[1]:
 					blackboard.set_value("phase", 2)
 
-				
+
 				if attr.current_buffed_value == 0:
 					Globals.set_global_var("skeleton_boss_killed", true)
 					EventBus.boss_fight_ended.emit()

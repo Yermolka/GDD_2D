@@ -5,8 +5,12 @@ class_name Enemy extends Entity
 @onready var attribute_map: GameplayAttributeMap = $GameplayAttributeMap
 @onready var ability_container: AbilityContainer = $AbilityContainer
 @export var ui_name: String = "enemy"
+
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
+@export var blackboard: Blackboard
+
 const SPEED: float = 100.0
+const RETURN_SPEED: float = 200.0
 @export var abilities: Array[Ability]
 
 @export_group("animation")
@@ -28,7 +32,11 @@ func _ready() -> void:
 				player.give_xp(xp_reward)
 				EventBus.enemyKilled.emit(self)
 				call_deferred("queue_free")
-			print(attr.attribute_name, ": ", attr.current_buffed_value)
+	)
+	attribute_map.attribute_effect_applied.connect(
+		func (effect: AttributeEffect, attr: AttributeSpec) -> void: 
+			if effect.attribute_name == "health" and effect.get_current_value() < 0:
+				blackboard.set_value("state", EnemyBlackboard.EnemyState.AGGRO)
 	)
 
 
@@ -42,7 +50,12 @@ func _physics_process(delta: float) -> void:
 		global_rotation = Vector3.ZERO
 		var next_point: Vector3 = to_local(nav_agent.get_next_path_position())
 		
-		velocity = next_point.normalized() * SPEED * delta
+		if blackboard.get_value("state") == EnemyBlackboard.EnemyState.RETURN:
+			velocity = next_point.normalized() * RETURN_SPEED * delta
+			var health_attr: AttributeSpec = attribute_map.get_attribute_by_name("health")
+			health_attr.current_value = health_attr.maximum_value
+		else:
+			velocity = next_point.normalized() * SPEED * delta
 	else:
 		velocity = Vector3.ZERO
 	move_and_slide()
