@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bll0lr7dq8kn8"]
+[gd_scene load_steps=4 format=3 uid="uid://bll0lr7dq8kn8"]
 
 [ext_resource type="Script" path="res://hud/inventory_slot.gd" id="1_0p28w"]
 [ext_resource type="Texture2D" uid="uid://xsy4002jva8x" path="res://hud/ui_passive_skill_slot.png" id="2_1ijaq"]
+[ext_resource type="Texture2D" uid="uid://js66hwkst3vq" path="res://hud/ui_inventory_active.png" id="3_k0f04"]
 
 [node name="InventorySlot" type="Panel"]
 texture_filter = 1
@@ -25,7 +26,7 @@ offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect2" type="TextureRect" parent="."]
+[node name="slot_default" type="TextureRect" parent="."]
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -36,9 +37,23 @@ grow_vertical = 2
 texture = ExtResource("2_1ijaq")
 expand_mode = 2
 
+[node name="slot_active" type="TextureRect" parent="."]
+visible = false
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_k0f04")
+expand_mode = 2
+
 [node name="CountLabel" type="Label" parent="."]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

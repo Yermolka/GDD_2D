@@ -30,8 +30,8 @@ func _physics_process(delta: float) -> void:
 
 	if iray.get("position"):
 		last_ray_position = iray.position
-		player.look_at(iray.position)
-		player.global_rotation.z = 0
-		player.global_rotation.x = 0
+		# player.look_at(iray.position)
+		# player.global_rotation.z = 0
+		# player.global_rotation.x = 0
 	
 	# print(get_viewport().get_mouse_position())

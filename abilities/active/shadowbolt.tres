@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_lsrxw"]
 [ext_resource type="Script" path="res://abilities/NonTargetedActiveSkill.gd" id="1_wknwl"]
 [ext_resource type="PackedScene" uid="uid://daryvs1woadw6" path="res://abilities/scenes/shadowbolt/shadowbolt.tscn" id="2_ss4yc"]
-[ext_resource type="Texture2D" uid="uid://dw7rom0hiff6c" path="res://addons/beehave/icons/blackboard.svg" id="4_o0vjl"]
+[ext_resource type="Texture2D" uid="uid://b84idqa1h3134" path="res://abilities/images/skill_icepike.png" id="4_7mmpv"]
 
 [sub_resource type="Resource" id="Resource_5r0e3"]
 script = ExtResource("1_lsrxw")
@@ -55,7 +55,7 @@ instant_self_effects = Array[ExtResource("1_lsrxw")]([])
 instant_self_timed_effects = Array[ExtResource("1_lsrxw")]([])
 instant_self_timed_effects_duration = 1.0
 self_chance_effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])
-ui_icon = ExtResource("4_o0vjl")
+ui_icon = ExtResource("4_7mmpv")
 ui_name = "Shadowbolt"
 cooldown_duration = 5.0
 cooldown_continuos = false

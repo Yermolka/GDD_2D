@@ -18,6 +18,9 @@ signal unlock_passive_btn_pressed(btn: UnlockPassiveButton)
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+		
 	pressed.connect(
 		func () -> void:
 			unlock_passive_btn_pressed.emit(self)

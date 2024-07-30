@@ -73,6 +73,11 @@ var stats: Dictionary:
 		attribute_map._attributes_dict = stats
 
 
+var camera: CameraController:
+	get:
+		return get_viewport().get_camera_3d()
+
+
 func _setup_attr_map() -> void:
 	attribute_map.attribute_changed.connect(
 		func (attr: AttributeSpec) -> void:
@@ -245,9 +250,9 @@ func _process_input() -> void:
 
 
 func _process_movement() -> void:
-	# player_screen_pos = get_viewport().get_camera_3d().unproject_position(global_position - Vector3(0, 1, 0))
-	# var mouse_relative: Vector2 = (get_viewport().get_mouse_position() - player_screen_pos)
-	# global_rotation.y = get_viewport().get_camera_3d().global_rotation.y + mouse_relative.angle_to(Vector2(0, -1))
+	look_at(camera.last_ray_position)
+	global_rotation.z = 0
+	global_rotation.x = 0
 
 	velocity = Vector3.ZERO
 	if not is_on_floor():

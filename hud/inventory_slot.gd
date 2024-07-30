@@ -83,3 +83,13 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 			equipment.unequip(data["item"])
 			equipment.equip(item)
 			inventory.remove_item(item)
+
+
+
+func _on_mouse_exited() -> void:
+	$slot_default.visible = true
+	$slot_active.visible = false
+
+func _on_mouse_entered() -> void:
+	$slot_default.visible = false
+	$slot_active.visible = true
