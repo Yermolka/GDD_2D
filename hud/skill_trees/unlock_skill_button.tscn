@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkvixb3f3nrud"]
+[gd_scene load_steps=5 format=3 uid="uid://bkvixb3f3nrud"]
 
 [ext_resource type="Script" path="res://hud/skill_trees/unlock_skill_button.gd" id="1_2w1dg"]
+[ext_resource type="Texture2D" uid="uid://uqdeoo7kjqwh" path="res://abilities/images/skill_fireball.png" id="1_yj13r"]
+[ext_resource type="Texture2D" uid="uid://b6rtw5n7wreeo" path="res://hud/images/passive_unavailable.png" id="2_ippfb"]
+[ext_resource type="Texture2D" uid="uid://3juhu0vqm6bo" path="res://hud/images/passive_available.png" id="4_354r3"]
 
 [node name="TextureButton" type="TextureButton"]
 custom_minimum_size = Vector2(32, 32)
@@ -9,6 +12,27 @@ anchor_right = 0.035
 anchor_bottom = 0.062
 offset_right = -0.32
 offset_bottom = -0.176003
+texture_normal = ExtResource("1_yj13r")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_2w1dg")
+
+[node name="Unavailable" type="TextureRect" parent="."]
+visible = false
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("2_ippfb")
+expand_mode = 3
+
+[node name="Available" type="TextureRect" parent="."]
+visible = false
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("4_354r3")
+expand_mode = 3

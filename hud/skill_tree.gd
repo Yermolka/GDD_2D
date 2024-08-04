@@ -70,9 +70,9 @@ func update_buttons() -> void:
     for b: UnlockSkillButton in panel.get_children():
         if b.skill:
             if player.ability_container.granted_abilities.has(b.skill):
-                b.disabled = false
+                b.set_disable(false)
             else:
-                b.disabled = not (available_points > 0 and player.ability_container.can_grant(b.skill))
+                b.set_disable(not (available_points > 0 and player.ability_container.can_grant(b.skill)))
 
             if not b.disabled:
                 print("Can click ", b.skill.ui_name)
@@ -80,9 +80,9 @@ func update_buttons() -> void:
                 print("Can not click ", b.skill.ui_name)
         else:
             if not b.upgrade.learned:
-                b.disabled = not (available_points > 0 and b.upgrade.unlocked(player.ability_container))
+                b.set_disable(not (available_points > 0 and b.upgrade.unlocked(player.ability_container)))
             else:
-                b.disabled = false
+                b.set_disable(false)
             if not b.disabled:
                 print("Can click ", b.upgrade.ui_name)
             else:

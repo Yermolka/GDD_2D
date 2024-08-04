@@ -50,3 +50,13 @@ func _update_arrows() -> void:
         arrows.map(func (x: UITreeArrow) -> void: x.texture = x.active_texture)
     else:
         arrows.map(func (x: UITreeArrow) -> void: x.texture = x.not_active_texture)
+
+
+func set_disable(value: bool) -> void:
+    disabled = value
+    if disabled:
+        $Unavailable.show()
+        $Available.hide()
+    else:
+        $Unavailable.hide()
+        $Available.show()

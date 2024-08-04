@@ -9,7 +9,7 @@ class_name SelectedSkillButton extends TextureButton
 		ability = value
 		draw_ability()
 		
-@export_enum("1", "2", "3", "_movement") var skill_number: String = "1"
+@export_enum("1", "2", "3", "4", "5", "_movement") var skill_number: String = "1"
 
 
 @onready var label: Label = $Label
@@ -85,8 +85,6 @@ func _process(_delta: float) -> void:
 
 func activate() -> void:
 	if ability != null and ability_container != null:
-		if ability is TargetedSkill:
-			ability.set_target(get_tree().get_first_node_in_group("selected"))
 		ability_container.activate_one(ability)
 
 
