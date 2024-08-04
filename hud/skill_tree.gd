@@ -44,6 +44,9 @@ func _create_nodes() -> void:
         panel.remove_child(c)
         c.queue_free()
 
+    if data == null:
+        return
+
     for node in data.nodes:
         var btn := btn_scene.instantiate() as UnlockSkillButton
         panel.add_child(btn)
@@ -76,7 +79,10 @@ func update_buttons() -> void:
             else:
                 print("Can not click ", b.skill.ui_name)
         else:
-            b.disabled = not (available_points > 0 and b.upgrade.unlocked(player.ability_container))
+            if not b.upgrade.learned:
+                b.disabled = not (available_points > 0 and b.upgrade.unlocked(player.ability_container))
+            else:
+                b.disabled = false
             if not b.disabled:
                 print("Can click ", b.upgrade.ui_name)
             else:
@@ -93,18 +99,6 @@ func _draw_items() -> void:
 
     update_buttons()
 	
-
-func can_remove_upgrade(_upgrade: GDDSkillUpgrade) -> bool:
-    for tier: SkillTreeTierData in data.tiers:
-        for upgrade: GDDSkillUpgrade in tier.skills:
-            if not upgrade.learned:
-                continue
-                
-            for tag: String in _upgrade.grant_tags:
-                if upgrade.grant_tags_required.has(tag):
-                    return false
-    return true
-
 
 func _handle_btn_pressed(btn: UnlockSkillButton) -> void:
     print("Pressed ", btn)
@@ -180,11 +174,18 @@ func setup_equipment(eq: Equipment) -> void:
             if not item:
                 return
 
-            data = null
-            available_points = 0
-
             if item.skill_points_changed.is_connected(_handle_skill_points_changed):
                 item.skill_points_changed.disconnect(_handle_skill_points_changed)
+
+            for b: UnlockSkillButton in panel.get_children():
+                if b.skill:
+                    if player.ability_container.granted_abilities.has(b.skill):
+                        player.ability_container.revoke(b.skill)
+                else:
+                    b.upgrade.remove(player.ability_container)
+
+            data = null
+            available_points = 0
     )
 
 
