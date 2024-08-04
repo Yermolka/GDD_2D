@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Weapon" load_steps=6 format=3 uid="uid://dqy2c0g5wqihv"]
 
 [ext_resource type="Script" path="res://items/weapon.gd" id="1_bbfx7"]
-[ext_resource type="PackedScene" uid="uid://bhxlh5s414cs2" path="res://hud/skill_trees/test_mana_weapon/test_mana_weapon_tree.tscn" id="2_y3487"]
+[ext_resource type="Resource" uid="uid://5yo1okuourib" path="res://abilities/tree_data/test_save.tres" id="2_agmg3"]
 [ext_resource type="Texture2D" uid="uid://b5wgoe1rpbf31" path="res://addons/dialogue_nodes/icons/CharacterList.svg" id="3_6n4kn"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="4_2qh25"]
 
@@ -18,7 +18,7 @@ maximum_value = 50.0
 
 [resource]
 script = ExtResource("1_bbfx7")
-skill_tree = ExtResource("2_y3487")
+skill_tree = ExtResource("2_agmg3")
 skill_points = 10
 level = 1
 current_xp = 0

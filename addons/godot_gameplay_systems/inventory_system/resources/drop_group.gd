@@ -16,7 +16,7 @@ class_name DropGroup extends Resource
 ## [br]It accepts an optional argument [code]drop_modifier[/code] which increases (or decreases if negative) drop chances.
 ## [br]The greater the modifier, the higher the chances to drop an [Item] from the pool.
 func can_be_dropped(modifier: float = 0.0) -> bool:
-	return drop_chance + modifier >= randf_range(0.0, 100.0)
+    return drop_chance + modifier >= randf_range(0.0, 100.0)
 
 
 ## Drops an [Item]. 
@@ -24,7 +24,10 @@ func can_be_dropped(modifier: float = 0.0) -> bool:
 ## [br]It accepts an optional argument [code]drop_modifier[/code] which increases (or decreases if negative) drop chances.
 ## [br]The greater the modifier, the higher the chances to drop an [Item] from the pool.
 func drop(drop_modifier: float = 0.0) -> Item:
-	if can_be_dropped(drop_modifier):
-		return items_pool.pick_random()
+    if items_pool.size() == 0:
+        return null
+        
+    if can_be_dropped(drop_modifier):
+        return items_pool.pick_random()
 
-	return null
+    return null

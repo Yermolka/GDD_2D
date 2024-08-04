@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="GDDSkillUpgrade" load_steps=4 format=3 uid="uid://blv5gmpknwk4a"]
+
+[ext_resource type="Script" path="res://abilities/ability_tree/skill_upgrade.gd" id="1_xkyh0"]
+[ext_resource type="Resource" uid="uid://t7wmj13oigdl" path="res://abilities/active/fireball.tres" id="2_e73xy"]
+[ext_resource type="Texture2D" uid="uid://uqdeoo7kjqwh" path="res://abilities/images/skill_fireball.png" id="3_akggb"]
+
+[resource]
+script = ExtResource("1_xkyh0")
+ui_name = "Fireball Upgrade"
+ui_icon = ExtResource("3_akggb")
+skill = ExtResource("2_e73xy")
+grant_tags_required = Array[String](["ability.fireball"])
+grant_tags = Array[String](["upgrade.fireball_damage"])
+upgrades_resource_costs = {}
+upgrade_min_range = 0.0
+upgrade_max_range = 0.0
+upgrade_cast_time = -0.5
+upgrade_cooldown = 0.0
+upgrade_remove_gcd = true
+upgrade_projectile_speed = 1000.0
+upgrades_instant = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd")]([])
+upgrades_instant_timed = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd")]([])
+upgrades_instant_bonus_duration = 1.0
+upgrades_chance = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])
+upgrades_generator = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd")]([])
+upgrades_instant_self = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd")]([])
+upgrades_instant_timed_self = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd")]([])
+upgrades_instant_self_bonus_duration = 1.0
+upgrades_chance_self = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])

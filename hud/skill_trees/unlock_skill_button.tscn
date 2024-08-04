@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkvixb3f3nrud"]
+
+[ext_resource type="Script" path="res://hud/skill_trees/unlock_skill_button.gd" id="1_2w1dg"]
+
+[node name="TextureButton" type="TextureButton"]
+custom_minimum_size = Vector2(32, 32)
+anchors_preset = -1
+anchor_right = 0.035
+anchor_bottom = 0.062
+offset_right = -0.32
+offset_bottom = -0.176003
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_2w1dg")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://b54ngq6in8rn8"]
+[gd_scene load_steps=34 format=3 uid="uid://b54ngq6in8rn8"]
 
 [ext_resource type="Script" path="res://hud/hud.gd" id="1_d5fuj"]
 [ext_resource type="Script" path="res://hud/inventory_hud.gd" id="2_idcnv"]
@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://urlfitmcfcog" path="res://hud/ui_hp_bar.png" id="28_hqgdd"]
 [ext_resource type="Script" path="res://hud/BossUI.gd" id="28_hv8of"]
 [ext_resource type="Texture2D" uid="uid://dfu2cqctwjsck" path="res://hud/ui_hp_middle.png" id="29_0d34k"]
+[ext_resource type="PackedScene" uid="uid://dkuujqavu6c60" path="res://hud/skill_tree.tscn" id="30_2q3ml"]
 [ext_resource type="Texture2D" uid="uid://q3j8j1bgalim" path="res://hud/ui_hp_left.png" id="30_3bq2o"]
 [ext_resource type="Texture2D" uid="uid://bo43ud76enyvm" path="res://hud/ui_hp_right.png" id="31_jcnkd"]
 [ext_resource type="PackedScene" uid="uid://clxev2qpwdhhu" path="res://hud/passive_tree/passive_tree.tscn" id="33_wni17"]
@@ -402,6 +403,10 @@ offset_left = 248.0
 offset_top = 132.0
 offset_right = -521.0
 offset_bottom = -298.0
+
+[node name="SkillTree" parent="." instance=ExtResource("30_2q3ml")]
+visible = false
+layout_mode = 1
 
 [connection signal="pressed" from="MicroMenu/Character" to="." method="_on_character_btn_pressed"]
 [connection signal="pressed" from="MicroMenu/Inventory" to="." method="_on_inventory_btn_pressed"]

@@ -1,7 +1,7 @@
 class_name Weapon extends EquipmentBase
 
 @export_category("Weapon")
-@export var skill_tree: PackedScene
+@export var skill_tree: SkillTreeData
 @export var skill_points: int = 0:
 	get:
 		return skill_points

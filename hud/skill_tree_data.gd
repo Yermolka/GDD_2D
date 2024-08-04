@@ -1,3 +1,3 @@
-class_name SkillTreeData extends Resource
+# class_name SkillTreeData extends Resource
 
-@export var tiers: Array[SkillTreeTierData] = []
+# @export var tiers: Array[SkillTreeTierData] = []

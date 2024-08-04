@@ -1,4 +1,4 @@
-class_name HpBar extends Node3D
+class_name HpBar3D extends Node3D
 
 @onready var hp_sprite: Sprite3D = $Sprite3D
 @onready var hp_label: Label3D = $Label3D

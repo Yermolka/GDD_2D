@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2wnf5netmgm0"]
+
+[ext_resource type="Script" path="res://addons/skilltreeeditor/skill_node/skill_node.gd" id="1_yy7i5"]
+
+[node name="SkillNode" type="GraphNode"]
+anchors_preset = -1
+anchor_right = 0.101
+anchor_bottom = 0.289
+offset_right = -0.352005
+offset_bottom = -0.272003
+grow_horizontal = 2
+grow_vertical = 2
+resizable = true
+title = "Skill"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("1_yy7i5")
+
+[node name="OutputSlot" type="Label" parent="."]
+layout_mode = 2
+text = "Output"

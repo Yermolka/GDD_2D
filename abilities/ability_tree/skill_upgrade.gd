@@ -1,9 +1,12 @@
 class_name GDDSkillUpgrade extends Resource
 
+@export var ui_name: String = ""
 @export var ui_icon: Texture2D = null
 
+@export var skill: ActiveSkill
+
 @export_group("Tags")
-@export var required_tags: Array[String] = []
+@export var grant_tags_required: Array[String] = []
 @export var grant_tags: Array[String] = []
 var learned: bool = false
 
@@ -40,13 +43,13 @@ func unlocked(ac: AbilityContainer) -> bool:
 	if learned:
 		return false
 
-	for tag: String in required_tags:
+	for tag: String in grant_tags_required:
 		if not ac.has_tag(tag):
 			return false
 
-	return true
+	return skill in ac.granted_abilities
 
-func apply(skill: ActiveSkill, ac: AbilityContainer) -> void:
+func apply(ac: AbilityContainer) -> void:
 	ac.add_tags(grant_tags)
 
 	for resource_type: String in upgrades_resource_costs:
@@ -84,7 +87,7 @@ func apply(skill: ActiveSkill, ac: AbilityContainer) -> void:
 
 	learned = true
 
-func remove(skill: ActiveSkill, ac: AbilityContainer) -> void:
+func remove(ac: AbilityContainer) -> void:
 	for tag: String in grant_tags:
 		ac.remove_tag(tag)
 

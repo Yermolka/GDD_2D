@@ -42,12 +42,12 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 
 	return {
 		"item": slot.equipped,
-		"owner": self,
+		"owner": slot,
 	}
 
 
 func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
-	if not data["item"] is EquipmentBase:
+	if not data.get("item") or not data["item"] is EquipmentBase:
 		return false
 
 	return data["item"]._can_equip(equipment) and slot.can_equip(data["item"])
@@ -55,7 +55,7 @@ func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 
 func _drop_data(at_position: Vector2, data: Variant) -> void:
 	print("End drag at equipment")
-	if data["owner"] == self:
+	if data["owner"] == slot:
 		return
 
 	if data["owner"] is InventorySlot:

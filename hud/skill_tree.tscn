@@ -7,18 +7,26 @@
 
 [node name="SkillTree" type="Control"]
 layout_mode = 3
-anchor_left = 0.41
-anchor_top = 0.101
-anchor_right = 0.768
-anchor_bottom = 0.88
-offset_left = -472.32
-offset_top = -65.448
-offset_right = 267.264
-offset_bottom = 77.7599
+anchor_left = 0.403
+anchor_top = 0.091
+anchor_right = 0.773
+anchor_bottom = 0.881
+offset_left = -0.256042
+offset_top = 0.0319977
+offset_right = 0.503906
+offset_bottom = 0.112
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_3y0ys")
+
+[node name="Points" type="Label" parent="."]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 5.00002
+offset_right = 47.0
+offset_bottom = 28.0
+text = "0"
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -28,40 +36,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 11.0
-offset_top = 11.0
-offset_right = -10.9999
-offset_bottom = -10.9998
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 32
-alignment = 2
-
-[node name="Points" type="Label" parent="Panel"]
-layout_mode = 0
-offset_left = 7.0
-offset_top = 5.00002
-offset_right = 47.0
-offset_bottom = 28.0
-text = "0"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/separation = 32
-alignment = 1
 
 [node name="CloseButton" type="TextureButton" parent="."]
 texture_filter = 1

@@ -1,0 +1,51 @@
+[gd_resource type="Resource" script_class="SkillTreeData" load_steps=2 format=3 uid="uid://5yo1okuourib"]
+
+[ext_resource type="Script" path="res://addons/skilltreeeditor/models/skill_tree_data.gd" id="1_c6b4o"]
+
+[resource]
+script = ExtResource("1_c6b4o")
+nodes = Array[Dictionary]([{
+"connections_to": Array[String](["RxDZWlwzR8", "AoqY48M-Ml"]),
+"graph_editor_position": Vector2(281.286, 297.08),
+"graph_editor_size": Vector2(252, 94),
+"id": "sSa6MCO0VX",
+"node_name": &"SkillRootNode",
+"position": Vector2(105.184, 0),
+"skill": "res://abilities/active/fireball.tres"
+}, {
+"connections_to": Array[String]([]),
+"graph_editor_position": Vector2(176.102, 206.923),
+"graph_editor_size": Vector2(282, 121),
+"id": "RxDZWlwzR8",
+"node_name": &"@GraphNode@157696",
+"position": Vector2(0, -90.1578),
+"skill": "res://abilities/active/shadowbolt.tres"
+}, {
+"connections_to": Array[String]([]),
+"graph_editor_position": Vector2(581.812, 297.08),
+"graph_editor_size": Vector2(306, 94),
+"id": "xcicbakWaC",
+"node_name": &"@GraphNode@157702",
+"position": Vector2(405.71, 0),
+"skill": "res://abilities/active/arcane_explosion.tres"
+}, {
+"connections_to": Array[String]([]),
+"graph_editor_position": Vector2(431.549, 206.923),
+"graph_editor_size": Vector2(313, 121),
+"id": "AoqY48M-Ml",
+"node_name": &"@GraphNode@157719",
+"position": Vector2(255.447, -90.1578),
+"skill": "res://abilities/upgrades/fireball_upgrade.tres"
+}])
+connections = Array[Dictionary]([{
+"from_node": &"SkillRootNode",
+"from_port": 0,
+"to_node": &"@GraphNode@157696",
+"to_port": 0
+}, {
+"from_node": &"SkillRootNode",
+"from_port": 0,
+"to_node": &"@GraphNode@157719",
+"to_port": 0
+}])
+learned_skills = Array[int]([])

@@ -129,7 +129,7 @@ func _setup_equipped_items() -> void:
 			for tier: SkillTreeTierData in eqb.skill_tree.tiers:
 				for upgrade: GDDSkillUpgrade in tier.skills:
 					if upgrade.learned:
-						upgrade.apply(eqb.skill, ability_container)
+						upgrade.apply(ability_container)
 		add_child(eqb.effect)
 
 	Questify.update_quests()
