@@ -12,6 +12,7 @@ signal unlock_skill_btn_pressed(btn: UnlockSkillButton)
             texture_normal = null
         else:
             texture_normal = skill.ui_icon
+            _update_tooltip()
             _update_arrows()
 @export var upgrade: GDDSkillUpgrade:
     get:
@@ -22,6 +23,7 @@ signal unlock_skill_btn_pressed(btn: UnlockSkillButton)
             texture_normal = null
         else:
             texture_normal = upgrade.ui_icon
+            _update_tooltip()
             _update_arrows()
 @onready var arrows: Array = get_children()
 var player: Player:
@@ -52,6 +54,13 @@ func _update_arrows() -> void:
         arrows.map(func (x: UITreeArrow) -> void: x.texture = x.not_active_texture)
 
 
+func _update_tooltip() -> void:
+    if skill or upgrade:
+        tooltip_text = "1"
+    else:
+        tooltip_text = ""
+
+
 func set_disable(value: bool) -> void:
     disabled = value
     if disabled:
@@ -60,3 +69,13 @@ func set_disable(value: bool) -> void:
     else:
         $Unavailable.hide()
         $Available.show()
+
+
+func _make_custom_tooltip(for_text: String) -> Object:
+    var new_tooltip: SpellTooltip = load("res://hud/in_game_bar/spell_tooltip.tscn").instantiate()
+    new_tooltip.visible = true
+    if skill:
+        new_tooltip.set_spell(skill)
+    elif upgrade:
+        new_tooltip.set_upgrade(upgrade)
+    return new_tooltip

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_sd3ca"]
 [ext_resource type="Script" path="res://abilities/PassiveSkill.gd" id="1_wacp2"]
+[ext_resource type="Texture2D" uid="uid://bin2vmboalnkr" path="res://abilities/images/passive_increase_mana_regen.png" id="3_odv87"]
 
 [sub_resource type="Resource" id="Resource_y3bua"]
 script = ExtResource("1_sd3ca")
@@ -14,11 +15,9 @@ value_formula = ""
 minimum_value = 5.0
 maximum_value = 5.0
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ib7un"]
-
 [resource]
 script = ExtResource("1_wacp2")
-ui_icon = SubResource("PlaceholderTexture2D_ib7un")
+ui_icon = ExtResource("3_odv87")
 ui_name = "Mana Regen Increase"
 ui_description = "Increase mana regen by 5 per second"
 effects = Array[ExtResource("1_sd3ca")]([SubResource("Resource_y3bua")])

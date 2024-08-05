@@ -2,6 +2,7 @@ class_name GDDSkillUpgrade extends Resource
 
 @export var ui_name: String = ""
 @export var ui_icon: Texture2D = null
+@export var ui_description: String = ""
 
 @export var skill: ActiveSkill
 

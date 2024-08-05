@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://abilities/PassiveSkill.gd" id="1_b88vw"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_hjcb5"]
+[ext_resource type="Texture2D" uid="uid://drne034gi842h" path="res://abilities/images/passive_increase_intellect.png" id="3_dvol5"]
 
 [sub_resource type="Resource" id="Resource_cha1a"]
 script = ExtResource("1_hjcb5")
@@ -14,11 +15,9 @@ value_formula = ""
 minimum_value = 5.0
 maximum_value = 5.0
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y2m0h"]
-
 [resource]
 script = ExtResource("1_b88vw")
-ui_icon = SubResource("PlaceholderTexture2D_y2m0h")
+ui_icon = ExtResource("3_dvol5")
 ui_name = "Intellect Increase"
 ui_description = "Increases intellect by 5"
 effects = Array[ExtResource("1_hjcb5")]([SubResource("Resource_cha1a")])

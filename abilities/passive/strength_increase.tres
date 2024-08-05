@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_8os6d"]
 [ext_resource type="Script" path="res://abilities/PassiveSkill.gd" id="1_ds3dx"]
+[ext_resource type="Texture2D" uid="uid://dlm5a5gn1cys3" path="res://abilities/images/passive_increase_strength.png" id="3_wcvad"]
 
 [sub_resource type="Resource" id="Resource_kukdl"]
 script = ExtResource("1_8os6d")
@@ -14,11 +15,9 @@ value_formula = ""
 minimum_value = 5.0
 maximum_value = 5.0
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_s6acj"]
-
 [resource]
 script = ExtResource("1_ds3dx")
-ui_icon = SubResource("PlaceholderTexture2D_s6acj")
+ui_icon = ExtResource("3_wcvad")
 ui_name = "Strength Increase"
 ui_description = "Increases strength by 5"
 effects = Array[ExtResource("1_8os6d")]([SubResource("Resource_kukdl")])

@@ -22,6 +22,7 @@ instant_self_effects = Array[Resource("res://addons/godot_gameplay_systems/attri
 instant_self_timed_effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd")]([])
 instant_self_timed_effects_duration = 1.0
 self_chance_effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])
+ui_description = "Dash a short distance in movement direction"
 ui_name = "Dash"
 cooldown_duration = 4.0
 cooldown_continuos = false

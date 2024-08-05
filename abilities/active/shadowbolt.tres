@@ -55,6 +55,7 @@ instant_self_effects = Array[ExtResource("1_lsrxw")]([])
 instant_self_timed_effects = Array[ExtResource("1_lsrxw")]([])
 instant_self_timed_effects_duration = 1.0
 self_chance_effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])
+ui_description = ""
 ui_icon = ExtResource("4_7mmpv")
 ui_name = "Shadowbolt"
 cooldown_duration = 5.0

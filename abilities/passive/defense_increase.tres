@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://abilities/PassiveSkill.gd" id="1_1ankd"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_hku46"]
+[ext_resource type="Texture2D" uid="uid://6dvh7nsh7iur" path="res://abilities/images/passive_increase_defense.png" id="3_5whkg"]
 
 [sub_resource type="Resource" id="Resource_q2eae"]
 script = ExtResource("1_hku46")
@@ -14,11 +15,9 @@ value_formula = ""
 minimum_value = 5.0
 maximum_value = 5.0
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_472hp"]
-
 [resource]
 script = ExtResource("1_1ankd")
-ui_icon = SubResource("PlaceholderTexture2D_472hp")
+ui_icon = ExtResource("3_5whkg")
 ui_name = "Defense Increase"
 ui_description = "Increases defense by 5"
 effects = Array[ExtResource("1_hku46")]([SubResource("Resource_q2eae")])

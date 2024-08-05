@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://abilities/PassiveSkill.gd" id="1_qsvfk"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_xmqfm"]
+[ext_resource type="Texture2D" uid="uid://cmuj16eh5tst4" path="res://abilities/images/passive_increase_movespeed.png" id="3_xnywi"]
 
 [sub_resource type="Resource" id="Resource_uuuob"]
 script = ExtResource("1_xmqfm")
@@ -14,11 +15,9 @@ value_formula = ""
 minimum_value = 50.0
 maximum_value = 50.0
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y6u7s"]
-
 [resource]
 script = ExtResource("1_qsvfk")
-ui_icon = SubResource("PlaceholderTexture2D_y6u7s")
+ui_icon = ExtResource("3_xnywi")
 ui_name = "Movespeed Increase"
 ui_description = "Increases movespeed by 50%"
 effects = Array[ExtResource("1_xmqfm")]([SubResource("Resource_uuuob")])

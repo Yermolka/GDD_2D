@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://abilities/PassiveSkill.gd" id="1_er4p8"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_pb6i5"]
+[ext_resource type="Texture2D" uid="uid://c5mykt0344dse" path="res://abilities/images/passive_increase_crit_chance.png" id="3_hbjut"]
 
 [sub_resource type="Resource" id="Resource_8k6xl"]
 script = ExtResource("1_pb6i5")
@@ -14,11 +15,9 @@ value_formula = ""
 minimum_value = 0.1
 maximum_value = 0.1
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vuxsq"]
-
 [resource]
 script = ExtResource("1_er4p8")
-ui_icon = SubResource("PlaceholderTexture2D_vuxsq")
+ui_icon = ExtResource("3_hbjut")
 ui_name = "Crit chance Increase"
 ui_description = "Increases crit chance by 5%"
 effects = Array[ExtResource("1_pb6i5")]([SubResource("Resource_8k6xl")])

@@ -6,3 +6,4 @@ const RANGED_SKILL_TAG: String = "skill.type.ranged"
 const DEAD_TAG: String = "dead"
 const CASTING_TAG: String = "casting"
 
+@export var ui_description: String = ""

@@ -1,45 +1,31 @@
-[gd_scene load_steps=28 format=3 uid="uid://clxev2qpwdhhu"]
+[gd_scene load_steps=27 format=3 uid="uid://clxev2qpwdhhu"]
 
 [ext_resource type="Script" path="res://hud/passive_tree/passive_tree.gd" id="1_fimo3"]
 [ext_resource type="Script" path="res://hud/passive_tree/unlock_passive_btn.gd" id="1_rce8t"]
+[ext_resource type="Texture2D" uid="uid://cds8bfliobq1u" path="res://abilities/images/passive_mana.png" id="2_5lpp0"]
 [ext_resource type="Resource" uid="uid://b0hns56hm4ly2" path="res://abilities/passive/mana_resource.tres" id="2_gyipk"]
 [ext_resource type="Texture2D" uid="uid://b5ov6t841geta" path="res://hud/ui_arrow_inactive.png" id="3_tbyra"]
 [ext_resource type="Script" path="res://hud/passive_tree/arrow.gd" id="4_s4o3o"]
 [ext_resource type="Resource" uid="uid://kfdpl04udldy" path="res://abilities/passive/intellect_increase.tres" id="5_7sl5o"]
 [ext_resource type="Resource" uid="uid://12vb0jtrruel" path="res://abilities/passive/mana_regen_increase.tres" id="6_t75hb"]
+[ext_resource type="Texture2D" uid="uid://drne034gi842h" path="res://abilities/images/passive_increase_intellect.png" id="7_fmjnx"]
 [ext_resource type="Resource" uid="uid://40l0me0mhnat" path="res://abilities/passive/concentration_resource.tres" id="7_pm0ij"]
 [ext_resource type="Resource" uid="uid://bsv1fm86a5lma" path="res://abilities/passive/move_speed_increase.tres" id="8_74uji"]
+[ext_resource type="Texture2D" uid="uid://bin2vmboalnkr" path="res://abilities/images/passive_increase_mana_regen.png" id="9_8wnqg"]
 [ext_resource type="Resource" uid="uid://cx5xey37ofyma" path="res://abilities/passive/crit_chance_increase.tres" id="9_jba7g"]
 [ext_resource type="Resource" uid="uid://1wwnlafa0kkg" path="res://abilities/passive/crit_damage_increase.tres" id="10_o1jkk"]
+[ext_resource type="Texture2D" uid="uid://ctgwt3ixo7olk" path="res://abilities/images/passive_concentration.png" id="11_ef41w"]
 [ext_resource type="Resource" uid="uid://b175648ucykpe" path="res://abilities/passive/rage_resource.tres" id="11_uawiu"]
 [ext_resource type="Resource" uid="uid://bpxwdkfuifcgi" path="res://abilities/passive/strength_increase.tres" id="12_j3gm0"]
+[ext_resource type="Texture2D" uid="uid://cmuj16eh5tst4" path="res://abilities/images/passive_increase_movespeed.png" id="13_86ilf"]
 [ext_resource type="Resource" uid="uid://2rsjqqbw56kf" path="res://abilities/passive/defense_increase.tres" id="13_f2kux"]
 [ext_resource type="Resource" uid="uid://cfs82vxpq5rxo" path="res://abilities/passive/base_damage_increase.tres" id="14_rj272"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_6p2ol"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y2m0h"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ib7un"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_a4nkd"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y6u7s"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vuxsq"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_80te7"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_bkda0"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_s6acj"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_472hp"]
-
-[sub_resource type="Gradient" id="Gradient_tli3d"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_mxoyx"]
-gradient = SubResource("Gradient_tli3d")
+[ext_resource type="Texture2D" uid="uid://c5mykt0344dse" path="res://abilities/images/passive_increase_crit_chance.png" id="15_6v3qv"]
+[ext_resource type="Texture2D" uid="uid://b076gouwidmrx" path="res://abilities/images/passive_increase_crit_damage.png" id="17_m2y4b"]
+[ext_resource type="Texture2D" uid="uid://c8wpwyd17xufd" path="res://abilities/images/passive_strength.png" id="19_0ipev"]
+[ext_resource type="Texture2D" uid="uid://dlm5a5gn1cys3" path="res://abilities/images/passive_increase_strength.png" id="21_3uryd"]
+[ext_resource type="Texture2D" uid="uid://6dvh7nsh7iur" path="res://abilities/images/passive_increase_defense.png" id="23_vomen"]
+[ext_resource type="Texture2D" uid="uid://6m4bj45o6qjp" path="res://abilities/images/passive_increase_base_damage.png" id="25_kl7k0"]
 
 [node name="PassiveTree" type="Control"]
 layout_mode = 3
@@ -63,15 +49,16 @@ grow_vertical = 2
 [node name="UnlockMana" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.161
-anchor_top = 0.878
-anchor_right = 0.196
-anchor_bottom = 0.94
-offset_left = 0.527985
-offset_top = 0.0559692
-offset_right = 0.207993
-offset_bottom = -0.120056
-texture_normal = SubResource("PlaceholderTexture2D_6p2ol")
+anchor_left = 0.141
+anchor_top = 0.807
+anchor_right = 0.22
+anchor_bottom = 0.948
+offset_left = -0.432007
+offset_top = 0.0639648
+offset_right = -1.44002
+offset_bottom = -1.30408
+tooltip_text = "1"
+texture_normal = ExtResource("2_5lpp0")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_rce8t")
@@ -101,15 +88,16 @@ script = ExtResource("4_s4o3o")
 [node name="IntellectIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.115
-anchor_top = 0.741
-anchor_right = 0.149
-anchor_bottom = 0.802
-offset_left = -0.479996
-offset_top = -0.16803
-offset_right = 0.35199
-offset_bottom = 0.303955
-texture_normal = SubResource("PlaceholderTexture2D_y2m0h")
+anchor_left = 0.062
+anchor_top = 0.503
+anchor_right = 0.141
+anchor_bottom = 0.642
+offset_left = 0.575996
+offset_top = 0.0559998
+offset_right = -0.432007
+offset_bottom = -0.0159912
+tooltip_text = "1"
+texture_normal = ExtResource("7_fmjnx")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_rce8t")
@@ -118,15 +106,16 @@ passive = ExtResource("5_7sl5o")
 [node name="ManaRegenIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.218
-anchor_top = 0.738
-anchor_right = 0.253
-anchor_bottom = 0.799
-offset_left = -0.136017
-offset_top = -0.22403
-offset_right = -0.456024
-offset_bottom = 0.247986
-texture_normal = SubResource("PlaceholderTexture2D_ib7un")
+anchor_left = 0.236
+anchor_top = 0.506
+anchor_right = 0.314
+anchor_bottom = 0.645
+offset_left = 0.127991
+offset_top = 0.111969
+offset_right = 0.271973
+offset_bottom = 0.0400085
+tooltip_text = "1"
+texture_normal = ExtResource("9_8wnqg")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_rce8t")
@@ -135,15 +124,16 @@ passive = ExtResource("6_t75hb")
 [node name="UnlockConcentration" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.437
-anchor_top = 0.889
-anchor_right = 0.471
-anchor_bottom = 0.951
-offset_left = -0.424011
-offset_top = -0.0720215
-offset_right = 0.407959
-offset_bottom = -0.248047
-texture_normal = SubResource("PlaceholderTexture2D_a4nkd")
+anchor_left = 0.424
+anchor_top = 0.806
+anchor_right = 0.502
+anchor_bottom = 0.944
+offset_left = -0.448029
+offset_top = -0.288025
+offset_right = -0.304016
+offset_bottom = 0.287964
+tooltip_text = "1"
+texture_normal = ExtResource("11_ef41w")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_rce8t")
@@ -171,15 +161,16 @@ script = ExtResource("4_s4o3o")
 [node name="MoveSpeedIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.393
-anchor_top = 0.752
-anchor_right = 0.428
-anchor_bottom = 0.813
-offset_left = 0.263977
-offset_top = -0.296021
-offset_right = -0.0560303
-offset_bottom = 0.175964
-texture_normal = SubResource("PlaceholderTexture2D_y6u7s")
+anchor_left = 0.345
+anchor_top = 0.505
+anchor_right = 0.424
+anchor_bottom = 0.644
+offset_left = 0.559967
+offset_top = -0.23999
+offset_right = -0.448029
+offset_bottom = -0.312012
+tooltip_text = "1"
+texture_normal = ExtResource("13_86ilf")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_rce8t")
@@ -188,15 +179,16 @@ passive = ExtResource("8_74uji")
 [node name="CritChanceIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.487
-anchor_top = 0.758
-anchor_right = 0.522
-anchor_bottom = 0.819
-offset_left = -0.0240479
-offset_top = -0.184021
-offset_right = -0.343994
-offset_bottom = 0.287964
-texture_normal = SubResource("PlaceholderTexture2D_vuxsq")
+anchor_left = 0.508
+anchor_top = 0.525
+anchor_right = 0.586
+anchor_bottom = 0.664
+offset_left = -0.216003
+offset_top = -0.200012
+offset_right = -0.0720215
+offset_bottom = -0.272034
+tooltip_text = "1"
+texture_normal = ExtResource("15_6v3qv")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_rce8t")
@@ -216,15 +208,16 @@ script = ExtResource("4_s4o3o")
 [node name="CritDamageIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.485
-anchor_top = 0.616
-anchor_right = 0.52
-anchor_bottom = 0.677
-offset_left = 0.279968
-offset_top = -0.16803
-offset_right = -0.0400391
-offset_bottom = 0.303955
-texture_normal = SubResource("PlaceholderTexture2D_80te7")
+anchor_left = 0.5
+anchor_top = 0.213
+anchor_right = 0.575
+anchor_bottom = 0.352
+offset_left = -4.0
+offset_top = -0.0240021
+offset_right = -0.400024
+offset_bottom = -0.0960236
+tooltip_text = "1"
+texture_normal = ExtResource("17_m2y4b")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_rce8t")
@@ -233,15 +226,16 @@ passive = ExtResource("10_o1jkk")
 [node name="UnlockRage" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.777
-anchor_top = 0.872
-anchor_right = 0.812
-anchor_bottom = 0.934
-offset_left = -0.104004
-offset_top = -0.0560303
-offset_right = -0.424072
-offset_bottom = -0.231995
-texture_normal = SubResource("PlaceholderTexture2D_bkda0")
+anchor_left = 0.759
+anchor_top = 0.793
+anchor_right = 0.837
+anchor_bottom = 0.932
+offset_left = -0.368042
+offset_top = 0.135986
+offset_right = -0.223999
+offset_bottom = 0.0639648
+tooltip_text = "1"
+texture_normal = ExtResource("19_0ipev")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_rce8t")
@@ -270,15 +264,16 @@ script = ExtResource("4_s4o3o")
 [node name="StrengthIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.734
-anchor_top = 0.739
-anchor_right = 0.769
-anchor_bottom = 0.801
-offset_left = 0.431946
-offset_top = 0.127991
-offset_right = 0.111938
-offset_bottom = -0.0480347
-texture_normal = SubResource("PlaceholderTexture2D_s6acj")
+anchor_left = 0.679
+anchor_top = 0.5
+anchor_right = 0.757
+anchor_bottom = 0.637
+offset_left = -0.208008
+offset_top = -1.0
+offset_right = -0.0640259
+offset_bottom = 0.223999
+tooltip_text = "1"
+texture_normal = ExtResource("21_3uryd")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_rce8t")
@@ -298,15 +293,16 @@ script = ExtResource("4_s4o3o")
 [node name="DefenseIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.82
-anchor_top = 0.739
-anchor_right = 0.855
-anchor_bottom = 0.801
-offset_left = 0.359924
-offset_top = 0.127991
-offset_right = 0.039978
-offset_bottom = -0.0480347
-texture_normal = SubResource("PlaceholderTexture2D_472hp")
+anchor_left = 0.844
+anchor_top = 0.508
+anchor_right = 0.922
+anchor_bottom = 0.647
+offset_left = -0.288025
+offset_top = -0.184021
+offset_right = -0.144043
+offset_bottom = -0.256012
+tooltip_text = "1"
+texture_normal = ExtResource("23_vomen")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_rce8t")
@@ -315,15 +311,16 @@ passive = ExtResource("13_f2kux")
 [node name="BaseDamageIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.734
-anchor_top = 0.594
-anchor_right = 0.769
-anchor_bottom = 0.656
-offset_left = 0.431946
-offset_top = 0.0879822
-offset_right = 0.111938
-offset_bottom = -0.0880127
-texture_normal = SubResource("GradientTexture2D_mxoyx")
+anchor_left = 0.672
+anchor_top = 0.182
+anchor_right = 0.75
+anchor_bottom = 0.321
+offset_left = -0.144043
+offset_top = 0.0639954
+offset_right = -6.10352e-05
+offset_bottom = -0.00801086
+tooltip_text = "1"
+texture_normal = ExtResource("25_kl7k0")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_rce8t")

@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://abilities/PassiveSkill.gd" id="1_wober"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_xg5se"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute.gd" id="2_7arac"]
+[ext_resource type="Texture2D" uid="uid://cds8bfliobq1u" path="res://abilities/images/passive_mana.png" id="4_7anep"]
 
 [sub_resource type="Resource" id="Resource_7i0bs"]
 script = ExtResource("1_xg5se")
@@ -22,11 +23,9 @@ minimum_value = 0.0
 maximum_value = 100.0
 current_value = 100.0
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_6p2ol"]
-
 [resource]
 script = ExtResource("1_wober")
-ui_icon = SubResource("PlaceholderTexture2D_6p2ol")
+ui_icon = ExtResource("4_7anep")
 ui_name = "Unlock mana"
 ui_description = "Gives access to mana resource. Base of 100 with "
 effects = Array[ExtResource("1_xg5se")]([SubResource("Resource_7i0bs")])

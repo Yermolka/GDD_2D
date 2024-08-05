@@ -1,0 +1,71 @@
+[gd_scene load_steps=2 format=3 uid="uid://1jxvpqpepo72"]
+
+[ext_resource type="Script" path="res://hud/in_game_bar/spell_tooltip.gd" id="1_l3o18"]
+
+[node name="SpellTooltip" type="Control"]
+texture_filter = 1
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l3o18")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpellName" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Fireball"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SpellDescription" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+text = "Throws a ball of hot fire in target direction. Deals moderate damage"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cast time: "
+
+[node name="SpellCastTime" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "1.0s"
+horizontal_alignment = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Cooldown:"
+
+[node name="SpellCD" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "1.0s"
+horizontal_alignment = 2
