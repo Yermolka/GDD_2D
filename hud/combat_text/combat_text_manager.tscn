@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdugfwb3otbpx"]
+
+[ext_resource type="Script" path="res://combat_text_manager.gd" id="1_j6wyc"]
+
+[node name="CombatTextManager" type="Node3D"]
+script = ExtResource("1_j6wyc")
+
+[node name="NormalPool" type="Node3D" parent="."]
+
+[node name="CritPool" type="Node3D" parent="."]

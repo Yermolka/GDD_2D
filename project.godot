@@ -25,6 +25,7 @@ Globals="*res://common/Globals.gd"
 BeehaveGlobalMetrics="*res://addons/beehave/metrics/beehave_global_metrics.gd"
 BeehaveGlobalDebugger="*res://addons/beehave/debug/global_debugger.gd"
 Signal_Debugger="*res://addons/SignalVisualizer/Debugger/SignalDebugger.gd"
+CombatTextManager="*res://hud/combat_text/combat_text_manager.gd"
 
 [debug]
 

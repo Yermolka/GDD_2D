@@ -41,261 +41,267 @@ var _attributes_dict: Dictionary = {}
 var _timeouts_count_dict: Dictionary = {}
 ## Is the list of child GameplayEffect nodes
 var effects: Array[GameplayEffect] = []:
-	get:
-		var _effects: Array[GameplayEffect] = []
+    get:
+        var _effects: Array[GameplayEffect] = []
 
-		for child in get_children():
-			if child is GameplayEffect and not child is TimedGameplayEffect:
-				_effects.append(child)
+        for child in get_children():
+            if child is GameplayEffect and not child is TimedGameplayEffect:
+                _effects.append(child)
 
-		return _effects
+        return _effects
 
 var timed_effects: Array[TimedGameplayEffect] = []:
-	get:
-		var _timed_effects: Array[TimedGameplayEffect] = []
+    get:
+        var _timed_effects: Array[TimedGameplayEffect] = []
 
-		for child in get_children():
-			if child is TimedGameplayEffect:
-				_timed_effects.append(child)
+        for child in get_children():
+            if child is TimedGameplayEffect:
+                _timed_effects.append(child)
 
-		return _timed_effects
+        return _timed_effects
 
 func _add_attribute_spec(spec: AttributeResource) -> void:
-	if Engine.is_editor_hint():
-		attributes.append(spec)
+    if Engine.is_editor_hint():
+        attributes.append(spec)
 
 
 func _apply_initial_effects() -> void:
-	for effect in effects:
-		apply_effect(effect)
+    for effect in effects:
+        apply_effect(effect)
 
 
 func _handle_character_child_entered_tree(node: Node) -> void:
-	if node is GameplayEffect:
-		add_child(node)
+    if node is GameplayEffect:
+        add_child(node)
 
 
 func _get_attribute_at(index: int) -> AttributeResource:
-	if Engine.is_editor_hint():
-		if attributes.size() > index:
-			return attributes[index]
+    if Engine.is_editor_hint():
+        if attributes.size() > index:
+            return attributes[index]
 
-		attributes.append(AttributeResource.new())
-		return attributes[index]
-	else:
-		return null
+        attributes.append(AttributeResource.new())
+        return attributes[index]
+    else:
+        return null
 
 
 func _ready() -> void:
-	if not Engine.is_editor_hint():
-		_setup_attributes()
+    if not Engine.is_editor_hint():
+        _setup_attributes()
 
-		if owning_character != null and not owning_character.is_empty():
-			var character = get_node(owning_character)
+        if owning_character != null and not owning_character.is_empty():
+            var character = get_node(owning_character)
 
-			if character:
-				character.child_entered_tree.connect(func (child):
-					if child is TimedGameplayEffect:
-						apply_timed_effect(child)
-					elif child is GameplayEffect:
-						apply_effect(child)
-				)
+            if character:
+                character.child_entered_tree.connect(func (child):
+                    if child is TimedGameplayEffect:
+                        apply_timed_effect(child)
+                    elif child is GameplayEffect:
+                        apply_effect(child)
+                )
 
-		_apply_initial_effects()
+        _apply_initial_effects()
 
 
 func _setup_attributes() -> void:
-	_attributes_dict = {}
+    _attributes_dict = {}
 
-	for attribute in attributes:
-		var spec = AttributeSpec.from_attribute(attribute)
+    for attribute in attributes:
+        var spec = AttributeSpec.from_attribute(attribute)
 
-		spec.changed.connect(func (attribute):
-			attribute_changed.emit(attribute)
-		)
+        spec.changed.connect(func (attribute):
+            attribute_changed.emit(attribute)
+        )
 
-		_attributes_dict[spec.attribute_name] = spec
+        _attributes_dict[spec.attribute_name] = spec
 
 
 func _setup_owning_character() -> void:
-	if owning_character == null or owning_character.is_empty():
-		return
+    if owning_character == null or owning_character.is_empty():
+        return
 
-	var owning_character = get_node(owning_character)
+    var owning_character = get_node(owning_character)
 
-	if owning_character:
-		owning_character.child_entered_tree.connect(func (child):
-			if child is GameplayEffect:
-				apply_effect(child)
-		)
+    if owning_character:
+        owning_character.child_entered_tree.connect(func (child):
+            if child is GameplayEffect:
+                apply_effect(child)
+        )
 
 
 func _update_attribute(index: int, key: String, value: float) -> void:
-	if Engine.is_editor_hint():
-		if attributes.size() >= index:
-			if key in attributes[index]:
-				attributes[index][key] = value
+    if Engine.is_editor_hint():
+        if attributes.size() >= index:
+            if key in attributes[index]:
+                attributes[index][key] = value
 
 
 func add_attribute(attribute: AttributeSpec) -> void:
-	attribute.changed.connect(func (attribute):
-		attribute_changed.emit(attribute)
-	)
+    attribute.changed.connect(func (attribute):
+        attribute_changed.emit(attribute)
+    )
 
-	_attributes_dict[attribute.attribute_name] = attribute
-	attribute_added.emit(attribute)
+    _attributes_dict[attribute.attribute_name] = attribute
+    attribute_added.emit(attribute)
 
 func remove_attribute(attribute_name: String) -> void:
-	var attr = get_attribute_by_name(attribute_name)
+    var attr = get_attribute_by_name(attribute_name)
 
-	if attr:
-		_attributes_dict.erase(attribute_name)
-		attribute_removed.emit(attr)
+    if attr:
+        _attributes_dict.erase(attribute_name)
+        attribute_removed.emit(attr)
 
 
 func apply_timed_effect(effect: TimedGameplayEffect) -> void:
-	var _effect = effect.duplicate()
-	effect.queue_free()
+    var _effect = effect.duplicate()
+    effect.queue_free()
 
-	if effect == null:
-		return
+    if effect == null:
+        return
 
-	for attribute_affected in effect.attributes_affected:
-		if not attribute_affected.attribute_name in _attributes_dict:
-			continue
+    for attribute_affected in effect.attributes_affected:
+        if not attribute_affected.attribute_name in _attributes_dict:
+            continue
 
-		if not attribute_affected.should_apply(_effect, self):
-			continue
+        if not attribute_affected.should_apply(_effect, self):
+            continue
 
-		if attribute_affected.applies_as != 1: ## not value buff
-			printerr("Timed effect is not a value buff! Effect: ", _effect.name)
-			attribute_affected.applies_as = 1
+        if attribute_affected.applies_as != 1: ## not value buff
+            printerr("Timed effect is not a value buff! Effect: ", _effect.name)
+            attribute_affected.applies_as = 1
 
-		var spec = _attributes_dict[attribute_affected.attribute_name]
-		var old_value = spec.buffing_value
+        var spec = _attributes_dict[attribute_affected.attribute_name]
+        var old_value = spec.buffing_value
 
-		spec.apply_attribute_effect(attribute_affected)
+        spec.apply_attribute_effect(attribute_affected)
 
-		var diff = old_value - spec.buffing_value
+        var diff = old_value - spec.buffing_value
+        if attribute_affected.attribute_name == "health" and diff < 0:
+            CombatTextManager.spawn_normal_text(owner, diff)
 
-		attribute_effect_applied.emit(attribute_affected, spec)
+        attribute_effect_applied.emit(attribute_affected, spec)
 
-		var timer = Timer.new()
+        var timer = Timer.new()
 
-		timer.autostart = true
-		timer.one_shot = true
-		timer.wait_time = effect.effect_time
+        timer.autostart = true
+        timer.one_shot = true
+        timer.wait_time = effect.effect_time
 
-		timer.timeout.connect(
-			func():
-				spec.buffing_value += diff
-				attribute_effect_removed.emit(attribute_affected, spec)
-				timer.stop()
+        timer.timeout.connect(
+            func():
+                spec.buffing_value += diff
+                attribute_effect_removed.emit(attribute_affected, spec)
+                timer.stop()
 
-				remove_child(timer)
-		)
+                remove_child(timer)
+        )
 
-		add_child(timer)
+        add_child(timer)
 
-	timed_effect_applied.emit(_effect)
+    timed_effect_applied.emit(_effect)
 
 func consider_defense(effect: AttributeEffect) -> AttributeEffect:
-	if effect.attribute_name != "health" or effect.get_current_value() >= 0.0 or effect.applies_as != 0:
-		return effect
+    if effect.attribute_name != "health" or effect.get_current_value() >= 0.0 or effect.applies_as != 0:
+        return effect
 
-	var defense: AttributeSpec = _attributes_dict.get("defense", null)
-	if not defense:
-		return effect
+    var defense: AttributeSpec = _attributes_dict.get("defense", null)
+    if not defense:
+        return effect
 
-	var res: AttributeEffect = effect.duplicate(true)
-	res.stats = effect.stats
+    var res: AttributeEffect = effect.duplicate(true)
+    res.stats = effect.stats
 
-	if not res.value_formula.is_empty():
-		res.value_formula = "(" + res.value_formula + ")+(" + str(defense.current_buffed_value) + ")"
-	else:
-		res.minimum_value = min(res.minimum_value + defense.current_buffed_value, 0.0)
-		res.maximum_value = min(res.maximum_value + defense.current_buffed_value, 0.0)
+    if not res.value_formula.is_empty():
+        res.value_formula = "(" + res.value_formula + ")+(" + str(defense.current_buffed_value) + ")"
+    else:
+        res.minimum_value = min(res.minimum_value + defense.current_buffed_value, 0.0)
+        res.maximum_value = min(res.maximum_value + defense.current_buffed_value, 0.0)
 
-	return res
+    return res
 
 ## Applies an effect on current GameplayAttributeMap
 func apply_effect(effect: GameplayEffect) -> void:
-	var _effect = effect.duplicate()
+    var _effect = effect.duplicate()
 
-	effect.queue_free()
+    effect.queue_free()
 
-	if multiplayer and not multiplayer.is_server():
-		return
+    if multiplayer and not multiplayer.is_server():
+        return
 
-	if effect == null:
-		return
+    if effect == null:
+        return
 
-	for attribute_affected in effect.attributes_affected:
-		if not attribute_affected.attribute_name in _attributes_dict:
-			continue
+    for attribute_affected in effect.attributes_affected:
+        if not attribute_affected.attribute_name in _attributes_dict:
+            continue
 
-		if attribute_affected.life_time == AttributeEffect.LIFETIME_ONE_SHOT:
-			var spec = _attributes_dict[attribute_affected.attribute_name]
+        if attribute_affected.life_time == AttributeEffect.LIFETIME_ONE_SHOT:
+            var spec = _attributes_dict[attribute_affected.attribute_name]
 
-			if not attribute_affected.should_apply(_effect, self):
-				continue
+            if not attribute_affected.should_apply(_effect, self):
+                continue
 
-			var considered: AttributeEffect = consider_defense(attribute_affected)
-			print(considered.attribute_name, " ", considered.get_current_value(), " ", considered.value_formula)
-			_attributes_dict[attribute_affected.attribute_name].apply_attribute_effect(considered)
+            var considered: AttributeEffect = consider_defense(attribute_affected)
+            var result: float = _attributes_dict[attribute_affected.attribute_name].apply_attribute_effect(considered)
+            if attribute_affected.attribute_name == "health" and result < 0:
+                if considered.crit:
+                    CombatTextManager.spawn_crit_text(owner, result)
+                else:
+                    CombatTextManager.spawn_normal_text(owner, result)
 
-			attribute_effect_applied.emit(attribute_affected, spec)
-		elif attribute_affected.life_time == AttributeEffect.LIFETIME_TIME_BASED:
-			var timer = Timer.new()
-			var timer_id = timer.get_instance_id()
+            attribute_effect_applied.emit(attribute_affected, spec)
+        elif attribute_affected.life_time == AttributeEffect.LIFETIME_TIME_BASED:
+            var timer = Timer.new()
+            var timer_id = timer.get_instance_id()
 
-			_timeouts_count_dict[timer_id] = 0
+            _timeouts_count_dict[timer_id] = 0
 
-			timer.autostart = true
-			timer.wait_time = attribute_affected.apply_every_second
+            timer.autostart = true
+            timer.wait_time = attribute_affected.apply_every_second
 
-			timer.timeout.connect(func ():
-				var spec = _attributes_dict.get(attribute_affected.attribute_name, null)
-				if not spec:
-					return
+            timer.timeout.connect(func ():
+                var spec = _attributes_dict.get(attribute_affected.attribute_name, null)
+                if not spec:
+                    return
 
-				if not attribute_affected.should_apply(_effect, self):
-					return
+                if not attribute_affected.should_apply(_effect, self):
+                    return
 
-				if attribute_affected.max_applications != 0 and attribute_affected.max_applications == _timeouts_count_dict[timer_id]:
-					attribute_effect_removed.emit(attribute_affected, spec)
-					timer.stop()
-					_timeouts_count_dict.erase(timer_id)
-					remove_child(timer)
-				else:
-					_attributes_dict[attribute_affected.attribute_name].apply_attribute_effect(attribute_affected)
+                if attribute_affected.max_applications != 0 and attribute_affected.max_applications == _timeouts_count_dict[timer_id]:
+                    attribute_effect_removed.emit(attribute_affected, spec)
+                    timer.stop()
+                    _timeouts_count_dict.erase(timer_id)
+                    remove_child(timer)
+                else:
+                    _attributes_dict[attribute_affected.attribute_name].apply_attribute_effect(attribute_affected)
 
-					attribute_effect_applied.emit(attribute_affected, spec)
+                    attribute_effect_applied.emit(attribute_affected, spec)
 
-					if attribute_affected.max_applications != 0:
-						_timeouts_count_dict[timer_id] += 1
-			)
+                    if attribute_affected.max_applications != 0:
+                        _timeouts_count_dict[timer_id] += 1
+            )
 
-			add_child(timer)
+            add_child(timer)
 
-	effect_applied.emit(_effect)
+    effect_applied.emit(_effect)
 
 
 ## Gets an instance of AttributeSpec by it's attribute_name
 func get_attribute_by_name(attribute_name: String) -> AttributeSpec:
-	if _attributes_dict.has(attribute_name):
-		return _attributes_dict.get(attribute_name)
+    if _attributes_dict.has(attribute_name):
+        return _attributes_dict.get(attribute_name)
 
-	return null
+    return null
 
 
 ## Gets all attributes as a dictionary
 ## [br]The dictionary keys are the attribute names and the values are the current buffed value of the attribute.
 func get_attributes_dict() -> Dictionary:
-	var keys = _attributes_dict.keys()
-	var out = {} as Dictionary
+    var keys = _attributes_dict.keys()
+    var out = {} as Dictionary
 
-	for key in keys:
-		var attr = get_attribute_by_name(key)
-		out[key] = attr.current_buffed_value
-	return out
+    for key in keys:
+        var attr = get_attribute_by_name(key)
+        out[key] = attr.current_buffed_value
+    return out

@@ -20,40 +20,40 @@ enum {
 ## LIFETIME_ONE_SHOT [b]0[/b] is equal to a oneshot effect, aka applied once.[br]
 ## LIFETIME_TIME_BASED [b]1[/b] is equal to a time-based effect, applied each [member AttributeEffect.apply_every_second] seconds for a maximum of [member AttributeEffect.max_applications] times
 @export_enum("One-Shot", "Time-Based") var life_time = 0:
-	get:
-		return life_time
-	set(value):
-		life_time = value
-		emit_changed()
+    get:
+        return life_time
+    set(value):
+        life_time = value
+        emit_changed()
 ## If [member life_time] is [b]1[/b], then the effect is applied each seconds as specified by this parameter
 @export var apply_every_second := 1.0:
-	get:
-		return apply_every_second
-	set(value):
-		apply_every_second = value
-		emit_changed()
+    get:
+        return apply_every_second
+    set(value):
+        apply_every_second = value
+        emit_changed()
 ## If [member life_time] is [b]1[/b], then the effect is applied each seconds as specified by [member apply_every_second] for a maximum of times specified by this parameter
 @export var max_applications := 1:
-	get:
-		return max_applications
-	set(value):
-		max_applications = value
-		emit_changed()
+    get:
+        return max_applications
+    set(value):
+        max_applications = value
+        emit_changed()
 
 @export_category("Attribute modifier")
 @export_enum("Value modification", "Value buff", "Max value increase") var applies_as = 0:
-	get:
-		return applies_as
-	set(value):
-		applies_as = value
-		emit_changed()
+    get:
+        return applies_as
+    set(value):
+        applies_as = value
+        emit_changed()
 ## The attribute name to mutate
 @export var attribute_name := "":
-	get:
-		return attribute_name
-	set(value):
-		attribute_name = value
-		emit_changed()
+    get:
+        return attribute_name
+    set(value):
+        attribute_name = value
+        emit_changed()
 ## The minimum value.
 ## [br]Can be negative
 const INPUT_STATS: PackedStringArray = ["INT", "AGI", "STR", "DMG"]
@@ -61,32 +61,32 @@ const INPUT_STATS_FULL_NAMES: PackedStringArray = ["intellect", "agility", "stre
 var stats: GameplayAttributeMap = null
 
 @export var value_formula: String = "":
-	set(value):
-		value_formula = value
-		emit_changed()
+    set(value):
+        value_formula = value
+        emit_changed()
 @export var minimum_value := 0.0:
-	get:
-		return minimum_value
-	set(value):
-		minimum_value = value
-		emit_changed()
+    get:
+        return minimum_value
+    set(value):
+        minimum_value = value
+        emit_changed()
 ## The minimum value.
 ## [br]Can be negative
 @export var maximum_value := 0.0:
-	get:
-		return maximum_value
-	set(value):
-		maximum_value = value
-		emit_changed()
+    get:
+        return maximum_value
+    set(value):
+        maximum_value = value
+        emit_changed()
 @export_group("Pipeline")
 ## If it is set, it will call [method AttributeEffectCondition.should_apply]
 @export var condition: AttributeEffectCondition = null:
-	get:
-		return condition
-	set(value):
-		condition = value
-		emit_changed()
-
+    get:
+        return condition
+    set(value):
+        condition = value
+        emit_changed()
+var crit: bool = false
 
 ## Gets the computed current value.[br]
 ##
@@ -94,39 +94,40 @@ var stats: GameplayAttributeMap = null
 ## [br] - [member minimum_value] and [member maximum_value] if minimum_value is less than maximum
 ## [br] - [member maximum_value] and [member minimum_value] if minimum_value is greater than maximum
 func get_current_value() -> float:
-	if not value_formula.is_empty() and stats != null:
-		var e: Expression = Expression.new()
-		e.parse(value_formula, INPUT_STATS)
-		var stat_array: Array = []
-		for i in range(INPUT_STATS.size()):
-			var attr = stats.get_attribute_by_name(INPUT_STATS_FULL_NAMES[i])
-			if attr:
-				stat_array.append(attr.current_buffed_value)
-			else:
-				stat_array.append(0)
-		var result: int = roundf(e.execute(stat_array))
-		if stats._attributes_dict.has("crit_chance") and stats._attributes_dict.has("crit_value"):
-			if stats._attributes_dict["crit_chance"] > randi_range(0, 100):
-				return roundf(result * stats._attributes_dict["crit_value"] / 100)
+    if not value_formula.is_empty() and stats != null:
+        var e: Expression = Expression.new()
+        e.parse(value_formula, INPUT_STATS)
+        var stat_array: Array = []
+        for i in range(INPUT_STATS.size()):
+            var attr = stats.get_attribute_by_name(INPUT_STATS_FULL_NAMES[i])
+            if attr:
+                stat_array.append(attr.current_buffed_value)
+            else:
+                stat_array.append(0)
+        var result: int = roundf(e.execute(stat_array))
+        if stats._attributes_dict.has("crit_chance") and stats._attributes_dict.has("crit_value"):
+            if stats._attributes_dict["crit_chance"] > randi_range(0, 100):
+                crit = true
+                return roundf(result * stats._attributes_dict["crit_value"] / 100)
 
-		return result
-	
-	if minimum_value < maximum_value:
-		return randf_range(minimum_value, maximum_value)
-	elif minimum_value > maximum_value:
-		return randf_range(maximum_value, minimum_value)
-	else:
-		return minimum_value
+        return result
+
+    if minimum_value < maximum_value:
+        return randf_range(minimum_value, maximum_value)
+    elif minimum_value > maximum_value:
+        return randf_range(maximum_value, minimum_value)
+    else:
+        return minimum_value
 
 
 ## Checks if the current attribute effect can be applied
 func should_apply(gameplay_effect: GameplayEffect, gameplay_attribute_map: GameplayAttributeMap) -> bool:
-	if condition == null:
-		return true
+    if condition == null:
+        return true
 
-	if condition.has_method("should_apply"):
-		return condition.should_apply(self, gameplay_effect, gameplay_attribute_map)
+    if condition.has_method("should_apply"):
+        return condition.should_apply(self, gameplay_effect, gameplay_attribute_map)
 
-	printerr("condition has not a method should_apply(attribute_effect: AttributeEffect, effect: GameplayEffect, gameplay_attributes: GameplayAttributeMap) -> bool")
+    printerr("condition has not a method should_apply(attribute_effect: AttributeEffect, effect: GameplayEffect, gameplay_attributes: GameplayAttributeMap) -> bool")
 
-	return true
+    return true
