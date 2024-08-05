@@ -26,13 +26,16 @@ func _ready() -> void:
 func spawn_normal_text(text_owner: Node3D, amount: int) -> void:
     var text: CombatText = get_first_normal_text()
     text.text = str(amount)
+    text.crit = false
     text.visible = true
     text.text_owner = text_owner
 
 
 func spawn_crit_text(text_owner: Node3D, amount: int) -> void:
+    printerr("crit")
     var text: CombatText = get_first_crit_text()
     text.text = str(amount)
+    text.crit = true
     text.visible = true
     text.text_owner = text_owner
 

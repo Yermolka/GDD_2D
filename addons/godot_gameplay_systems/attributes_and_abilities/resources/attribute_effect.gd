@@ -105,10 +105,10 @@ func get_current_value() -> float:
             else:
                 stat_array.append(0)
         var result: int = roundf(e.execute(stat_array))
-        if stats._attributes_dict.has("crit_chance") and stats._attributes_dict.has("crit_value"):
-            if stats._attributes_dict["crit_chance"] > randi_range(0, 100):
+        if stats._attributes_dict.has("crit_chance") and stats._attributes_dict.has("crit_multiplier"):
+            if stats._attributes_dict["crit_chance"].current_buffed_value > randf_range(0.0, 1.0):
                 crit = true
-                return roundf(result * stats._attributes_dict["crit_value"] / 100)
+                return roundf(result * stats._attributes_dict["crit_multiplier"].current_buffed_value)
 
         return result
 
