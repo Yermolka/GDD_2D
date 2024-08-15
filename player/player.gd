@@ -2,6 +2,7 @@ class_name Player extends Entity
 
 signal current_xp_changed(value: int, maxValue: int)
 signal level_changed(value: int)
+signal death
 
 @onready var attribute_map: GameplayAttributeMap = $GameplayAttributeMap
 @onready var inventory: Inventory = $Inventory
@@ -27,6 +28,7 @@ var unlocked_passives: Array[String] = []
 @onready var forward: Vector3 = get_viewport().get_camera_3d().global_transform.basis.z
 @onready var player_screen_pos: Vector2 = get_viewport().get_camera_3d().unproject_position(global_position)
 @onready var mesh: Node3D = $Model
+var health_regen_amount: int = 10
 
 @export_group("Animation")
 @export var mesh_anim: AnimationPlayer
@@ -41,6 +43,9 @@ var movement_speed: float:
 		return SPEED * attribute_map.get_attribute_by_name("movement_speed").current_buffed_value / 100.0
 	set(value):
 		attribute_map.get_attribute_by_name("movement_speed").current_value = value
+var alive: bool:
+	get:
+		return attribute_map.get_attribute_by_name("health").current_buffed_value > 0
 
 
 ## For loading only
@@ -82,6 +87,10 @@ func _setup_attr_map() -> void:
 	attribute_map.attribute_changed.connect(
 		func (attr: AttributeSpec) -> void:
 			print(attr.attribute_name, ": ", attr.current_buffed_value, "/", attr.maximum_value)
+			if attr.attribute_name == "health" and attr.current_buffed_value <= 0:
+				death.emit()
+				$HealthRegenTimer.stop()
+				ability_container.add_tag(GDDSkill.DEAD_TAG)
 	)
 	attribute_map.attribute_effect_applied.connect(
 		func (_attribute_effect: AttributeEffect, attribute: AttributeSpec) -> void:
@@ -205,7 +214,10 @@ func _ready() -> void:
 	await get_tree().physics_frame
 
 	forward = get_viewport().get_camera_3d().global_transform.basis.z
-	
+
+	CutsceneScriptManager.cutscene_started.connect(func () -> void: process_mode = Node.PROCESS_MODE_DISABLED)
+	CutsceneScriptManager.cutscene_finished.connect(func () -> void: process_mode = Node.PROCESS_MODE_INHERIT)
+
 
 func _quest_update(type: String, key: String, value: Variant, requester: QuestCondition) -> void:
 	if type != "has_item":
@@ -224,6 +236,11 @@ func _quest_update(type: String, key: String, value: Variant, requester: QuestCo
 
 
 func _physics_process(_delta: float) -> void:
+	if not alive:
+		return
+
+	$RayCast3D.target_position = to_local(camera.last_ray_position)
+
 	_process_movement()
 	_process_input()
 
@@ -248,9 +265,16 @@ func _process_input() -> void:
 	if Input.is_physical_key_pressed(KEY_B):
 		print(unlocked_passives)
 
+	if Input.is_action_just_pressed("interact"):
+		var pickups: Array[PickableItem3D]
+		pickups.assign(get_tree().get_nodes_in_group("pick_up"))
+		for p: PickableItem3D in pickups:
+			p.pick(inventory)
+
 
 func _process_movement() -> void:
-	look_at(camera.last_ray_position)
+	if camera.last_ray_position:
+		look_at(camera.last_ray_position)
 	global_rotation.z = 0
 	global_rotation.x = 0
 
@@ -335,7 +359,7 @@ func deserialize(body: Dictionary) -> void:
 		var new_item: ItemBase = load(item_dict.resource_path)
 		new_item.quantity_current = item_dict.quantity
 		inventory.call_deferred("add_item", new_item)
-	
+
 	for item_dict: Dictionary in inventory_data.equipped_items:
 		if item_dict.resource_path == null:
 			continue
@@ -349,3 +373,17 @@ func deserialize(body: Dictionary) -> void:
 	typed_tags.assign(body.ability_container_tags)
 
 	ability_container.tags = typed_tags
+
+
+func _on_health_regen_timer_timeout() -> void:
+	var attr: AttributeSpec = attribute_map.get_attribute_by_name("health")
+	if attr.current_buffed_value != attr.maximum_value:
+		attr.current_value += health_regen_amount
+
+
+func resurrect() -> void:
+	$HealthRegenTimer.start(1.0)
+	global_position = Globals.last_save_position
+	blackboard.erase_value("played_dead_anim")
+	ability_container.remove_tag(GDDSkill.DEAD_TAG)
+	attribute_map.get_attribute_by_name("health").current_value = 9999

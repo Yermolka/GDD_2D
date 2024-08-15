@@ -1,6 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://oeyilr4l43u1"]
+[gd_scene load_steps=10 format=3 uid="uid://oeyilr4l43u1"]
 
 [ext_resource type="Script" path="res://abilities/scenes/fireball/fireball.gd" id="1_of2kb"]
+[ext_resource type="AudioStream" uid="uid://brltm3nixmmn8" path="res://abilities/sounds/magic_projectile_cast.wav" id="2_8mum5"]
+[ext_resource type="AudioStream" uid="uid://jtlhkgvs7p7e" path="res://abilities/sounds/magic_projectile_impact.wav" id="3_jg0m1"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_lvgrm"]
 radius = 0.2
@@ -10,7 +12,7 @@ height = 0.4
 albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tur13"]
-radius = 0.2
+radius = 0.32344
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3nnfb"]
 lifetime_randomness = 0.71
@@ -37,6 +39,8 @@ collision_mask = 516
 priority = 1
 script = ExtResource("1_of2kb")
 speed = 20.0
+cast_sound = ExtResource("2_8mum5")
+impact_sound = ExtResource("3_jg0m1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_lvgrm")
@@ -51,3 +55,8 @@ lifetime = 0.4
 visibility_aabb = AABB(-0.001, -0.001, -0.001, 0.002, 0.002, 0.002)
 process_material = SubResource("ParticleProcessMaterial_3nnfb")
 draw_pass_1 = SubResource("BoxMesh_0kjv0")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(1, 0, 0, 1)
+omni_range = 2.074
+omni_attenuation = 0.138696

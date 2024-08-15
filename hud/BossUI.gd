@@ -5,7 +5,7 @@ class_name BossUI extends Control
 
 func _ready() -> void:
 	EventBus.boss_fight_started.connect(
-		func (boss: Enemy) -> void:
+		func (boss: Entity) -> void:
 			show()
 			var hp: AttributeSpec = boss.attribute_map.get_attribute_by_name("health")
 			progress_bar.max_value = hp.maximum_value

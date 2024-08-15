@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://clxev2qpwdhhu"]
+[gd_scene load_steps=29 format=3 uid="uid://clxev2qpwdhhu"]
 
 [ext_resource type="Script" path="res://hud/passive_tree/passive_tree.gd" id="1_fimo3"]
 [ext_resource type="Script" path="res://hud/passive_tree/unlock_passive_btn.gd" id="1_rce8t"]
@@ -9,8 +9,10 @@
 [ext_resource type="Resource" uid="uid://kfdpl04udldy" path="res://abilities/passive/intellect_increase.tres" id="5_7sl5o"]
 [ext_resource type="Resource" uid="uid://12vb0jtrruel" path="res://abilities/passive/mana_regen_increase.tres" id="6_t75hb"]
 [ext_resource type="Texture2D" uid="uid://drne034gi842h" path="res://abilities/images/passive_increase_intellect.png" id="7_fmjnx"]
+[ext_resource type="Texture2D" uid="uid://3juhu0vqm6bo" path="res://hud/images/passive_available.png" id="7_oxl7d"]
 [ext_resource type="Resource" uid="uid://40l0me0mhnat" path="res://abilities/passive/concentration_resource.tres" id="7_pm0ij"]
 [ext_resource type="Resource" uid="uid://bsv1fm86a5lma" path="res://abilities/passive/move_speed_increase.tres" id="8_74uji"]
+[ext_resource type="Texture2D" uid="uid://b6rtw5n7wreeo" path="res://hud/images/passive_unavailable.png" id="8_83rxb"]
 [ext_resource type="Texture2D" uid="uid://bin2vmboalnkr" path="res://abilities/images/passive_increase_mana_regen.png" id="9_8wnqg"]
 [ext_resource type="Resource" uid="uid://cx5xey37ofyma" path="res://abilities/passive/crit_chance_increase.tres" id="9_jba7g"]
 [ext_resource type="Resource" uid="uid://1wwnlafa0kkg" path="res://abilities/passive/crit_damage_increase.tres" id="10_o1jkk"]
@@ -85,6 +87,32 @@ offset_bottom = 0.999992
 texture = ExtResource("3_tbyra")
 script = ExtResource("4_s4o3o")
 
+[node name="Available" type="TextureRect" parent="Panel/UnlockMana"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("7_oxl7d")
+
+[node name="Unavailable" type="TextureRect" parent="Panel/UnlockMana"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("8_83rxb")
+
 [node name="IntellectIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
@@ -103,6 +131,32 @@ stretch_mode = 0
 script = ExtResource("1_rce8t")
 passive = ExtResource("5_7sl5o")
 
+[node name="Available" type="TextureRect" parent="Panel/IntellectIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("7_oxl7d")
+
+[node name="Unavailable" type="TextureRect" parent="Panel/IntellectIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("8_83rxb")
+
 [node name="ManaRegenIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
@@ -120,6 +174,32 @@ ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_rce8t")
 passive = ExtResource("6_t75hb")
+
+[node name="Available" type="TextureRect" parent="Panel/ManaRegenIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("7_oxl7d")
+
+[node name="Unavailable" type="TextureRect" parent="Panel/ManaRegenIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("8_83rxb")
 
 [node name="UnlockConcentration" type="TextureButton" parent="Panel"]
 layout_mode = 1
@@ -158,6 +238,32 @@ anchor_bottom = 0.125
 texture = ExtResource("3_tbyra")
 script = ExtResource("4_s4o3o")
 
+[node name="Available" type="TextureRect" parent="Panel/UnlockConcentration"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("7_oxl7d")
+
+[node name="Unavailable" type="TextureRect" parent="Panel/UnlockConcentration"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("8_83rxb")
+
 [node name="MoveSpeedIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
@@ -175,6 +281,32 @@ ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_rce8t")
 passive = ExtResource("8_74uji")
+
+[node name="Available" type="TextureRect" parent="Panel/MoveSpeedIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("7_oxl7d")
+
+[node name="Unavailable" type="TextureRect" parent="Panel/MoveSpeedIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("8_83rxb")
 
 [node name="CritChanceIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
@@ -205,6 +337,32 @@ offset_right = -2.00001
 texture = ExtResource("3_tbyra")
 script = ExtResource("4_s4o3o")
 
+[node name="Available" type="TextureRect" parent="Panel/CritChanceIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("7_oxl7d")
+
+[node name="Unavailable" type="TextureRect" parent="Panel/CritChanceIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("8_83rxb")
+
 [node name="CritDamageIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
@@ -222,6 +380,32 @@ ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_rce8t")
 passive = ExtResource("10_o1jkk")
+
+[node name="Available" type="TextureRect" parent="Panel/CritDamageIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("7_oxl7d")
+
+[node name="Unavailable" type="TextureRect" parent="Panel/CritDamageIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("8_83rxb")
 
 [node name="UnlockRage" type="TextureButton" parent="Panel"]
 layout_mode = 1
@@ -261,6 +445,32 @@ anchor_bottom = 0.175
 texture = ExtResource("3_tbyra")
 script = ExtResource("4_s4o3o")
 
+[node name="Available" type="TextureRect" parent="Panel/UnlockRage"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("7_oxl7d")
+
+[node name="Unavailable" type="TextureRect" parent="Panel/UnlockRage"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("8_83rxb")
+
 [node name="StrengthIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
@@ -290,6 +500,32 @@ offset_right = -2.00001
 texture = ExtResource("3_tbyra")
 script = ExtResource("4_s4o3o")
 
+[node name="Available" type="TextureRect" parent="Panel/StrengthIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("7_oxl7d")
+
+[node name="Unavailable" type="TextureRect" parent="Panel/StrengthIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("8_83rxb")
+
 [node name="DefenseIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
@@ -308,6 +544,32 @@ stretch_mode = 0
 script = ExtResource("1_rce8t")
 passive = ExtResource("13_f2kux")
 
+[node name="Available" type="TextureRect" parent="Panel/DefenseIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("7_oxl7d")
+
+[node name="Unavailable" type="TextureRect" parent="Panel/DefenseIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("8_83rxb")
+
 [node name="BaseDamageIncrease" type="TextureButton" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
@@ -325,3 +587,29 @@ ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_rce8t")
 passive = ExtResource("14_rj272")
+
+[node name="Available" type="TextureRect" parent="Panel/BaseDamageIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("7_oxl7d")
+
+[node name="Unavailable" type="TextureRect" parent="Panel/BaseDamageIncrease"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.033
+anchor_top = -0.044
+anchor_right = 1.044
+anchor_bottom = 1.033
+offset_left = -0.0300004
+offset_top = -0.0399387
+offset_right = 0.0400162
+offset_bottom = 0.0300598
+texture = ExtResource("8_83rxb")

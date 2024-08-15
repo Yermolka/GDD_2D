@@ -1,0 +1,73 @@
+[gd_resource type="Resource" script_class="QuestResource" load_steps=14 format=3 uid="uid://c67ylrkycctxs"]
+
+[ext_resource type="Script" path="res://addons/questify/scripts/model/quest_resource.gd" id="1_gx4wn"]
+[ext_resource type="Script" path="res://addons/questify/scripts/model/quest_start.gd" id="1_qnucy"]
+[ext_resource type="Script" path="res://addons/questify/scripts/model/quest_edge.gd" id="2_kboij"]
+[ext_resource type="Script" path="res://addons/questify/scripts/model/quest_objective.gd" id="3_22why"]
+[ext_resource type="Script" path="res://addons/questify/scripts/model/quest_condition.gd" id="4_7krsj"]
+[ext_resource type="Script" path="res://addons/questify/scripts/model/quest_end.gd" id="5_45njm"]
+
+[sub_resource type="Resource" id="Resource_lcwkm"]
+script = ExtResource("1_qnucy")
+name = "Dungeon"
+description = ""
+id = "ofy5oMakyi"
+optional = false
+graph_editor_position = Vector2(286, 251)
+graph_editor_size = Vector2(280, 470)
+
+[sub_resource type="Resource" id="Resource_vdsyf"]
+script = ExtResource("3_22why")
+description = "Pick up your weapon"
+id = "mdJHrbYZjz"
+optional = false
+graph_editor_position = Vector2(880, 580)
+graph_editor_size = Vector2(468, 483)
+
+[sub_resource type="Resource" id="Resource_48c4h"]
+script = ExtResource("2_kboij")
+from = SubResource("Resource_lcwkm")
+to = SubResource("Resource_vdsyf")
+edge_type = 0
+
+[sub_resource type="Resource" id="Resource_ekl4s"]
+script = ExtResource("4_7krsj")
+type = "has_item"
+key = "Test Weapon"
+id = "zdbyJy_nlH"
+optional = false
+graph_editor_position = Vector2(300, 780)
+graph_editor_size = Vector2(377, 309)
+metadata/value = 1.0
+
+[sub_resource type="Resource" id="Resource_wvfsr"]
+script = ExtResource("2_kboij")
+from = SubResource("Resource_ekl4s")
+to = SubResource("Resource_vdsyf")
+edge_type = 1
+
+[sub_resource type="Resource" id="Resource_28orx"]
+script = ExtResource("5_45njm")
+id = "o003O4rEws"
+optional = false
+graph_editor_position = Vector2(1529.73, 660.135)
+graph_editor_size = Vector2(141, 78)
+
+[sub_resource type="Resource" id="Resource_kbc03"]
+script = ExtResource("2_kboij")
+from = SubResource("Resource_vdsyf")
+to = SubResource("Resource_28orx")
+edge_type = 0
+
+[resource]
+script = ExtResource("1_gx4wn")
+nodes = Array[Resource("res://addons/questify/scripts/model/quest_node.gd")]([SubResource("Resource_lcwkm"), SubResource("Resource_vdsyf"), SubResource("Resource_28orx"), SubResource("Resource_ekl4s")])
+edges = Array[ExtResource("2_kboij")]([SubResource("Resource_48c4h"), SubResource("Resource_wvfsr"), SubResource("Resource_kbc03")])
+required_level = 0
+remove_items_on_complete = true
+global_requirements = {}
+global_vars_on_turn_in = {}
+reward_xp = 0
+reward_currency = 0
+reward_guaranteed_items = Array[Resource("res://items/item_base.gd")]([])
+reward_choice_items = Array[Resource("res://items/item_base.gd")]([])

@@ -9,10 +9,10 @@ class_name AttributeEffect extends Resource
 
 
 enum {
-	## The effect will be applied once
-	LIFETIME_ONE_SHOT = 0,
-	## The effect will be applied each tot seconds
-	LIFETIME_TIME_BASED = 1,
+    ## The effect will be applied once
+    LIFETIME_ONE_SHOT = 0,
+    ## The effect will be applied each tot seconds
+    LIFETIME_TIME_BASED = 1,
 }
 
 @export_category("Effect life-time")
@@ -94,6 +94,8 @@ var crit: bool = false
 ## [br] - [member minimum_value] and [member maximum_value] if minimum_value is less than maximum
 ## [br] - [member maximum_value] and [member minimum_value] if minimum_value is greater than maximum
 func get_current_value() -> float:
+    crit = false
+
     if not value_formula.is_empty() and stats != null:
         var e: Expression = Expression.new()
         e.parse(value_formula, INPUT_STATS)
@@ -105,12 +107,12 @@ func get_current_value() -> float:
             else:
                 stat_array.append(0)
         var result: int = roundf(e.execute(stat_array))
+        var crit_mult: float = 1.0
         if stats._attributes_dict.has("crit_chance") and stats._attributes_dict.has("crit_multiplier"):
             if stats._attributes_dict["crit_chance"].current_buffed_value > randf_range(0.0, 1.0):
+                crit_mult = stats._attributes_dict["crit_multiplier"].current_buffed_value
                 crit = true
-                return roundf(result * stats._attributes_dict["crit_multiplier"].current_buffed_value)
-
-        return result
+        return roundf(result * crit_mult)
 
     if minimum_value < maximum_value:
         return randf_range(minimum_value, maximum_value)

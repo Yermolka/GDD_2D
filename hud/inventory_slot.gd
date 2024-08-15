@@ -25,6 +25,8 @@ var item: ItemBase:
 
 var equipment: Equipment
 var inventory: Inventory
+@export var sound: AudioStream
+
 
 func _on_gui_input(event: InputEvent) -> void:
     if item == null:
@@ -94,3 +96,5 @@ func _on_mouse_exited() -> void:
 func _on_mouse_entered() -> void:
     $slot_default.visible = false
     $slot_active.visible = true
+    if item != null:
+        AudioManager.play_sound(sound)

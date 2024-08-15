@@ -1,0 +1,65 @@
+[gd_resource type="Resource" script_class="NonTargetedSkill" load_steps=6 format=3 uid="uid://3mvkb4xieprh"]
+
+[ext_resource type="Script" path="res://abilities/NonTargetedActiveSkill.gd" id="1_2pax0"]
+[ext_resource type="PackedScene" uid="uid://btyxefhixuim" path="res://abilities/scenes/exploding_ball/exploding_ball.tscn" id="1_8krgc"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="1_yvg03"]
+
+[sub_resource type="Resource" id="Resource_e7c0w"]
+script = ExtResource("1_yvg03")
+life_time = 0
+apply_every_second = 1.0
+max_applications = 1
+applies_as = 0
+attribute_name = "health"
+value_formula = ""
+minimum_value = -10.0
+maximum_value = -25.0
+
+[sub_resource type="Resource" id="Resource_a7bnv"]
+script = ExtResource("1_yvg03")
+life_time = 1
+apply_every_second = 0.25
+max_applications = 8
+applies_as = 0
+attribute_name = "health"
+value_formula = ""
+minimum_value = -1.0
+maximum_value = -3.0
+
+[resource]
+script = ExtResource("1_2pax0")
+projectile_scene = ExtResource("1_8krgc")
+projectile_speed = 1000.0
+resource_costs = {}
+min_range = 0.0
+max_range = 0.0
+cast_time = 0.0
+instant_effects = Array[ExtResource("1_yvg03")]([SubResource("Resource_e7c0w"), SubResource("Resource_a7bnv")])
+instant_timed_effects = Array[ExtResource("1_yvg03")]([])
+timed_effects_duration = 3.0
+chance_effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])
+generator_effects = Array[ExtResource("1_yvg03")]([])
+instant_self_effects = Array[ExtResource("1_yvg03")]([])
+instant_self_timed_effects = Array[ExtResource("1_yvg03")]([])
+instant_self_timed_effects_duration = 1.0
+self_chance_effects = Array[Resource("res://addons/godot_gameplay_systems/attributes_and_abilities/resources/chance_attribute_effect.gd")]([])
+ui_description = ""
+ui_name = "Exploding Ball"
+cooldown_duration = 2.0
+cooldown_continuos = false
+grant_automatic = true
+grant_tags = Array[String]([])
+grant_tags_required = Array[String]([])
+tags_activation = Array[String]([])
+tags_activation_required = Array[String]([])
+tags_block = Array[String]([])
+tags_cancellation_required = Array[String]([])
+tags_cooldown_start = Array[String]([])
+tags_cooldown_end = Array[String]([])
+tags_end_blocking = Array[String]([])
+tags_to_remove_on_activation = Array[String]([])
+tags_to_remove_on_block = Array[String]([])
+tags_to_remove_on_cancellation = Array[String]([])
+tags_to_remove_on_cooldown_start = Array[String]([])
+tags_to_remove_on_cooldown_end = Array[String]([])
+tags_to_remove_on_end = Array[String]([])

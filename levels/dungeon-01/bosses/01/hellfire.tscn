@@ -1,0 +1,52 @@
+[gd_scene load_steps=10 format=3 uid="uid://cq85vo1f1nr78"]
+
+[ext_resource type="Script" path="res://levels/dungeon-01/bosses/01/hellfire.gd" id="1_bblak"]
+[ext_resource type="Texture2D" uid="uid://cxfy3v83r43w1" path="res://addons/godot_gameplay_systems/inventory_system/assets/RadialMenuIcon.png" id="2_bwndb"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_effect.gd" id="3_ownua"]
+[ext_resource type="Resource" uid="uid://xltm11epb5ep" path="res://stats/player_attributes.tres" id="4_pjkii"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="5_5amru"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qlmp0"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_68s0k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xha11"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="Resource" id="Resource_701ar"]
+script = ExtResource("5_5amru")
+life_time = 0
+apply_every_second = 0.0
+max_applications = 0
+applies_as = 0
+attribute_name = "health"
+value_formula = ""
+minimum_value = -30.0
+maximum_value = -50.0
+
+[node name="Hellfire" type="Area3D"]
+script = ExtResource("1_bblak")
+remove_self_on_apply = false
+remove_effects_on_apply = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.88208, 0)
+shape = SubResource("SphereShape3D_qlmp0")
+
+[node name="Decal" type="Decal" parent="CollisionShape3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0452881, -2.03735, 0)
+layers = 3
+size = Vector3(1.90942, 6.07471, 2)
+texture_albedo = ExtResource("2_bwndb")
+modulate = Color(1, 0, 0, 1)
+cull_mask = 1048573
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+layers = 2
+mesh = SubResource("SphereMesh_68s0k")
+surface_material_override/0 = SubResource("StandardMaterial3D_xha11")
+
+[node name="GameplayEffect" type="Node" parent="."]
+script = ExtResource("3_ownua")
+table = ExtResource("4_pjkii")
+attributes_affected = Array[ExtResource("5_5amru")]([SubResource("Resource_701ar")])

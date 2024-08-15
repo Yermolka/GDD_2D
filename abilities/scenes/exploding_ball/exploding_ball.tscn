@@ -1,0 +1,78 @@
+[gd_scene load_steps=8 format=3 uid="uid://btyxefhixuim"]
+
+[ext_resource type="Script" path="res://abilities/scenes/exploding_ball/exploding_ball.gd" id="1_oio8s"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lvhkt"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_2klso"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qqt71"]
+albedo_color = Color(1, 0.156863, 0.14902, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_t1se7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ayym"]
+transparency = 1
+albedo_color = Color(1, 0.517647, 1, 0.4)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kw5y6"]
+
+[node name="ExplodingBall" type="Area3D"]
+collision_layer = 192
+collision_mask = 512
+monitoring = false
+monitorable = false
+script = ExtResource("1_oio8s")
+apply_once_per_target = false
+remove_self_on_apply = false
+remove_effects_on_apply = false
+
+[node name="Ball1" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09976, 0)
+visible = false
+shape = SubResource("SphereShape3D_lvhkt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball1"]
+mesh = SubResource("SphereMesh_2klso")
+surface_material_override/0 = SubResource("StandardMaterial3D_qqt71")
+
+[node name="Ball2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09976, 0)
+visible = false
+shape = SubResource("SphereShape3D_lvhkt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball2"]
+mesh = SubResource("SphereMesh_2klso")
+surface_material_override/0 = SubResource("StandardMaterial3D_qqt71")
+
+[node name="Ball3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09976, 0)
+visible = false
+shape = SubResource("SphereShape3D_lvhkt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball3"]
+mesh = SubResource("SphereMesh_2klso")
+surface_material_override/0 = SubResource("StandardMaterial3D_qqt71")
+
+[node name="Ball4" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09976, 0)
+visible = false
+shape = SubResource("SphereShape3D_lvhkt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball4"]
+mesh = SubResource("SphereMesh_2klso")
+surface_material_override/0 = SubResource("StandardMaterial3D_qqt71")
+
+[node name="FirstBall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.76274, 0)
+mesh = SubResource("SphereMesh_t1se7")
+surface_material_override/0 = SubResource("StandardMaterial3D_2ayym")
+
+[node name="Area3D" type="Area3D" parent="FirstBall"]
+collision_layer = 256
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FirstBall/Area3D"]
+shape = SubResource("SphereShape3D_kw5y6")
+
+[connection signal="body_entered" from="FirstBall/Area3D" to="." method="_on_first_ball_body_entered"]

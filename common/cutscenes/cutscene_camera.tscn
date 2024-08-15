@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://btuq4qnci5gnm"]
+
+[ext_resource type="Script" path="res://common/cutscenes/cutscene_camera.gd" id="1_k7spy"]
+
+[node name="CutsceneCamera" type="Camera3D"]
+script = ExtResource("1_k7spy")

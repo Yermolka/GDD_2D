@@ -1,0 +1,293 @@
+[gd_scene load_steps=32 format=3 uid="uid://cj3yfn3rapnwj"]
+
+[ext_resource type="MeshLibrary" uid="uid://c2hkxgfka4klr" path="res://world/tiles-snow.tres" id="1_ay4o0"]
+[ext_resource type="Script" path="res://levels/dungeon-01/dungeon.gd" id="1_ijj6w"]
+[ext_resource type="Script" path="res://common/CameraController.gd" id="2_tsts1"]
+[ext_resource type="PackedScene" uid="uid://cultyql87ixvl" path="res://player/player.tscn" id="3_gj1es"]
+[ext_resource type="PackedScene" uid="uid://bao5ifn05pung" path="res://items/item_drop3d.tscn" id="4_yf1d4"]
+[ext_resource type="Script" path="res://items/weapon.gd" id="5_ibksv"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence_reactive.gd" id="5_onfcn"]
+[ext_resource type="Script" path="res://addons/skilltreeeditor/models/skill_tree_data.gd" id="6_hr2lb"]
+[ext_resource type="Script" path="res://enemies/ai_scripts/bh_is_dead.gd" id="6_m1lad"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/resources/attribute_effect.gd" id="7_5gsrq"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/succeeder.gd" id="7_dio2x"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="8_jh8bd"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/blackboard_compare.gd" id="9_11uem"]
+[ext_resource type="PackedScene" uid="uid://go78bvph3a0n" path="res://levels/dungeon-01/bosses/dungeon_boss_1.tscn" id="9_a5k7x"]
+[ext_resource type="Script" path="res://player/bh_play_player_animation.gd" id="10_7xv2r"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/effected_area3d.gd" id="10_8ty5p"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/blackboard_set.gd" id="11_cor13"]
+[ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_effect.gd" id="11_fe0wa"]
+[ext_resource type="Resource" uid="uid://xltm11epb5ep" path="res://stats/player_attributes.tres" id="12_6xh0w"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_6blm4"]
+vertices = PackedVector3Array(-1.9, 0.3, -37.05, 0.849999, 0.3, -37.3, 0.849999, 0.3, -44.3, -13.9, 0.3, -44.3, -2.9, 0.3, -26.3, -1.9, 0.3, -31.8, -1.9, 0.3, -37.05, -13.9, 0.3, -44.3, -13.9, 0.3, -26.05, 0.849999, 0.3, -44.3, 0.849999, 0.3, -37.3, 3.35, 0.3, -37.3, 3.35, 0.3, -37.3, 3.6, 0.3, -35.55, 13.85, 0.3, -35.8, 3.35, 0.3, -37.3, 13.85, 0.3, -35.8, 13.85, 0.3, -44.3, 0.849999, 0.3, -44.3, -0.900001, -1.2, -36.3, -0.900001, -1.2, -32.55, 2.6, -1.2, -32.55, 2.6, -1.2, -36.3, 3.6, 0.3, -31.8, 3.1, 0.3, -31.55, 4.6, 0.3, -26.3, 3.6, 0.3, -35.55, 3.6, 0.3, -31.8, 4.6, 0.3, -26.3, 13.85, 0.3, -26.05, 13.85, 0.3, -35.8, 4.1, 0.3, -26.05, 4.6, 0.3, -26.3, 3.1, 0.3, -31.55, -1.9, 0.3, -31.8, -2.9, 0.3, -26.3, -2.4, 0.3, -26.05, -2.4, 0.3, -26.05, -2.4, 0.3, -24.05, 4.1, 0.3, -24.05, 4.1, 0.3, -26.05, 3.1, 0.3, -31.55, -1.9, 0.3, -31.8, -2.4, 0.3, -12.8, 4.1, 0.3, -12.8, 4.1, 0.3, -24.05, -2.4, 0.3, -24.05, 4.35, 0.3, -9.3, 4.1, 0.3, -12.8, -2.4, 0.3, -12.8, -2.65, 0.3, -9.3, 7.35, 0.3, -9.05, 4.35, 0.3, -9.3, -2.65, 0.3, -9.3, -5.65, 0.3, -9.05, -5.65, 0.3, 4.2, 7.35, 0.3, 4.2, -8.4, 0.3, -11.3, -3.9, 0.3, -11.55, -3.9, 0.3, -12.3, -13.9, 0.3, -12.3, -13.9, 0.3, 4.45, -8.4, 0.3, 4.45, -8.4, 0.3, -11.3, -13.9, 0.3, -12.3, 5.35, 0.3, -12.3, 5.35, 0.3, -11.55, 10.1, 0.3, -11.3, 13.85, 0.3, -12.3, 13.85, 0.3, 4.45, 13.85, 0.3, -12.3, 10.1, 0.3, -11.3, 9.85, 0.3, 4.45, -6.65, 3.55, -9.8, -3.65, 3.55, -10.05, -3.65, 3.55, -10.55, -7.4, 3.55, -10.55, -6.65, 3.55, -9.8, -7.4, 3.55, -10.55, -7.4, 3.55, 5.7, -6.4, 3.55, 5.2, 5.1, 3.55, -10.55, 5.1, 3.55, -10.05, 8.35, 3.55, -9.8, 9.1, 3.55, -10.55, 9.1, 3.55, 5.7, 8.35, 3.55, 4.95, -6.4, 3.55, 5.2, -7.4, 3.55, 5.7, 9.1, 3.55, 5.7, 9.1, 3.55, -10.55, 8.35, 3.55, -9.8, 8.35, 3.55, 4.95, -8.4, 0.3, 6.45, -8.4, 0.3, 4.45, -13.9, 0.3, 4.45, -6.9, 0.3, 13.95, -6.65, 0.3, 6.7, -8.4, 0.3, 6.45, -13.9, 0.3, 13.95, -6.9, 0.3, 13.95, -8.4, 0.3, 6.45, -13.9, 0.3, 4.45, 13.85, 0.3, 4.45, 9.85, 0.3, 4.45, 9.6, 0.3, 6.7, 13.85, 0.3, 13.95, 9.6, 0.3, 6.7, -6.65, 0.3, 6.7, -6.9, 0.3, 13.95, 13.85, 0.3, 13.95)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 8), PackedInt32Array(6, 8, 7), PackedInt32Array(11, 10, 9), PackedInt32Array(14, 13, 12), PackedInt32Array(16, 15, 17), PackedInt32Array(17, 15, 18), PackedInt32Array(22, 21, 19), PackedInt32Array(19, 21, 20), PackedInt32Array(25, 24, 23), PackedInt32Array(27, 26, 28), PackedInt32Array(28, 26, 29), PackedInt32Array(29, 26, 30), PackedInt32Array(33, 32, 31), PackedInt32Array(36, 35, 34), PackedInt32Array(40, 39, 41), PackedInt32Array(41, 39, 42), PackedInt32Array(42, 39, 37), PackedInt32Array(37, 39, 38), PackedInt32Array(46, 45, 43), PackedInt32Array(43, 45, 44), PackedInt32Array(48, 47, 49), PackedInt32Array(49, 47, 50), PackedInt32Array(52, 51, 53), PackedInt32Array(53, 51, 54), PackedInt32Array(54, 51, 56), PackedInt32Array(54, 56, 55), PackedInt32Array(58, 57, 59), PackedInt32Array(59, 57, 60), PackedInt32Array(62, 61, 63), PackedInt32Array(63, 61, 64), PackedInt32Array(66, 65, 67), PackedInt32Array(67, 65, 68), PackedInt32Array(72, 71, 69), PackedInt32Array(69, 71, 70), PackedInt32Array(74, 73, 75), PackedInt32Array(75, 73, 76), PackedInt32Array(80, 79, 77), PackedInt32Array(77, 79, 78), PackedInt32Array(82, 81, 83), PackedInt32Array(83, 81, 84), PackedInt32Array(86, 85, 87), PackedInt32Array(87, 85, 88), PackedInt32Array(92, 91, 89), PackedInt32Array(89, 91, 90), PackedInt32Array(95, 94, 93), PackedInt32Array(98, 97, 96), PackedInt32Array(100, 99, 101), PackedInt32Array(101, 99, 102), PackedInt32Array(104, 103, 105), PackedInt32Array(105, 103, 106), PackedInt32Array(108, 107, 109), PackedInt32Array(109, 107, 110)]
+
+[sub_resource type="Resource" id="Resource_sxf73"]
+script = ExtResource("6_hr2lb")
+nodes = Array[Dictionary]([{
+"connections_to": Array[String](["RxDZWlwzR8", "AoqY48M-Ml"]),
+"graph_editor_position": Vector2(281.286, 297.08),
+"graph_editor_size": Vector2(252, 94),
+"id": "sSa6MCO0VX",
+"node_name": &"SkillRootNode",
+"position": Vector2(105.184, 0),
+"skill": "res://abilities/active/fireball.tres"
+}, {
+"connections_to": Array[String]([]),
+"graph_editor_position": Vector2(176.102, 206.923),
+"graph_editor_size": Vector2(282, 121),
+"id": "RxDZWlwzR8",
+"node_name": &"@GraphNode@157696",
+"position": Vector2(0, -90.1578),
+"skill": "res://abilities/active/shadowbolt.tres"
+}, {
+"connections_to": Array[String]([]),
+"graph_editor_position": Vector2(581.812, 297.08),
+"graph_editor_size": Vector2(306, 94),
+"id": "xcicbakWaC",
+"node_name": &"@GraphNode@157702",
+"position": Vector2(405.71, 0),
+"skill": "res://abilities/active/arcane_explosion.tres"
+}, {
+"connections_to": Array[String]([]),
+"graph_editor_position": Vector2(431.549, 206.923),
+"graph_editor_size": Vector2(313, 121),
+"id": "AoqY48M-Ml",
+"node_name": &"@GraphNode@157719",
+"position": Vector2(255.447, -90.1578),
+"skill": "res://abilities/upgrades/fireball_upgrade.tres"
+}])
+connections = Array[Dictionary]([{
+"from_node": &"SkillRootNode",
+"from_port": 0,
+"to_node": &"@GraphNode@157696",
+"to_port": 0
+}, {
+"from_node": &"SkillRootNode",
+"from_port": 0,
+"to_node": &"@GraphNode@157719",
+"to_port": 0
+}])
+learned_skills = Array[int]([])
+
+[sub_resource type="Resource" id="Resource_xgee3"]
+script = ExtResource("7_5gsrq")
+life_time = 0
+apply_every_second = 1.0
+max_applications = 1
+applies_as = 2
+attribute_name = "health"
+value_formula = ""
+minimum_value = 50.0
+maximum_value = 50.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ygjik"]
+load_path = "res://.godot/imported/weapon_staff.png-890c36c3af0c4fd3718e9b355e2c51d6.ctex"
+
+[sub_resource type="Resource" id="Resource_8i65t"]
+script = ExtResource("5_ibksv")
+skill_tree = SubResource("Resource_sxf73")
+skill_points = 10
+level = 1
+current_xp = 0
+xp_map = Array[int]([0, 10])
+stats = Array[ExtResource("7_5gsrq")]([SubResource("Resource_xgee3")])
+required_level = 0
+ui_icon = SubResource("CompressedTexture2D_ygjik")
+desription = ""
+name = &"Test Weapon"
+can_stack = false
+decrease_stack_on_use = false
+tags = Array[String](["equipment.weapon"])
+quantity_current = 1
+quantity_max = 1
+tags_added_on_activation = Array[String]([])
+tags_added_on_add = Array[String]([])
+tags_added_on_equip = Array[String](["weapon.two_handed"])
+tags_added_on_remove = Array[String]([])
+tags_added_on_unequip = Array[String]([])
+tags_required_to_activate = Array[String]([])
+tags_required_to_add = Array[String]([])
+tags_required_to_equip = Array[String]([])
+tags_required_to_remove = Array[String]([])
+tags_required_to_unequip = Array[String]([])
+tags_removed_on_activation = Array[String]([])
+tags_removed_on_add = Array[String]([])
+tags_removed_on_equip = Array[String]([])
+tags_removed_on_remove = Array[String]([])
+tags_removed_on_unequip = Array[String](["weapon.two_handed"])
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_snqdc"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="Resource" id="Resource_52o08"]
+script = ExtResource("7_5gsrq")
+life_time = 0
+apply_every_second = 0.0
+max_applications = 0
+applies_as = 0
+attribute_name = "health"
+value_formula = ""
+minimum_value = -10000.0
+maximum_value = -10000.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wikho"]
+size = Vector3(29, 5, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1v7wj"]
+size = Vector3(7, 2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jwtlf"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.196078)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mc5gw"]
+size = Vector3(7, 2.5, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h1yke"]
+size = Vector3(5, 0.1, 5)
+
+[node name="Dungeon" type="Node3D"]
+script = ExtResource("1_ijj6w")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_6blm4")
+
+[node name="GridMap" type="GridMap" parent="NavigationRegion3D"]
+mesh_library = ExtResource("1_ay4o0")
+cell_size = Vector3(1.6, 1.6, 1.6)
+cell_center_y = false
+collision_layer = 4
+data = {
+"cells": PackedInt32Array(-5, 65530, 1048597, -5, 65531, 1048597, -5, 65532, 1048597, -5, 65533, 1048597, -5, 65534, 1048597, -5, 65535, 1048597, -5, 0, 1048597, -5, 1, 1048597, -5, 2, 1048597, -5, 3, 1048597, -4, 65530, 1048597, -4, 65531, 1048597, -4, 65532, 1048597, -4, 65533, 1048597, -4, 65534, 1048597, -4, 65535, 1048597, -4, 0, 1048597, -4, 1, 1048597, -4, 2, 1048597, -4, 3, 1048597, -3, 65530, 1048597, -3, 65531, 1048597, -3, 65532, 1048597, -3, 65533, 1048597, -3, 65534, 1048597, -3, 65535, 1048597, -3, 0, 1048597, -3, 1, 1048597, -3, 2, 1048597, -3, 3, 1048597, -2, 65530, 1048597, -2, 65531, 1048597, -2, 65532, 1048597, -2, 65533, 1048597, -2, 65534, 1048597, -2, 65535, 1048597, -2, 0, 1048597, -2, 1, 1048597, -2, 2, 1048597, -2, 3, 1048597, -1, 65533, 1048597, -1, 65534, 1048597, -1, 65535, 1048597, -1, 0, 1048597, -1, 1, 1048597, -1, 2, 1048597, -1, 3, 1048597, -65536, 65530, 1048597, -65536, 65531, 1048597, -65536, 65532, 1048597, -65536, 65533, 1048597, -65536, 65534, 1048597, -65536, 65535, 1048597, -65536, 0, 1048597, -65536, 1, 1048597, -65536, 2, 1048597, -65536, 3, 1048597, -65535, 65530, 1048597, -65535, 65531, 1048597, -65535, 65532, 1048597, -65535, 65533, 1048597, -65535, 65534, 1048597, -65535, 65535, 1048597, -65535, 0, 1048597, -65535, 1, 1048597, -65535, 2, 1048597, -65535, 3, 1048597, -65534, 65530, 1048597, -65534, 65531, 1048597, -65534, 65532, 1048597, -65534, 65533, 1048597, -65534, 65534, 1048597, -65534, 65535, 1048597, -65534, 0, 1048597, -65534, 1, 1048597, -65534, 2, 1048597, -65534, 3, 1048597, -65533, 65530, 1048597, -65533, 65531, 1048597, -65533, 65532, 1048597, -65533, 65533, 1048597, -65533, 65534, 1048597, -65533, 65535, 1048597, -65533, 0, 1048597, -65533, 1, 1048597, -65533, 2, 1048597, -65533, 3, 1048597, -65532, 65530, 1048597, -65532, 65531, 1048597, -65532, 65532, 1048597, -65532, 65533, 1048597, -65532, 65534, 1048597, -65532, 65535, 1048597, -65532, 0, 1048597, -65532, 1, 1048597, -65532, 2, 1048597, -65532, 3, 1048597, -65531, 65530, 1048597, -65531, 65531, 1048597, -65531, 65532, 1048597, -65531, 65533, 1048597, -65531, 65534, 1048597, -65531, 65535, 1048597, -65531, 0, 1048597, -65531, 1, 1048597, -65531, 2, 1048597, -65531, 3, 1048597, 65531, 65530, 655384, 65531, 65531, 655384, 65531, 65532, 655384, 65531, 65533, 655384, 65531, 65534, 655384, 65531, 65535, 655384, 65531, 0, 655384, 65531, 1, 655384, 65531, 2, 655384, 65531, 3, 655383, 65532, 3, 1441816, 65533, 3, 1441816, 65534, 3, 1441816, 65535, 3, 1441816, 0, 3, 1441816, 1, 3, 1441816, 2, 3, 1441816, 3, 3, 1441816, 4, 3, 1441816, 5, 2, 24, 5, 1, 24, 5, 0, 24, 5, 65535, 24, 5, 65534, 24, 5, 65533, 24, 5, 65532, 24, 5, 65531, 24, 5, 65530, 24, 5, 3, 1441815, -65530, 65529, 1441813, -65530, 65530, 1441813, -65530, 65531, 1441813, -65530, 65532, 1441813, -65530, 65533, 1441813, -65530, 65534, 1441813, -65530, 65535, 1441813, -65530, 0, 1441813, -65530, 1, 1441813, -65530, 2, 1441813, -65530, 3, 1441813, -65529, 65529, 1441813, -65529, 65530, 1441813, -65529, 65531, 1441813, -65529, 65532, 1441813, -65529, 65533, 1441813, -65529, 65534, 1441813, -65529, 65535, 1441813, -65529, 0, 1441813, -65529, 1, 1441813, -65529, 2, 1441813, -65529, 3, 1441813, -65528, 65529, 1441813, -65528, 65530, 1441813, -65528, 65531, 1441813, -65528, 65532, 1441813, -65528, 65533, 1441813, -65528, 65534, 1441813, -65528, 65535, 1441813, -65528, 0, 1441813, -65528, 1, 1441813, -65528, 2, 1441813, -65528, 3, 1441813, -5, 4, 1441813, -5, 5, 1441813, -5, 6, 1441813, -5, 7, 1441813, -5, 8, 1441813, -4, 4, 1441813, -4, 5, 1441813, -4, 6, 1441813, -4, 7, 1441813, -4, 8, 1441813, -3, 4, 1441813, -3, 5, 1441813, -3, 6, 1441813, -3, 7, 1441813, -3, 8, 1441813, -2, 4, 1441813, -2, 5, 1441813, -2, 6, 1441813, -2, 7, 1441813, -2, 8, 1441813, -1, 4, 1441813, -1, 5, 1441813, -1, 6, 1441813, -1, 7, 1441813, -1, 8, 1441813, -65536, 4, 1441813, -65536, 5, 1441813, -65536, 6, 1441813, -65536, 7, 1441813, -65536, 8, 1441813, -65535, 4, 1441813, -65535, 5, 1441813, -65535, 6, 1441813, -65535, 7, 1441813, -65535, 8, 1441813, -65534, 4, 1441813, -65534, 5, 1441813, -65534, 6, 1441813, -65534, 7, 1441813, -65534, 8, 1441813, -65533, 4, 1441813, -65533, 5, 1441813, -65533, 6, 1441813, -65533, 7, 1441813, -65533, 8, 1441813, -65532, 4, 1441813, -65532, 5, 1441813, -65532, 6, 1441813, -65532, 7, 1441813, -65532, 8, 1441813, -65531, 4, 1441813, -65531, 5, 1441813, -65531, 6, 1441813, -65531, 7, 1441813, -65531, 8, 1441813, -65530, 4, 1441813, -65530, 5, 1441813, -65530, 6, 1441813, -65530, 7, 1441813, -65530, 8, 1441813, -65529, 4, 1441813, -65529, 5, 1441813, -65529, 6, 1441813, -65529, 7, 1441813, -65529, 8, 1441813, -65528, 4, 1441813, -65528, 5, 1441813, -65528, 6, 1441813, -65528, 7, 1441813, -65528, 8, 1441813, -9, 65530, 1441813, -9, 65531, 1441813, -9, 65532, 1441813, -9, 65533, 1441813, -9, 65534, 1441813, -9, 65535, 1441813, -9, 0, 1441813, -9, 1, 1441813, -9, 2, 1441813, -9, 3, 1441813, -8, 65530, 1441813, -8, 65531, 1441813, -8, 65532, 1441813, -8, 65533, 1441813, -8, 65534, 1441813, -8, 65535, 1441813, -8, 0, 1441813, -8, 1, 1441813, -8, 2, 1441813, -8, 3, 1441813, -7, 65530, 1441813, -7, 65531, 1441813, -7, 65532, 1441813, -7, 65533, 1441813, -7, 65534, 1441813, -7, 65535, 1441813, -7, 0, 1441813, -7, 1, 1441813, -7, 2, 1441813, -7, 3, 1441813, -6, 65530, 1441813, -6, 65531, 1441813, -6, 65532, 1441813, -6, 65533, 1441813, -6, 65534, 1441813, -6, 65535, 1441813, -6, 0, 1441813, -6, 1, 1441813, -6, 2, 1441813, -6, 3, 1441813, -9, 4, 1441813, -9, 5, 1441813, -9, 6, 1441813, -9, 7, 1441813, -9, 8, 1441813, -8, 4, 1441813, -8, 5, 1441813, -8, 6, 1441813, -8, 7, 1441813, -8, 8, 1441813, -7, 4, 1441813, -7, 5, 1441813, -7, 6, 1441813, -7, 7, 1441813, -7, 8, 1441813, -6, 4, 1441813, -6, 5, 1441813, -6, 6, 1441813, -6, 7, 1441813, -6, 8, 1441813, -1, 65532, 1048597, -1, 65531, 1048597, -1, 65530, 1048597, -9, 65528, 1441813, -9, 65529, 1441813, -8, 65528, 1441813, -8, 65529, 1441813, -7, 65528, 1441813, -7, 65529, 1441813, -6, 65528, 1441813, -6, 65529, 1441813, -5, 65528, 1441813, -5, 65529, 1441813, -4, 65528, 1441813, -4, 65529, 1441813, -3, 65528, 1441813, -3, 65529, 1441813, -2, 65528, 1441813, -2, 65529, 1441813, -1, 65528, 1441813, -1, 65529, 1441813, -65536, 65528, 1441813, -65536, 65529, 1441813, -65535, 65528, 1441813, -65535, 65529, 1441813, -65534, 65528, 1441813, -65534, 65529, 1441813, -65533, 65528, 1441813, -65533, 65529, 1441813, -65532, 65528, 1441813, -65532, 65529, 1441813, -65531, 65528, 1441813, -65531, 65529, 1441813, -65530, 65528, 1441813, -65529, 65528, 1441813, -65528, 65528, 1441813, 65532, 65529, 1048595, 65533, 65529, 18, 4, 65529, 1048595, 3, 65529, 1048594, 65531, 65529, 1048594, 5, 65529, 18, -65535, 65527, 20, -65536, 65527, 20, -1, 65527, 20, -65534, 65527, 20, -2, 65527, 20, -2, 65520, 20, -2, 65521, 20, -2, 65522, 20, -2, 65523, 20, -2, 65524, 20, -2, 65525, 20, -2, 65526, 20, -1, 65520, 20, -1, 65521, 20, -1, 65522, 20, -1, 65523, 20, -1, 65524, 20, -1, 65525, 20, -1, 65526, 20, -65536, 65520, 20, -65536, 65521, 20, -65536, 65522, 20, -65536, 65523, 20, -65536, 65524, 20, -65536, 65525, 20, -65536, 65526, 20, -65535, 65520, 20, -65535, 65521, 20, -65535, 65522, 20, -65535, 65523, 20, -65535, 65524, 20, -65535, 65525, 20, -65535, 65526, 20, -65534, 65520, 20, -65534, 65521, 20, -65534, 65522, 20, -65534, 65523, 20, -65534, 65524, 20, -65534, 65525, 20, -65534, 65526, 20, 2, 65527, 36, 2, 65526, 36, 2, 65525, 36, 2, 65528, 36, 65534, 65528, 655396, 65534, 65527, 655396, 65534, 65526, 655396, 65534, 65525, 655396, 65534, 65524, 655396, 65534, 65523, 655396, 65534, 65522, 655396, 65534, 65521, 655396, 65534, 65520, 655396, 2, 65524, 36, 2, 65523, 36, 2, 65522, 36, 2, 65521, 36, 2, 65520, 36, -9, 65508, 655380, -9, 65509, 655380, -9, 65510, 655380, -9, 65511, 655380, -9, 65512, 655380, -9, 65513, 655380, -9, 65514, 655380, -9, 65515, 655380, -9, 65516, 655380, -9, 65517, 655380, -9, 65518, 655380, -9, 65519, 655380, -8, 65508, 655380, -8, 65509, 655380, -8, 65510, 655380, -8, 65511, 655380, -8, 65512, 655380, -8, 65513, 655380, -8, 65514, 655380, -8, 65515, 655380, -8, 65516, 655380, -8, 65517, 655380, -8, 65518, 655380, -8, 65519, 655380, -7, 65508, 655380, -7, 65509, 655380, -7, 65510, 655380, -7, 65511, 655380, -7, 65512, 655380, -7, 65513, 655380, -7, 65514, 655380, -7, 65515, 655380, -7, 65516, 655380, -7, 65517, 655380, -7, 65518, 655380, -7, 65519, 655380, -6, 65508, 655380, -6, 65509, 655380, -6, 65510, 655380, -6, 65511, 655380, -6, 65512, 655380, -6, 65513, 655380, -6, 65514, 655380, -6, 65515, 655380, -6, 65516, 655380, -6, 65517, 655380, -6, 65518, 655380, -6, 65519, 655380, -5, 65508, 655380, -5, 65509, 655380, -5, 65510, 655380, -5, 65511, 655380, -5, 65512, 655380, -5, 65513, 655380, -5, 65514, 655380, -5, 65515, 655380, -5, 65516, 655380, -5, 65517, 655380, -5, 65518, 655380, -5, 65519, 655380, -4, 65508, 655380, -4, 65509, 655380, -4, 65510, 655380, -4, 65511, 20, -4, 65512, 20, -4, 65513, 20, -4, 65514, 20, -4, 65515, 20, -4, 65516, 20, -4, 65517, 20, -4, 65518, 655380, -4, 65519, 655380, -3, 65508, 655380, -3, 65509, 655380, -3, 65510, 655380, -3, 65511, 20, -3, 65517, 20, -3, 65518, 655380, -3, 65519, 655380, -2, 65508, 655380, -2, 65509, 655380, -2, 65510, 655380, -2, 65511, 20, -2, 65517, 20, -2, 65518, 655380, -2, 65519, 655380, -1, 65508, 655380, -1, 65509, 655380, -1, 65510, 655380, -1, 65511, 20, -1, 65517, 20, -1, 65518, 655380, -1, 65519, 655380, -65536, 65508, 655380, -65536, 65509, 655380, -65536, 65510, 655380, -65536, 65511, 20, -65536, 65517, 20, -65536, 65518, 655380, -65536, 65519, 655380, -65535, 65508, 655380, -65535, 65509, 655380, -65535, 65510, 20, -65535, 65511, 20, -65535, 65517, 20, -65535, 65518, 655380, -65535, 65519, 655380, -65534, 65508, 655380, -65534, 65509, 655380, -65534, 65510, 20, -65534, 65518, 655380, -65534, 65519, 655380, -65533, 65508, 655380, -65533, 65509, 655380, -65533, 65510, 655380, -65533, 65511, 655380, -65533, 65512, 655380, -65533, 65514, 655380, -65533, 65515, 655380, -65533, 65516, 655380, -65533, 65517, 655380, -65533, 65518, 655380, -65533, 65519, 655380, -65532, 65508, 655380, -65532, 65509, 655380, -65532, 65510, 655380, -65532, 65511, 655380, -65532, 65512, 655380, -65532, 65513, 655380, -65532, 65514, 655380, -65532, 65515, 655380, -65532, 65516, 655380, -65532, 65517, 655380, -65532, 65518, 655380, -65532, 65519, 655380, -65531, 65508, 655380, -65531, 65509, 655380, -65531, 65510, 655380, -65531, 65511, 655380, -65531, 65512, 655380, -65531, 65513, 655380, -65531, 65514, 655380, -65531, 65515, 655380, -65531, 65516, 655380, -65531, 65517, 655380, -65531, 65518, 655380, -65531, 65519, 655380, -65530, 65508, 655380, -65530, 65509, 655380, -65530, 65510, 655380, -65530, 65511, 655380, -65530, 65512, 655380, -65530, 65513, 655380, -65530, 65514, 655380, -65530, 65515, 655380, -65530, 65516, 655380, -65530, 65517, 655380, -65530, 65518, 655380, -65530, 65519, 655380, -65529, 65508, 655380, -65529, 65509, 655380, -65529, 65510, 655380, -65529, 65511, 655380, -65529, 65512, 655380, -65529, 65513, 655380, -65529, 65514, 655380, -65529, 65515, 655380, -65529, 65516, 655380, -65529, 65517, 655380, -65529, 65518, 655380, -65529, 65519, 655380, -65528, 65508, 655380, -65528, 65509, 655380, -65528, 65510, 655380, -65528, 65511, 655380, -65528, 65512, 655380, -65528, 65513, 655380, -65528, 65514, 655380, -65528, 65515, 655380, -65528, 65516, 655380, -65528, 65517, 655380, -65528, 65518, 655380, -65528, 65519, 655380, 131075, 65529, 1179667, 131076, 65529, 1179667, 131077, 65530, 524307, 131077, 65531, 524307, 131077, 65532, 524307, 131077, 65533, 524307, 131077, 65534, 524307, 131077, 65535, 524307, 131077, 0, 524307, 131077, 1, 524307, 131077, 2, 524307, 131076, 3, 1310739, 131075, 3, 1310739, 131074, 3, 1310739, 131073, 3, 1310739, 131072, 3, 1310739, 196607, 3, 1310739, 196606, 3, 1310739, 196605, 3, 1310739, 196604, 3, 1310739, 196603, 1, 131091, 196603, 0, 131091, 196603, 65535, 131091, 196603, 65534, 131091, 196603, 65533, 131091, 196603, 65532, 131091, 196603, 65531, 131091, 196604, 65529, 1179667, 196605, 65529, 1179667, 196603, 65530, 131091, 196603, 2, 131091, 196603, 3, 1310738, 196603, 65529, 131090, 131077, 65529, 1179666, 131077, 3, 524306, -65534, 65517, 20, -65534, 65511, 20, -65533, 65513, 20, -3, 65512, 20, -3, 65513, 20, -3, 65514, 20, -3, 65515, 20, -3, 65516, 20, -65534, 65512, 20, -65534, 65513, 20, -65534, 65514, 20, -65534, 65515, 20, -65534, 65516, 20, -65535, 65516, 20, -65536, 65516, 20, -1, 65516, 20, -2, 65515, 20, -2, 65516, 20, -2, 65512, 20, -2, 65513, 20, -2, 65514, 20, -1, 65512, 20, -65536, 65512, 20, -65535, 65512, 20, -65538, 65511, 10, -65538, 65512, 10, -65538, 65513, 10, -65538, 65514, 10, -65538, 65515, 10, -65537, 65511, 10, -65537, 65512, 10, -65537, 65513, 10, -65537, 65514, 10, -65537, 65515, 10, -131072, 65511, 10, -131072, 65512, 10, -131072, 65513, 10, -131072, 65514, 10, -131072, 65515, 10, -131071, 65511, 10, -131071, 65512, 10, -131071, 65513, 10, -131071, 65514, 10, -131071, 65515, 10, -131070, 65511, 10, -131070, 65512, 10, -131070, 65513, 10, -131070, 65514, 10, -131070, 65515, 10, -131069, 65511, 10, -131069, 65512, 10, -131069, 65513, 10, -131069, 65514, 10, -131069, 65515, 10)
+}
+metadata/_editor_floor_ = Vector3(0, -2, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+projection = 1
+current = true
+size = 15.0
+script = ExtResource("2_tsts1")
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
+collision_mask = 1031
+
+[node name="Player" parent="." instance=ExtResource("3_gj1es")]
+
+[node name="Body-Global" parent="Player/Model/World-Global" index="1"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -2, 2.31415, 3.50341)
+
+[node name="Arm1-Global" parent="Player/Model/World-Global/Body-Global" index="1"]
+transform = Transform3D(-0.0147779, 0.999882, -0.00395962, 0.965813, 0.0152992, 0.258789, 0.258819, 1.02445e-07, -0.965926, 2.9853, 4.9606, 0.648134)
+
+[node name="Arm2-Global" parent="Player/Model/World-Global/Body-Global" index="2"]
+transform = Transform3D(-0.0287641, -0.99939, 0.0198084, -0.823098, 0.0349249, 0.566825, -0.56717, -5.02914e-08, -0.823601, -3, 4, 0)
+
+[node name="Head-Global" parent="Player/Model/World-Global/Body-Global" index="3"]
+transform = Transform3D(1, -1.36346e-06, 0, 1.36346e-06, 1, 0, 0, 0, 1, 0, 5.65, 1.71661e-06)
+
+[node name="Leg1-Global" parent="Player/Model/World-Global/Body-Global" index="4"]
+transform = Transform3D(1, 0, 0, 0, 0.996194, 0.0871557, 0, -0.0871557, 0.996194, -3, 0, -1)
+
+[node name="Leg2-Global" parent="Player/Model/World-Global/Body-Global" index="5"]
+transform = Transform3D(1, 0, 0, 0, 0.996195, 0.0871549, 0, -0.0871549, 0.996195, 3, 0, -1)
+
+[node name="Dead" type="Node" parent="Player/BeehaveTree/SelectorReactiveComposite" index="0"]
+script = ExtResource("5_onfcn")
+
+[node name="IsDead" type="Node" parent="Player/BeehaveTree/SelectorReactiveComposite/Dead"]
+script = ExtResource("6_m1lad")
+
+[node name="AlwaysSucceedDecorator" type="Node" parent="Player/BeehaveTree/SelectorReactiveComposite/Dead"]
+script = ExtResource("7_dio2x")
+
+[node name="SequenceComposite" type="Node" parent="Player/BeehaveTree/SelectorReactiveComposite/Dead/AlwaysSucceedDecorator"]
+script = ExtResource("8_jh8bd")
+
+[node name="BlackboardCompareCondition" type="Node" parent="Player/BeehaveTree/SelectorReactiveComposite/Dead/AlwaysSucceedDecorator/SequenceComposite"]
+script = ExtResource("9_11uem")
+left_operand = "get_value(\"played_dead_anim\")"
+right_operand = "null"
+
+[node name="PlayPlayerAnimation" type="Node" parent="Player/BeehaveTree/SelectorReactiveComposite/Dead/AlwaysSucceedDecorator/SequenceComposite"]
+script = ExtResource("10_7xv2r")
+anim_name = "Dead"
+
+[node name="BlackboardSetAction" type="Node" parent="Player/BeehaveTree/SelectorReactiveComposite/Dead/AlwaysSucceedDecorator/SequenceComposite"]
+script = ExtResource("11_cor13")
+key = "\"played_dead_anim\""
+value = "true"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5.98913, 0)
+shadow_enabled = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.947839, -7)
+omni_attenuation = 0.77462
+
+[node name="ItemDrop" parent="." instance=ExtResource("4_yf1d4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.17729)
+item = SubResource("Resource_8i65t")
+
+[node name="DungeonBoss1" parent="." instance=ExtResource("9_a5k7x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.553467, -0.42476, -34.5)
+
+[node name="EffectedArea3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.76831, 0)
+collision_layer = 192
+collision_mask = 512
+script = ExtResource("10_8ty5p")
+remove_self_on_apply = false
+remove_effects_on_apply = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EffectedArea3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0924988, -1.84772, -16.2095)
+shape = SubResource("BoxShape3D_snqdc")
+
+[node name="GameplayEffect" type="Node" parent="EffectedArea3D"]
+script = ExtResource("11_fe0wa")
+table = ExtResource("12_6xh0w")
+attributes_affected = Array[ExtResource("7_5gsrq")]([SubResource("Resource_52o08")])
+
+[node name="SpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.96733, 0)
+
+[node name="BossArea1" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -35)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BossArea1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_wikho")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BossArea1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.880695, 2, 10.5819)
+mesh = SubResource("BoxMesh_1v7wj")
+surface_material_override/0 = SubResource("StandardMaterial3D_jwtlf")
+
+[node name="Label3D" type="Label3D" parent="BossArea1/MeshInstance3D"]
+text = "GLHF"
+font_size = 100
+
+[node name="StaticBody3D" type="StaticBody3D" parent="BossArea1/MeshInstance3D"]
+collision_layer = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BossArea1/MeshInstance3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.305274, 0)
+shape = SubResource("BoxShape3D_mc5gw")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="BossArea1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.335343, 0)
+collision_layer = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BossArea1/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.772867, 0, 0.546028)
+shape = SubResource("BoxShape3D_h1yke")
+
+[connection signal="body_entered" from="BossArea1" to="." method="_on_boss_area_1_body_entered"]
+[connection signal="body_entered" from="BossArea1" to="DungeonBoss1" method="_on_boss_area_1_body_entered"]
+
+[editable path="Player"]
+[editable path="Player/Model"]

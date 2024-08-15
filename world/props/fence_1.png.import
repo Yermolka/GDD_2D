@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://b0qgog7sp1p8x"
+path.s3tc="res://.godot/imported/fence_1.png-7096f1f70687a506a251f0fe2b1452a6.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "6e29c52bf2f1243d8084502d85371dfb"
+}
+
+[deps]
+
+source_file="res://world/props/fence_1.png"
+dest_files=["res://.godot/imported/fence_1.png-7096f1f70687a506a251f0fe2b1452a6.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

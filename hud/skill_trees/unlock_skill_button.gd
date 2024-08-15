@@ -25,7 +25,7 @@ signal unlock_skill_btn_pressed(btn: UnlockSkillButton)
             texture_normal = upgrade.ui_icon
             _update_tooltip()
             _update_arrows()
-@onready var arrows: Array = get_children()
+@onready var arrows: Array = get_children().filter((func(x: Node) -> bool: return x is UITreeArrow))
 var player: Player:
     get:
         return get_tree().get_first_node_in_group("player")

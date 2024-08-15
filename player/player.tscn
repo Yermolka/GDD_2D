@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://cultyql87ixvl"]
+[gd_scene load_steps=54 format=3 uid="uid://cultyql87ixvl"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_31dcg"]
 [ext_resource type="Resource" uid="uid://bwe1yh7rpxxnt" path="res://abilities/active/teleport.tres" id="2_7daoa"]
@@ -12,7 +12,6 @@
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/inventory.gd" id="7_fdlqo"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/nodes/equipment.gd" id="8_ngsfb"]
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/inventory_system/resources/equipment_slot.gd" id="10_a4fio"]
-[ext_resource type="Resource" uid="uid://dqy2c0g5wqihv" path="res://items/weapons/test_weapon.tres" id="11_qsa7m"]
 [ext_resource type="PackedScene" uid="uid://cxh5dyttaogko" path="res://addons/godot_gameplay_systems/attributes_and_abilities/debug/abilities_debugger.tscn" id="12_2smb5"]
 [ext_resource type="PackedScene" uid="uid://b54ngq6in8rn8" path="res://hud/hud.tscn" id="12_x425h"]
 [ext_resource type="Script" path="res://player/bh_player_blackboard.gd" id="15_2a1oi"]
@@ -23,6 +22,7 @@
 [ext_resource type="Script" path="res://player/bh_play_player_animation.gd" id="20_17bhg"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/delayer.gd" id="21_xi0g0"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/leaves/blackboard_set.gd" id="22_qy5me"]
+[ext_resource type="Texture2D" uid="uid://vyb6ysnvojh" path="res://abilities/texture_sheets/lightning.png" id="24_ijnbt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wwpa3"]
 size = Vector3(5.80646, 1, 1)
@@ -134,7 +134,72 @@ script = ExtResource("10_a4fio")
 name = "scroll"
 accepted_items = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([])
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_vg0h6"]
+atlas = ExtResource("24_ijnbt")
+region = Rect2(0, 0, 128, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l0lhc"]
+atlas = ExtResource("24_ijnbt")
+region = Rect2(128, 0, 128, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6md0"]
+atlas = ExtResource("24_ijnbt")
+region = Rect2(256, 0, 128, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxjwx"]
+atlas = ExtResource("24_ijnbt")
+region = Rect2(384, 0, 128, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0if38"]
+atlas = ExtResource("24_ijnbt")
+region = Rect2(512, 0, 128, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1mod"]
+atlas = ExtResource("24_ijnbt")
+region = Rect2(640, 0, 128, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wb8gl"]
+atlas = ExtResource("24_ijnbt")
+region = Rect2(768, 0, 128, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rav2m"]
+atlas = ExtResource("24_ijnbt")
+region = Rect2(896, 0, 128, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b2fda"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vg0h6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l0lhc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t6md0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxjwx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0if38")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i1mod")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wb8gl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rav2m")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("mesh_anim")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.97849, 0)
 collision_layer = 257
 collision_mask = 22
 axis_lock_angular_x = true
@@ -150,8 +215,14 @@ transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.184872, -1.03503, 0.3
 [node name="Body-Global" parent="Model/World-Global" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, -1.18464e-06, 0, 1.18464e-06, 1, -2, 6, 4)
 
+[node name="Body-Local" parent="Model/World-Global/Body-Global" index="0"]
+layers = 2
+
 [node name="Arm1-Global" parent="Model/World-Global/Body-Global" index="1"]
 transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 3, 4, 1)
+
+[node name="Arm1-Local" parent="Model/World-Global/Body-Global/Arm1-Global" index="0"]
+layers = 2
 
 [node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global/Arm1-Global" index="1"]
 collision_layer = 512
@@ -165,6 +236,9 @@ shape = SubResource("BoxShape3D_wwpa3")
 [node name="Arm2-Global" parent="Model/World-Global/Body-Global" index="2"]
 transform = Transform3D(1, -1.19209e-07, 0, 1.19209e-07, 1, 0, 0, 0, 1, -3, 4, 0)
 
+[node name="Arm2-Local" parent="Model/World-Global/Body-Global/Arm2-Global" index="0"]
+layers = 2
+
 [node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global/Arm2-Global" index="1"]
 collision_layer = 512
 collision_mask = 192
@@ -176,6 +250,9 @@ shape = SubResource("BoxShape3D_f1bgi")
 
 [node name="Head-Global" parent="Model/World-Global/Body-Global" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+
+[node name="Head-Local" parent="Model/World-Global/Body-Global/Head-Global" index="0"]
+layers = 2
 
 [node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global/Head-Global" index="1"]
 collision_layer = 512
@@ -189,6 +266,9 @@ shape = SubResource("BoxShape3D_qd3n3")
 [node name="Leg1-Global" parent="Model/World-Global/Body-Global" index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -1)
 
+[node name="Leg1-Local" parent="Model/World-Global/Body-Global/Leg1-Global" index="0"]
+layers = 2
+
 [node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global/Leg1-Global" index="1"]
 collision_layer = 512
 collision_mask = 192
@@ -200,6 +280,9 @@ shape = SubResource("BoxShape3D_vabiw")
 
 [node name="Leg2-Global" parent="Model/World-Global/Body-Global" index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -1)
+
+[node name="Leg2-Local" parent="Model/World-Global/Body-Global/Leg2-Global" index="0"]
+layers = 2
 
 [node name="HurtBox" type="Area3D" parent="Model/World-Global/Body-Global/Leg2-Global" index="1"]
 collision_layer = 512
@@ -236,9 +319,7 @@ table = ExtResource("5_5fmbk")
 [node name="Inventory" type="Node" parent="."]
 script = ExtResource("7_fdlqo")
 owner_path = NodePath("..")
-equipment_path = NodePath("../Equipment")
 max_size = 25
-items = Array[Resource("res://addons/godot_gameplay_systems/inventory_system/resources/item.gd")]([ExtResource("11_qsa7m")])
 
 [node name="Equipment" type="Node" parent="."]
 script = ExtResource("8_ngsfb")
@@ -252,6 +333,7 @@ ability_container_path = NodePath("../AbilityContainer")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 2.8, 6, 5.15)
+visible = false
 projection = 1
 size = 15.0
 
@@ -341,5 +423,20 @@ wait_time = 0.2
 script = ExtResource("22_qy5me")
 key = "\"attacking\""
 value = "false"
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.0942948, -2.90987)
+sprite_frames = SubResource("SpriteFrames_b2fda")
+autoplay = "default"
+frame = 1
+frame_progress = 0.013892
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -5)
+
+[node name="HealthRegenTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="HealthRegenTimer" to="." method="_on_health_regen_timer_timeout"]
 
 [editable path="Model"]

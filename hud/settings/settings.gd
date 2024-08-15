@@ -78,13 +78,13 @@ func _input(event: InputEvent) -> void:
 			if c.get_script() == null or c is InGameBar:
 				continue
 
-			if c == self:
+			if c == self or c is QuestContainer or c is BossUI:
 				continue
-			
+
 			if c.visible:
 				c.visible = false
 				closed_ui = true
-			
+
 		if closed_ui:
 			return
 

@@ -17,6 +17,8 @@ signal unlock_passive_btn_pressed(btn: UnlockPassiveButton)
             _update_arrows()
 
 @onready var arrows: Array = get_children()
+@onready var available_texture: TextureRect = $Available
+@onready var unavailable_texture: TextureRect = $Unavailable
 
 
 func _ready() -> void:

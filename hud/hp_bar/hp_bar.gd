@@ -2,7 +2,7 @@ class_name HpBar extends Control
 
 @onready var progress_bar: TextureProgressBar = $TextureProgressBar
 @onready var label: Label = $Label
-@onready var enemy: Enemy = get_parent()
+@onready var enemy: Entity = get_parent()
 @onready var camera: CameraController = get_viewport().get_camera_3d()
 
 @export var head_point: Node3D

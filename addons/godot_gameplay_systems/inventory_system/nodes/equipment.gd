@@ -58,14 +58,14 @@ signal tag_removed(tag: String, tags: Array[String])
 
 ## All equipped [Item]s.
 var equipped_items: Array[Item]:
-	get:
-		var items: Array[Item]
+    get:
+        var items: Array[Item]
 
-		for slot in slots:
-			if slot.has_equipped_item:
-				items.append(slot.equipped)
+        for slot in slots:
+            if slot.has_equipped_item:
+                items.append(slot.equipped)
 
-		return items
+        return items
 
 
 ## The related [Inventory] searched by [member Equipment.inventory_path]. 
@@ -74,105 +74,106 @@ var inventory: Inventory
 
 ## Used internally to handle a [signal Inventory.item_activated] signal.
 func _handle_item_activated(item: Item, activation_type: int) -> void:
-	_handle_life_cycle(LifeCycle.Activate, item)
-	item_activated.emit(item, activation_type)
+    _handle_life_cycle(LifeCycle.Activate, item)
+    item_activated.emit(item, activation_type)
 		
 
 ## Used internally to handle a [signal Inventory.item_added] signal.
 func _handle_item_added(item: Item) -> void:
-	if gameplay_equip_automatically:
-		var slot = find_slot_by_item(item)
+    if gameplay_equip_automatically:
+        var slot = find_slot_by_item(item)
 
-		if slot != null and not slot.has_equipped_item:
-			equip(item)
+        if slot != null and not slot.has_equipped_item:
+            inventory.remove_item(item)
+            equip(item)
 
 
 ## Used internally to handle a [signal EquipmentSlot.item_added] signal.
 func _handle_item_equipped(item: Item, slot: EquipmentSlot):
-	equipped.emit(item, slot)
-	item._equip(self, slot)
-	_handle_life_cycle(LifeCycle.Equip, item)
-		
+    equipped.emit(item, slot)
+    item._equip(self, slot)
+    _handle_life_cycle(LifeCycle.Equip, item)
+        
 
 
 ## Used internally to handle a [signal Inventory.item_removed] signal.
 func _handle_item_removed(item: Item) -> void:
 	# unequip(item)
-	_handle_life_cycle(LifeCycle.Remove, item)
+    _handle_life_cycle(LifeCycle.Remove, item)
 
 
 ## Handles tags internally. Do not call it manually.
 func _handle_life_cycle(life_cycle: LifeCycle, item: Item) -> void:
-	match life_cycle:
-		LifeCycle.Activate:
-			add_tags(item.tags_added_on_activation)
-			remove_tags(item.tags_removed_on_activation)
-			return
-		LifeCycle.Equip:
-			add_tags(item.tags_added_on_equip)
-			remove_tags(item.tags_removed_on_equip)
-			return
-		LifeCycle.Remove:
-			add_tags(item.tags_added_on_remove)
-			remove_tags(item.tags_removed_on_remove)
-		LifeCycle.Unequip:
-			add_tags(item.tags_added_on_unequip)
-			remove_tags(item.tags_removed_on_unequip)
-			return
+    match life_cycle:
+        LifeCycle.Activate:
+            add_tags(item.tags_added_on_activation)
+            remove_tags(item.tags_removed_on_activation)
+            return
+        LifeCycle.Equip:
+            add_tags(item.tags_added_on_equip)
+            remove_tags(item.tags_removed_on_equip)
+            return
+        LifeCycle.Remove:
+            add_tags(item.tags_added_on_remove)
+            remove_tags(item.tags_removed_on_remove)
+        LifeCycle.Unequip:
+            add_tags(item.tags_added_on_unequip)
+            remove_tags(item.tags_removed_on_unequip)
+            return
 
 
 ## Used internally to handle a [signal EquipmentSlot.refused_to_equip] signal.
 func _handle_item_refused_to_equip(item: Item, slot: EquipmentSlot):
-	refused_to_equip.emit(item, slot)	
+    refused_to_equip.emit(item, slot)	
 
 
 ## Used internally to handle a [signal EquipmentSlot.item_unequipped] signal.
 func _handle_item_unequipped(item: Item, slot: EquipmentSlot):
-	item._unequip(self, slot)
-	unequipped.emit(item, slot)	
-	inventory.add_item(item)
-	_handle_life_cycle(LifeCycle.Unequip, item)
+    item._unequip(self, slot)
+    unequipped.emit(item, slot)	
+    inventory.add_item(item)
+    _handle_life_cycle(LifeCycle.Unequip, item)
 
 
 ## Binds slots signals
 func _ready() -> void:
-	setup()
+    setup()
 
 
 ## Activates an [Item]. 
 ## [br]If an [Inventory] is bound to this equipment, the [method Inventory.activate] will be called.
 ## [br]Otherwise, the [method Item.activate] method will be called directly.
 func activate(item: Item, activation_type: int = 0) -> void:
-	if inventory:
-		inventory.activate(item, activation_type)
-	else:
-		if can_activate(item, activation_type):
-			item._activate(ItemActivationEvent.new(self, activation_type))
-			item_activated.emit(item, activation_type)
-			_handle_life_cycle(LifeCycle.Activate, item)
+    if inventory:
+        inventory.activate(item, activation_type)
+    else:
+        if can_activate(item, activation_type):
+            item._activate(ItemActivationEvent.new(self, activation_type))
+            item_activated.emit(item, activation_type)
+            _handle_life_cycle(LifeCycle.Activate, item)
 
 
 ## Adds one tag.
 func add_tag(tag: String) -> void:
-	if not tags.has(tag):
-		tags.append(tag)
-		tag_added.emit(tag, tags)
+    if not tags.has(tag):
+        tags.append(tag)
+        tag_added.emit(tag, tags)
 
 
 ## Adds many tags.
 func add_tags(_tags: Array[String]) -> void:
-	for t in _tags:
-		add_tag(t)
+    for t in _tags:
+        add_tag(t)
 
 
 ## Checks if an [Item] can be directly activated by this [Equipment].
 func can_activate(item: Item, activation_type: int) -> bool:
-	if item.tags_required_to_activate.size() > 0:
-		for t in item.tags_required_to_activate:
-			if not tags.has(t):
-				return false
-		
-	return is_equipped(item) and item._can_activate(ItemActivationEvent.new(self, activation_type))
+    if item.tags_required_to_activate.size() > 0:
+        for t in item.tags_required_to_activate:
+            if not tags.has(t):
+                return false
+        
+    return is_equipped(item) and item._can_activate(ItemActivationEvent.new(self, activation_type))
 
 
 ## Checks if an [Item] can be equipped or not based on 
@@ -181,14 +182,14 @@ func can_activate(item: Item, activation_type: int) -> bool:
 ## otherwise it check that all the tags specified are included 
 ## in the current [member Equipment.tags] member.
 func can_equip(item: Item) -> bool:
-	if item.tags_required_to_equip.size() == 0:
-		return true
-		
-	for tag in item.tags_required_to_equip:
-		if not tags.has(tag):
-			return false
-	
-	return true
+    if item.tags_required_to_equip.size() == 0:
+        return true
+        
+    for tag in item.tags_required_to_equip:
+        if not tags.has(tag):
+            return false
+
+    return true
 	
 
 ## Checks if an [Item] can be unequipped or not based on 
@@ -197,39 +198,39 @@ func can_equip(item: Item) -> bool:
 ## otherwise it check that all the tags specified are included 
 ## in the current [member Equipment.tags] member.
 func can_unequip(item: Item) -> bool:
-	if item.tags_required_to_unequip.size() == 0:
-		return true
+    if item.tags_required_to_unequip.size() == 0:
+        return true
 
-	for tag in item.tags_required_to_unequip:
-		if not tags.has(tag):
-			return false
+    for tag in item.tags_required_to_unequip:
+        if not tags.has(tag):
+            return false
 
-	return true
+    return true
 
 
 ## Finds the first suitable [EquipmentSlot] and equips the [Item].
 ## [br]Passing [code]skip_tags_check[/code] to [code]true[/code], 
 ## the check against [member Item.tags_required_to_equip] will be skipped.
 func equip(item: Item, skip_tags_check: bool = false) -> void:
-	var slot = find_slot_by_item(item)
+    var slot = find_slot_by_item(item)
 
-	if not slot:
-		refused_to_equip.emit(item, slot)
-		return
+    if not slot:
+        refused_to_equip.emit(item, slot)
+        return
 
-	if skip_tags_check:
-		if slot.has_equipped_item:
-			slot.unequip()
-		slot.equip(item)
-		return
-	else:
-		if can_equip(item):
-			if slot.has_equipped_item:
-				slot.unequip()
-			slot.equip(item)
-			return
-	
-	refused_to_equip.emit(item, slot)
+    if skip_tags_check:
+        if slot.has_equipped_item:
+            slot.unequip()
+        slot.equip(item)
+        return
+    else:
+        if can_equip(item):
+            if slot.has_equipped_item:
+                slot.unequip()
+            slot.equip(item)
+            return
+
+    refused_to_equip.emit(item, slot)
 
 
 ## Equips the passed [Item] whose slot satisfies a [Callable] predicate.
@@ -245,118 +246,118 @@ func equip(item: Item, skip_tags_check: bool = false) -> void:
 ## [br]Passing [code]skip_tags_check[/code] to [code]true[/code], 
 ## the check against [member Item.tags_required_to_equip] will be skipped.
 func equip_by(item: Item, predicate: Callable, skip_tags_check: bool = false) -> void:
-	var slot = find_slot_by_item(item)
-	
-	if slot == null:
-		refused_to_equip.emit(item, slot)
-		return
-	
-	var predicate_result = predicate.call(slot);
-	
-	if skip_tags_check and predicate_result:
-		slot.equip(item)
-		return
-	
-	if can_equip(item) and predicate_result:
-		slot.equip(item)
-		return
-			
-	refused_to_equip.emit(item, slot)
+    var slot = find_slot_by_item(item)
+
+    if slot == null:
+        refused_to_equip.emit(item, slot)
+        return
+
+    var predicate_result = predicate.call(slot);
+
+    if skip_tags_check and predicate_result:
+        slot.equip(item)
+        return
+
+    if can_equip(item) and predicate_result:
+        slot.equip(item)
+        return
+            
+    refused_to_equip.emit(item, slot)
 		
 
 
 ## Finds the first [Item] which satisfies the [Callable] predicate.
 ## [br]Returns [code]null[/code] if none is found.
 func find_item_by(predicate: Callable) -> Item:
-	for item in equipped_items:
-		if predicate.call(item):
-			return item
-	
-	return null
+    for item in equipped_items:
+        if predicate.call(item):
+            return item
+
+    return null
 
 
 ## Finds the first [EquipmentSlot] which satisfies the [Callable] predicate.
 ## [br]Returns [code]null[/code] if none is found.
 func find_slot_by(predicate: Callable) -> EquipmentSlot:
-	for slot in slots:
-		if predicate.call(slot):
-			return slot
-	return null
+    for slot in slots:
+        if predicate.call(slot):
+            return slot
+    return null
 
 
 ## Finds the first [EquipmentSlot] that can equip the passed [Item].
 func find_slot_by_item(item: Item) -> EquipmentSlot:
-	return find_slot_by(func (x: EquipmentSlot): return x.can_equip(item))
+    return find_slot_by(func (x: EquipmentSlot): return x.can_equip(item))
 
 
 ## Checks if a tag is contained in this [Equipment].
 func has_tag(tag: String) -> bool:
-	return tags.has(tag)
+    return tags.has(tag)
 
 
 
 ## Checks if all these tags are contained in this [Equipment].
 func has_tags(_tags: Array[String]) -> bool:
-	for t in _tags:
-		if not tags.has(t):
-			return false
-	
-	return true
+    for t in _tags:
+        if not tags.has(t):
+            return false
+
+    return true
 
 
 ## Checks if the [Item] is equipped.
 func is_equipped(item: Item) -> bool:
-	var slot = find_slot_by_item(item)
-	
-	if slot == null:
-		return false
-	
-	return slot.has_equipped_item and slot.equipped.name == item.name
+    var slot = find_slot_by_item(item)
+
+    if slot == null:
+        return false
+
+    return slot.has_equipped_item and slot.equipped.name == item.name
 
 
 ## Removes one tag.
 func remove_tag(tag: String) -> void:
-	var index = tags.find(tag)
-	
-	if index >= 0:
-		tags.remove_at(index)
-		tag_removed.emit(tags)
+    var index = tags.find(tag)
+
+    if index >= 0:
+        tags.remove_at(index)
+        tag_removed.emit(tags)
 
 
 ## Removes many tags.
 func remove_tags(_tags: Array[String]) -> void:
-	for t in _tags:
-		remove_tag(t)
+    for t in _tags:
+        remove_tag(t)
 
 
 ## Programmatically setups an [Equipment]
 func setup() -> void:
-	if not inventory_path.is_empty():
-		inventory = get_node(inventory_path) as Inventory
+    if not inventory_path.is_empty():
+        inventory = get_node(inventory_path) as Inventory
 
-	if not Engine.is_editor_hint() and not owner_path.is_empty():
-		var _owner = get_node(owner_path)
-		_owner.set_meta("ggsEquipment", self)
+    if not Engine.is_editor_hint() and not owner_path.is_empty():
+        var _owner = get_node(owner_path)
+        _owner.set_meta("ggsEquipment", self)
 
-	if inventory != null:
-		if not inventory.item_added.is_connected(_handle_item_activated):
-			inventory.item_activated.connect(_handle_item_activated)
+    if inventory != null:
+        if not inventory.item_added.is_connected(_handle_item_activated):
+            inventory.item_activated.connect(_handle_item_activated)
 
-		if not inventory.item_added.is_connected(_handle_item_added):
-			inventory.item_added.connect(_handle_item_added)
-			
-		if not inventory.item_removed.is_connected(_handle_item_removed):
-			inventory.item_removed.connect(_handle_item_removed)
-	
-	for slot in slots:
-		if not slot.item_equipped.is_connected(_handle_item_equipped):
-			slot.item_equipped.connect(_handle_item_equipped)
-		
-		if not slot.item_refused_to_equip.is_connected(_handle_item_refused_to_equip):
-			slot.item_refused_to_equip.connect(_handle_item_refused_to_equip)
+        if not inventory.item_added.is_connected(_handle_item_added):
+            inventory.item_added.connect(_handle_item_added)
+            
+        if not inventory.item_removed.is_connected(_handle_item_removed):
+            inventory.item_removed.connect(_handle_item_removed)
 
-		if not slot.item_unequipped.is_connected(_handle_item_unequipped):
-			slot.item_unequipped.connect(_handle_item_unequipped)
+    for slot in slots:
+        if not slot.item_equipped.is_connected(_handle_item_equipped):
+            slot.item_equipped.connect(_handle_item_equipped)
+        
+        if not slot.item_refused_to_equip.is_connected(_handle_item_refused_to_equip):
+            slot.item_refused_to_equip.connect(_handle_item_refused_to_equip)
+
+        if not slot.item_unequipped.is_connected(_handle_item_unequipped):
+            slot.item_unequipped.connect(_handle_item_unequipped)
 			
 
 
@@ -364,37 +365,37 @@ func setup() -> void:
 ## [br]Passing [code]skip_tags_check[/code] to [code]true[/code], 
 ## the check against [member Item.tags_required_to_equip] will be skipped.
 func unequip(item: Item, skip_tags_check: bool = false) -> void:
-	var slot = find_slot_by_item(item)
-	
-	if slot == null:
-		return
-	elif slot.has_equipped_item and slot.equipped.name == item.name and skip_tags_check:
-		slot.unequip()
-		return
-	elif slot.has_equipped_item and slot.equipped.name == item.name and can_unequip(item):
-		slot.unequip()
-		return
+    var slot = find_slot_by_item(item)
+
+    if slot == null:
+        return
+    elif slot.has_equipped_item and slot.equipped.name == item.name and skip_tags_check:
+        slot.unequip()
+        return
+    elif slot.has_equipped_item and slot.equipped.name == item.name and can_unequip(item):
+        slot.unequip()
+        return
 
 
 ## Unequips the first [EquipmentSlot] which satisfies the [Callable] predicate.
 ## [br]Passing [code]skip_tags_check[/code] to [code]true[/code], 
 ## the check against [member Item.tags_required_to_equip] will be skipped.
 func unequip_by(predicate: Callable, skip_tags_check: bool = false) -> void:
-	for slot in slots:
-		if slot.has_equipped_item and predicate.call(slot) and skip_tags_check:
-			slot.unequip()
-			return
-		elif slot.has_equipped_item and predicate.call(slot) and can_unequip(slot.equipped):
-			slot.unequip()
-			return
+    for slot in slots:
+        if slot.has_equipped_item and predicate.call(slot) and skip_tags_check:
+            slot.unequip()
+            return
+        elif slot.has_equipped_item and predicate.call(slot) and can_unequip(slot.equipped):
+            slot.unequip()
+            return
 
 
 ## Unequips all slots. ## [br]Passing [code]skip_tags_check[/code] to [code]true[/code], 
 ## the check against [member Item.tags_required_to_equip] will be skipped.
 func unequip_all(skip_tags_check: bool = false) -> void:
-	for slot in slots:
-		if slot.has_equipped_item and skip_tags_check:
-			slot.unequip()
-		elif slot.has_equipped_item and can_unequip(slot.equipped):
-			slot.unequip()
+    for slot in slots:
+        if slot.has_equipped_item and skip_tags_check:
+            slot.unequip()
+        elif slot.has_equipped_item and can_unequip(slot.equipped):
+            slot.unequip()
 

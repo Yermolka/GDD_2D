@@ -1,0 +1,204 @@
+[gd_scene load_steps=16 format=3 uid="uid://bh16saadaf04j"]
+
+[ext_resource type="Script" path="res://abilities/scenes/laser_sweep/laser_sweep.gd" id="1_bips4"]
+[ext_resource type="Texture2D" uid="uid://vyb6ysnvojh" path="res://abilities/texture_sheets/lightning.png" id="2_w32wb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3m1w6"]
+atlas = ExtResource("2_w32wb")
+region = Rect2(0, 0, 128, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwjc0"]
+atlas = ExtResource("2_w32wb")
+region = Rect2(128, 0, 128, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nw0g3"]
+atlas = ExtResource("2_w32wb")
+region = Rect2(256, 0, 128, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ftd0"]
+atlas = ExtResource("2_w32wb")
+region = Rect2(384, 0, 128, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tijfe"]
+atlas = ExtResource("2_w32wb")
+region = Rect2(512, 0, 128, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1eyfg"]
+atlas = ExtResource("2_w32wb")
+region = Rect2(640, 0, 128, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uwf70"]
+atlas = ExtResource("2_w32wb")
+region = Rect2(768, 0, 128, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k60jh"]
+atlas = ExtResource("2_w32wb")
+region = Rect2(896, 0, 128, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mwj1a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3m1w6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cwjc0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nw0g3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ftd0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tijfe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1eyfg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uwf70")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k60jh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="Animation" id="Animation_dolia"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(4.20662, 0.884855, 1.61096)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.5708, 1.30127, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape3D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(4.14699, 0.884855, 1.59449)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape3D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.5708, 1.30127, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ywnfm"]
+resource_name = "attack"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(4.20662, 0.884855, 1.61096), Vector3(0.786962, 0.884855, 4.66379), Vector3(-4.207, 0.885, 1.611)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1.5708, 1.30127, 0), Vector3(1.5708, -0.0077318, 0), Vector3(1.5708, -1.30202, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape3D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(4.14699, 0.884855, 1.59449), Vector3(0.787441, 0.884855, 4.60193), Vector3(-4.147, 0.885, 1.594)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape3D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1.5708, 1.30127, 0), Vector3(1.5708, -0.0077318, 0), Vector3(1.5708, -1.30202, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iomw2"]
+_data = {
+"RESET": SubResource("Animation_dolia"),
+"attack": SubResource("Animation_ywnfm")
+}
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_pod7f"]
+height = 4.77604
+radius = 0.429517
+
+[node name="LaserSweep" type="Area3D"]
+collision_layer = 192
+collision_mask = 512
+script = ExtResource("1_bips4")
+remove_self_on_apply = false
+remove_effects_on_apply = false
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(0.266275, 0.963897, -3.4893e-06, 0, -3.61999e-06, -1, -0.963897, 0.266275, -9.63912e-07, 4.20662, 0.884855, 1.61096)
+sprite_frames = SubResource("SpriteFrames_mwj1a")
+frame = 2
+frame_progress = 0.996828
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_iomw2")
+}
+autoplay = "attack"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.266275, 0.963897, -3.4893e-06, 0, -3.61999e-06, -1, -0.963897, 0.266275, -9.63912e-07, 4.14699, 0.884855, 1.59449)
+shape = SubResource("CylinderShape3D_pod7f")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bc4kklhjmj55a"]
+
+[ext_resource type="PackedScene" uid="uid://btuq4qnci5gnm" path="res://common/cutscenes/cutscene_camera.tscn" id="1_exorl"]
+[ext_resource type="Script" path="res://common/cutscenes/CutsceneScriptManager.gd" id="1_vsek2"]
+
+[node name="CutsceneScriptManager" type="Node"]
+script = ExtResource("1_vsek2")
+
+[node name="CutsceneCamera" parent="." instance=ExtResource("1_exorl")]

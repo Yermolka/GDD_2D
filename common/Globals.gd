@@ -10,6 +10,8 @@ var player_level: int:
 
 var global_state: Dictionary = {}
 var keybinds: Dictionary = {}
+var last_save_position: Vector3
+
 
 signal game_saved()
 signal game_loaded()
@@ -53,12 +55,12 @@ func save() -> void:
 func load() -> void:
 	var save_file: FileAccess = FileAccess.open_encrypted_with_pass("res://saves/test_save_bin.save", FileAccess.READ, "hard_password")
 	var player_dict: Dictionary = save_file.get_var()
-	
+
 	var player: Player = get_tree().get_first_node_in_group("player")
 	var player_parent: Node = player.get_parent()
 	var player_path: String = player.scene_file_path
 	player.queue_free()
-	
+
 	await get_tree().process_frame
 
 	player = load(player_path).instantiate()

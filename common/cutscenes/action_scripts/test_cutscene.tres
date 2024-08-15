@@ -1,0 +1,71 @@
+[gd_resource type="Resource" script_class="CutsceneScript" load_steps=12 format=3 uid="uid://dkkn341scsdn2"]
+
+[ext_resource type="Script" path="res://common/cutscenes/CutsceneScript.gd" id="1_4gd6p"]
+[ext_resource type="Script" path="res://common/cutscenes/CutsceneScriptAction.gd" id="1_r146y"]
+
+[sub_resource type="Resource" id="Resource_5bhgp"]
+script = ExtResource("1_r146y")
+action = 0
+param_vector = Vector3(-2, 1, 0)
+param_int = -1
+param_float = -1.0
+
+[sub_resource type="Resource" id="Resource_p2msk"]
+script = ExtResource("1_r146y")
+action = 4
+param_vector = Vector3(0, 1, 0)
+param_int = -1
+param_float = -1.0
+
+[sub_resource type="Resource" id="Resource_ayyru"]
+script = ExtResource("1_r146y")
+action = 1
+param_vector = Vector3(-2, 1, -2)
+param_int = -1
+param_float = 2.0
+
+[sub_resource type="Resource" id="Resource_hqa7g"]
+script = ExtResource("1_r146y")
+action = 3
+param_vector = Vector3(0, 0, 0)
+param_int = -1
+param_float = -1.0
+
+[sub_resource type="Resource" id="Resource_vqy38"]
+script = ExtResource("1_r146y")
+action = 1
+param_vector = Vector3(1, 1, -1)
+param_int = -1
+param_float = 2.0
+
+[sub_resource type="Resource" id="Resource_hrbr7"]
+script = ExtResource("1_r146y")
+action = 3
+param_vector = Vector3(0, 0, 0)
+param_int = -1
+param_float = -1.0
+
+[sub_resource type="Resource" id="Resource_walu0"]
+script = ExtResource("1_r146y")
+action = 1
+param_vector = Vector3(0, 1, 0)
+param_int = -1
+param_float = 0.5
+
+[sub_resource type="Resource" id="Resource_gblan"]
+script = ExtResource("1_r146y")
+action = 5
+param_vector = Vector3(0, 0, 0)
+param_int = -1
+param_float = -1.0
+
+[sub_resource type="Resource" id="Resource_jq7ci"]
+script = ExtResource("1_r146y")
+action = 6
+param_vector = Vector3(0, 0, 0)
+param_int = -1
+param_float = -1.0
+
+[resource]
+script = ExtResource("1_4gd6p")
+action_list = Array[ExtResource("1_r146y")]([SubResource("Resource_5bhgp"), SubResource("Resource_p2msk"), SubResource("Resource_ayyru"), SubResource("Resource_hqa7g"), SubResource("Resource_vqy38"), SubResource("Resource_hrbr7"), SubResource("Resource_walu0"), SubResource("Resource_gblan"), SubResource("Resource_jq7ci")])

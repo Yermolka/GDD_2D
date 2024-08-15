@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://8uqytm7th4gi"]
+[gd_scene load_steps=9 format=3 uid="uid://8uqytm7th4gi"]
 
 [ext_resource type="Script" path="res://abilities/scenes/MeleeScene.gd" id="1_7arc2"]
+[ext_resource type="Texture2D" uid="uid://yn0v8x2ycqor" path="res://hud/in_game_bar/noskillset_icon.png" id="2_ei5qu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7al0t"]
 size = Vector3(0.214844, 1.4165, 1)
@@ -23,6 +24,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector3(0, -0.998328, 0)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Decal:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(2, 2, 0.0453491)]
+}
 
 [sub_resource type="Animation" id="Animation_uuihl"]
 resource_name = "attack"
@@ -40,10 +53,39 @@ tracks/0/keys = {
 "values": [Vector3(0, -0.998328, 0), Vector3(0, 0.77456, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_ty6oa"]
+resource_name = "targeting"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Decal:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(2, 2, 0.0453491), Vector3(2, 2, 1.36321)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ms76u"]
 _data = {
 "RESET": SubResource("Animation_eai1v"),
-"attack": SubResource("Animation_uuihl")
+"attack": SubResource("Animation_uuihl"),
+"targeting": SubResource("Animation_ty6oa")
 }
 
 [node name="MeleeScene" type="Area3D"]
@@ -60,6 +102,7 @@ shape = SubResource("BoxShape3D_7al0t")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.0102274, 0.999948, 0, -0.999948, -0.0102274, 0, 0, -0.436878)
+layers = 2
 mesh = SubResource("CapsuleMesh_vgl23")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -67,5 +110,19 @@ libraries = {
 "": SubResource("AnimationLibrary_ms76u")
 }
 autoplay = "attack"
+
+[node name="Decal" type="Decal" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.457443)
+visible = false
+size = Vector3(2, 2, 0.0453491)
+texture_albedo = ExtResource("2_ei5qu")
+modulate = Color(1, 0, 0, 1)
+cull_mask = 1
+
+[node name="Decal2" type="Decal" parent="Decal"]
+size = Vector3(2, 2, 1.363)
+texture_albedo = ExtResource("2_ei5qu")
+modulate = Color(1, 0, 0, 1)
+cull_mask = 1
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

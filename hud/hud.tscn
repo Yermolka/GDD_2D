@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://b54ngq6in8rn8"]
+[gd_scene load_steps=35 format=3 uid="uid://b54ngq6in8rn8"]
 
 [ext_resource type="Script" path="res://hud/hud.gd" id="1_d5fuj"]
 [ext_resource type="Script" path="res://hud/inventory_hud.gd" id="2_idcnv"]
@@ -28,6 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://dfu2cqctwjsck" path="res://hud/ui_hp_middle.png" id="29_0d34k"]
 [ext_resource type="PackedScene" uid="uid://dkuujqavu6c60" path="res://hud/skill_tree.tscn" id="30_2q3ml"]
 [ext_resource type="Texture2D" uid="uid://q3j8j1bgalim" path="res://hud/ui_hp_left.png" id="30_3bq2o"]
+[ext_resource type="Script" path="res://hud/QuestContainer.gd" id="31_6h3p1"]
 [ext_resource type="Texture2D" uid="uid://bo43ud76enyvm" path="res://hud/ui_hp_right.png" id="31_jcnkd"]
 [ext_resource type="PackedScene" uid="uid://clxev2qpwdhhu" path="res://hud/passive_tree/passive_tree.tscn" id="33_wni17"]
 
@@ -40,7 +41,7 @@ script = ExtResource("7_ppcym")
 [sub_resource type="RichTextEffect" id="RichTextEffect_rnr86"]
 script = ExtResource("8_o4wgr")
 
-[node name="HUD" type="Control"]
+[node name="HUD" type="Control" groups=["hud"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,6 +52,7 @@ mouse_filter = 1
 script = ExtResource("1_d5fuj")
 
 [node name="Inventory" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchor_left = 0.597
 anchor_top = 0.202
@@ -396,6 +398,7 @@ offset_bottom = 14.0
 texture = ExtResource("31_jcnkd")
 
 [node name="PassiveTree" parent="." instance=ExtResource("33_wni17")]
+visible = false
 layout_mode = 1
 offset_left = 248.0
 offset_top = 132.0
@@ -406,7 +409,33 @@ offset_bottom = -298.0
 visible = false
 layout_mode = 1
 
+[node name="QuestContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 0
+offset_left = 910.0
+offset_top = 66.0
+offset_right = 1110.0
+offset_bottom = 106.0
+script = ExtResource("31_6h3p1")
+
+[node name="ReviveButton" type="Button" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Revive at checkpoint"
+
 [connection signal="pressed" from="MicroMenu/Character" to="." method="_on_character_btn_pressed"]
 [connection signal="pressed" from="MicroMenu/Inventory" to="." method="_on_inventory_btn_pressed"]
 [connection signal="pressed" from="MicroMenu/Map" to="." method="_on_map_btn_pressed"]
 [connection signal="pressed" from="MicroMenu/Skills" to="." method="_on_skills_btn_pressed"]
+[connection signal="pressed" from="ReviveButton" to="." method="_on_revive_button_pressed"]

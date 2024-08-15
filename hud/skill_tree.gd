@@ -24,6 +24,7 @@ var ability_container: AbilityContainer = null
 var player: Player:
     get:
         return get_tree().get_first_node_in_group("player")
+@export var close_sound: AudioStream
 
 
 func _ready() -> void:
@@ -191,3 +192,4 @@ func setup_equipment(eq: Equipment) -> void:
 
 func _on_close_button_pressed() -> void:
     visible = false
+    AudioManager.play_sound(close_sound)

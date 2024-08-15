@@ -214,7 +214,7 @@ func _handle_lifecycle_tagging(lifecycle: LifeCycle, ability: Ability) -> void:
 
 ## Returns [code]true[/code] if the [AbilityContainer] can process and [ActivationEvent], [code]false[/code] otherwise.
 func _is_eligible_for_operation(activation_event: ActivationEvent) -> bool:
-    return activation_event.ability_container == self and active
+    return activation_event.ability_container == self and active and not activation_event.ability_container.has_tag(GDDSkill.DEAD_TAG)
 
 
 ## The [method Node._ready] override
@@ -233,7 +233,7 @@ func start_gcd() -> void:
 
 ## Activates a single [Ability] calling [method Ability.try_activate].
 func activate_one(ability: Ability) -> void:
-    if not active:
+    if not active or has_tag(GDDSkill.DEAD_TAG):
         return
 
     if granted_abilities.has(ability):
@@ -247,7 +247,7 @@ func activate_one(ability: Ability) -> void:
 ## [br]If parallel_execution is [code]true[/code], then the event passed is generated once for all abilities
 ## otherwise the event will be regenerated for each iteration
 func activate_many(parallel_execution: bool = false) -> void:
-    if not active:
+    if not active or has_tag(GDDSkill.DEAD_TAG):
         return
 
     if parallel_execution:

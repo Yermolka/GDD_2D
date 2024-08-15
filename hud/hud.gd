@@ -41,6 +41,11 @@ func setup() -> void:
     )
     passive_tree.setup(player)
 
+    CutsceneScriptManager.cutscene_started.connect(func () -> void: visible = false)
+    CutsceneScriptManager.cutscene_finished.connect(func () -> void: visible = true)
+
+    player.death.connect(func () -> void: $ReviveButton.visible = true)
+
 @onready var test_res: PassiveSkill = load("res://abilities/passive/mana_resource.tres") as PassiveSkill
 		
 func _input(_event: InputEvent) -> void:
@@ -72,3 +77,8 @@ func _on_inventory_btn_pressed() -> void:
 
 func _on_character_btn_pressed() -> void:
     inventory_hud.toggle_char_screen()
+
+
+func _on_revive_button_pressed() -> void:
+    player.resurrect()
+    $ReviveButton.visible = false
