@@ -55,6 +55,7 @@ func reset() -> void:
     shield_mesh.visible = false
     %HurtBox.set_deferred("monitoring", true)
     %HurtBox.set_deferred("monitorable", true)
+    $Timer.stop()
 
 
 func _physics_process(delta: float) -> void:

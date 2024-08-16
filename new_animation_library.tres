@@ -1,0 +1,126 @@
+[gd_resource type="AnimationLibrary" load_steps=4 format=3 uid="uid://byj7aostqk6ox"]
+
+[sub_resource type="Animation" id="Animation_87oi3"]
+resource_name = "Idle"
+length = 0.5
+tracks/0/type = "position_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("World-Global/Telo-Global")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 5, 0, 0.1, 1, 0, 4.2, 0, 0.133333, 1, 0, 4.02222, 0, 0.5, 1, 0, 5, 0)
+tracks/1/type = "position_3d"
+tracks/1/imported = true
+tracks/1/enabled = true
+tracks/1/path = NodePath("World-Global/Telo-Global/Golodvs-Global")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 10, 0, 0.1, 1, 0, 9.2, 0, 0.133333, 1, 0, 9.02222, 0, 0.5, 1, 0, 10, 0)
+tracks/2/type = "position_3d"
+tracks/2/imported = true
+tracks/2/enabled = true
+tracks/2/path = NodePath("World-Global/Telo-Global/Ruka1-Global")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 4, 9, -7.50584e-08)
+tracks/3/type = "rotation_3d"
+tracks/3/imported = true
+tracks/3/enabled = true
+tracks/3/path = NodePath("World-Global/Telo-Global/Ruka1-Global")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, 1, 0, 0, 7.54979e-08)
+tracks/4/type = "rotation_3d"
+tracks/4/imported = true
+tracks/4/enabled = true
+tracks/4/path = NodePath("World-Global/Telo-Global/Ruka2-Global")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_7oq5c"]
+resource_name = "attack"
+length = 0.333333
+tracks/0/type = "position_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("World-Global/Telo-Global/Golodvs-Global")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 10, 0)
+tracks/1/type = "position_3d"
+tracks/1/imported = true
+tracks/1/enabled = true
+tracks/1/path = NodePath("World-Global/Telo-Global/Ruka1-Global")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 4, 9, -7.50584e-08)
+tracks/2/type = "rotation_3d"
+tracks/2/imported = true
+tracks/2/enabled = true
+tracks/2/path = NodePath("World-Global/Telo-Global/Ruka1-Global")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 1, 0, 0, 7.54979e-08, 0.0666667, 1, 0.615661, 0, 0, -0.788011, 0.1, 1, 0.529919, 0, 0, -0.848048, 0.133333, 1, -0.71934, 0, 0, 0.694658, 0.166667, 1, -0.866025, 0, 0, 0.5, 0.333333, 1, -1, 0, 0, -1.62921e-07)
+tracks/3/type = "rotation_3d"
+tracks/3/imported = true
+tracks/3/enabled = true
+tracks/3/path = NodePath("World-Global/Telo-Global/Ruka2-Global")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.0666667, 1, 0.788011, 0, 0, 0.615662, 0.1, 1, 0.848048, 0, 0, 0.529919, 0.166667, 1, 0.5, 0, 0, 0.866025, 0.3, 1, 0.104528, 0, 0, 0.994522, 0.333333, 1, 5.96046e-08, 0, 0, 1)
+tracks/4/type = "position_3d"
+tracks/4/imported = true
+tracks/4/enabled = true
+tracks/4/path = NodePath("World-Global/Telo-Global")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array(0, 1, 0, 5, 0)
+
+[sub_resource type="Animation" id="Animation_w2kfk"]
+resource_name = "walk"
+length = 0.416667
+tracks/0/type = "position_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("World-Global/Telo-Global/Golodvs-Global")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 9, 0, 0.2, 1, 0, 9.96, 0, 0.233333, 1, 0, 9.88, 0, 0.416667, 1, 0, 9, 0)
+tracks/1/type = "position_3d"
+tracks/1/imported = true
+tracks/1/enabled = true
+tracks/1/path = NodePath("World-Global/Telo-Global/Ruka1-Global")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 4.00001, 9.05168, -9.63746e-08)
+tracks/2/type = "rotation_3d"
+tracks/2/imported = true
+tracks/2/enabled = true
+tracks/2/path = NodePath("World-Global/Telo-Global/Ruka1-Global")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0.984808, 0.173648, 1.311e-08, 7.43509e-08, 0.2, 1, 0.998806, 0.0488491, 3.68801e-09, 7.54078e-08, 0.233333, 1, 0.998537, 0.0540781, 4.08279e-09, 7.53874e-08, 0.416667, 1, 0.991445, 0.130526, 9.8544e-09, 7.4852e-08)
+tracks/3/type = "rotation_3d"
+tracks/3/imported = true
+tracks/3/enabled = true
+tracks/3/path = NodePath("World-Global/Telo-Global/Ruka2-Global")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, 0, 0, -0.173648, 0.984808, 0.2, 1, 0, 0, -0.00698137, 0.999976, 0.233333, 1, 0, 0, -0.0209426, 0.999781, 0.416667, 1, 0, 0, -0.173649, 0.984808)
+tracks/4/type = "position_3d"
+tracks/4/imported = true
+tracks/4/enabled = true
+tracks/4/path = NodePath("World-Global/Telo-Global")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array(0, 1, 0, 5, 0)
+
+[resource]
+resource_local_to_scene = true
+_data = {
+"Idle": SubResource("Animation_87oi3"),
+"attack": SubResource("Animation_7oq5c"),
+"walk": SubResource("Animation_w2kfk")
+}

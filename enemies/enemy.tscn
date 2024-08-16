@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://dbx4mf5ywvhdr"]
+[gd_scene load_steps=55 format=3 uid="uid://dbx4mf5ywvhdr"]
 
 [ext_resource type="Script" path="res://addons/godot_gameplay_systems/attributes_and_abilities/nodes/gameplay_attribute_map.gd" id="1_kjur6"]
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="1_s888k"]
@@ -38,6 +38,7 @@
 [ext_resource type="PackedScene" uid="uid://duqifpy1ec0bg" path="res://common/hurtbox/hurt_box.tscn" id="26_q3ao2"]
 [ext_resource type="Script" path="res://enemies/ai_scripts/bh_move_to_spawn.gd" id="33_38cmi"]
 [ext_resource type="PackedScene" uid="uid://bd6fh4wm86q1v" path="res://hud/hp_bar/hp_bar.tscn" id="38_8myf3"]
+[ext_resource type="PackedScene" uid="uid://bx4jmx3xxpmci" path="res://common/mousebox/mouse_box.tscn" id="39_r51kp"]
 
 [sub_resource type="Resource" id="Resource_43n4g"]
 script = ExtResource("8_mnjep")
@@ -441,12 +442,9 @@ shape = SubResource("BoxShape3D_ypgm2")
 [node name="HpBar" parent="." node_paths=PackedStringArray("head_point") instance=ExtResource("38_8myf3")]
 head_point = NodePath("../Body/Skelet top/World-Global/Telo-Global/Golodvs-Global")
 
-[node name="Area3D" type="Area3D" parent="."]
-collision_layer = 1024
-collision_mask = 1024
-priority = 1
+[node name="MouseBox" parent="." instance=ExtResource("39_r51kp")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MouseBox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0301208, 0.382904, -0.00109863)
 shape = SubResource("BoxShape3D_848w2")
 
